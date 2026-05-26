@@ -16,46 +16,10 @@
 
     <%@ include file="imports.jsp" %>
 
-    <!-- Tema chiaro personalizzato -->
+
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        body {
-            background-color: #f8f9fa;
-            color: #212529;
-            font-family: "Segoe UI", sans-serif;
-        }
 
-        .main-container {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        .right-content {
-            flex: 1;
-            padding: 40px;
-            background-color: #ffffff;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .button-container a {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .button-container a:hover {
-            background-color: #0056b3;
-        }
 
         .table-responsive {
             background-color: #ffffff;
