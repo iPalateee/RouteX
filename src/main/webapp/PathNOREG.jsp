@@ -210,7 +210,7 @@
 
     <!-- Sezione principale -->
     <div class="main">
-        <button class="home-button" onclick="location.href='indexLogged.jsp'">Home</button>
+        <button class="home-button" onclick="location.href='index.jsp'">Home</button>
          <form action="PathControllerGrafico" method="get">
             <button class="back-button" type="submit">Back</button>
          </form>

@@ -109,7 +109,13 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
 
         //inoltro la richiesta al jsp
-            RequestDispatcher dispatcher = request.getRequestDispatcher("PathNOREG.jsp");
+        RequestDispatcher dispatcher;
+        if(cred.getCodiceFiscale()!=null) {
+            dispatcher = request.getRequestDispatcher("PathREG.jsp");
+        }
+        else {
+            dispatcher = request.getRequestDispatcher("PathNOREG.jsp");
+        }
             try {
                 dispatcher.forward(request, response);
             }catch(Exception e){
