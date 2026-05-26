@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
-<html>
+<html lang="it">
 <head>
     <title>Errore di login</title>
     <style>

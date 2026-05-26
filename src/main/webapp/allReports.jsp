@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.web.routex.model.Segnalazione" %>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>Tutte le Segnalazioni</title>
