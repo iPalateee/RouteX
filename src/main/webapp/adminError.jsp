@@ -5,27 +5,8 @@
     <meta charset="UTF-8">
     <title>RouteX - Admin Error</title>
     <%@ include file="imports.jsp" %>
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: "Segoe UI", sans-serif;
-            color: #212529;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .error-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 520px;
-        }
-
+        <link rel="stylesheet" href="css/style.css">
+        <style>
         .error-icon {
             font-size: 50px;
             color: #dc3545;

@@ -147,7 +147,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
             String errorPage;
             if (session != null && cred.getCodiceFiscale() != null) {
-                errorPage = "errorLogged.jsp";
+                errorPage = "error.jsp";
             } else {
                 errorPage = "errorNotLogged.jsp";
             }
