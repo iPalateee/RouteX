@@ -97,15 +97,15 @@
 
                 <!-- Sezione scelta metodo -->
                 <div class="payment-section">
-                    <label><strong>Seleziona il metodo di pagamento:</strong></label><br>
+                    <p class="mb-2"><strong>Seleziona il metodo di pagamento:</strong></p>
                     <div class="form-check form-check-inline mt-2">
-                        <input class="form-check-input" type="radio" name="metodoPagamento" id="mastercard" value="mastercard" onclick="mostraCampiPagamento()">
+                        <input class="form-check-input" type="radio" name="metodoPagamento" id="mastercard" value="mastercard" onkeydown="mostraCampiPagamento()">
                         <label class="form-check-label" for="mastercard">
                             <i class="fab fa-cc-mastercard text-danger"></i> Mastercard
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="metodoPagamento" id="paypal" value="paypal" onclick="mostraCampiPagamento()">
+                        <input class="form-check-input" type="radio" name="metodoPagamento" id="paypal" value="paypal" onkeydown="mostraCampiPagamento()">
                         <label class="form-check-label" for="paypal">
                             <i class="fab fa-paypal text-primary"></i> PayPal
                         </label>
@@ -142,7 +142,7 @@
 
                 <!-- Sezione scelta persistenza -->
                 <div class="payment-section mt-4">
-                    <label><strong>Modello di persistenza:</strong></label><br>
+                    <p class="mb-2"><strong>Modello di persistenza:</strong></p>
 
                     <div class="form-check form-check-inline mt-2">
                         <input class="form-check-input" type="radio" name="persistence"

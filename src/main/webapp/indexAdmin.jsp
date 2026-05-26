@@ -3,6 +3,7 @@
 <html lang="it">
 <head>
 <%@ include file="imports.jsp" %>
+<title>RouteX - Admin</title>
     <style>
         body {
             margin: 0;

@@ -273,7 +273,7 @@
 
                 <br><br><br>
 
-                <img src="images/logo-no-background.png" height="90" width="300" >
+                <img src="images/logo-no-background.png" height="90" width="300" alt="Logo">
 
             </form>
 

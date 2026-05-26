@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
 <%@ include file="imports.jsp" %>
+<title>RouteX - Comunicazione</title>
 <style>
     body {
         margin: 0;
