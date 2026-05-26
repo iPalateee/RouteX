@@ -200,10 +200,6 @@
         <i class="fas fa-map-marker-alt"></i>
     </div>
 
-    <!-- jQuery + DataTables -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <!-- Inizializzazione DataTables -->
     <script>
         $(document).ready(function () {
