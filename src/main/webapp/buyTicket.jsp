@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/lib/bootstrap/dist/css/bootstrap.css">
 
     <%@ include file="imports.jsp" %>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/risBuy.css">
     <style>
 
         .form-container {

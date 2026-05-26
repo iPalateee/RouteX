@@ -18,7 +18,7 @@
     <%@ include file="imports.jsp" %>
 
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/risBuy.css">
     <style>
 
 

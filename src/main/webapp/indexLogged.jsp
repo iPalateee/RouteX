@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>RouteX - Metro Finder</title>
     <%@ include file="imports.jsp" %>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body>
