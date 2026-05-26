@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<%@ include file="imports.jsp" %>
     <meta charset="UTF-8">
     <title>RouteX - Area Riservata</title>
 
