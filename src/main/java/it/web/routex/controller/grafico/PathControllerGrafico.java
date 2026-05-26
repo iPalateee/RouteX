@@ -146,11 +146,15 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             HttpSession session = request.getSession(false);
 
             String errorPage;
+            String pagina;
             if (session != null && cred.getCodiceFiscale() != null) {
-                errorPage = "error.jsp";
+                pagina = "indexLogged.jsp";
             } else {
-                errorPage = "errorNotLogged.jsp";
+                pagina = "index.jsp";
             }
+
+            request.setAttribute("indexUrl", pagina);
+            errorPage = "error.jsp";
 
             request.getRequestDispatcher(errorPage).forward(request, response);
 
