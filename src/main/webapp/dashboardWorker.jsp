@@ -209,7 +209,6 @@ body {
                 <button class="welcome-button" type="submit">View Notifications</button>
             </form>
 
-            <!-- Submit verso la servlet viewWorkSchedule -->
             <form action="viewWorkSchedule" method="get">
                 <button class="welcome-button" type="submit">View Work Schedule</button>
             </form>

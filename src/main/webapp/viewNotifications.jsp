@@ -18,7 +18,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/lib/bootstrap/dist/css/bootstrap.css">
-
+    <%@ include file="imports.jsp" %>
     <style>
         body {
             background: linear-gradient(135deg, #eef2f7, #f8f9fa);

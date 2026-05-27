@@ -2,11 +2,12 @@ package it.web.routex.controller.grafico;
 import it.web.routex.bean.WorkerScheduleBean;
 import it.web.routex.controller.applicativo.ViewWorkScheduleControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
+import it.web.routex.enumerator.Ruolo;
 import it.web.routex.exception.BrondiException;
 import it.web.routex.utility.singleton.Credentials;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
 @WebServlet("/viewWorkSchedule")
 public class ViewWorkScheduleControllerGrafico extends LoggedHttpServlet {
 
@@ -55,6 +56,9 @@ public class ViewWorkScheduleControllerGrafico extends LoggedHttpServlet {
                               String message) {
         try {
             request.setAttribute("errore", message);
+            Ruolo ruolo = Credentials.getInstanceSingleton().getRuolo();
+            String urlRitorno = (ruolo == Ruolo.WORKER) ? "dashboardWorker.jsp" : "index.jsp";
+            request.setAttribute("indexUrl", urlRitorno);
             request.getRequestDispatcher("/error.jsp")
                     .forward(request, response);
         } catch (Exception e) {

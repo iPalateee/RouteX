@@ -99,13 +99,13 @@
                 <div class="payment-section">
                     <p class="mb-2"><strong>Seleziona il metodo di pagamento:</strong></p>
                     <div class="form-check form-check-inline mt-2">
-                        <input class="form-check-input" type="radio" name="metodoPagamento" id="mastercard" value="mastercard" onkeydown="mostraCampiPagamento()">
+                        <input class="form-check-input" type="radio" name="metodoPagamento" id="mastercard" value="mastercard" onchange="mostraCampiPagamento()">
                         <label class="form-check-label" for="mastercard">
                             <i class="fab fa-cc-mastercard text-danger"></i> Mastercard
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="metodoPagamento" id="paypal" value="paypal" onkeydown="mostraCampiPagamento()">
+                        <input class="form-check-input" type="radio" name="metodoPagamento" id="paypal" value="paypal" onchange="mostraCampiPagamento()">
                         <label class="form-check-label" for="paypal">
                             <i class="fab fa-paypal text-primary"></i> PayPal
                         </label>
@@ -132,7 +132,7 @@
                 <div id="paypal-details" class="payment-details">
                     <div class="mb-3">
                         <label for="emailPaypal" class="form-label">Email PayPal</label>
-                        <input type="text" cla ss="form-control" id="emailPaypal" name="emailPaypal">
+                        <input type="text" class="form-control" id="emailPaypal" name="emailPaypal">
                     </div>
                     <div class="mb-3">
                         <label for="codiceTransazione" class="form-label">Codice Transazione</label>

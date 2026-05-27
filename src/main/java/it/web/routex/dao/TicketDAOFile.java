@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class TicketDAOFile extends TicketDAOLayer
 {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String filePath = ConfigLoader.get("ticket.csv.path");
+    private final String filePath = ConfigLoader.get("ticket.csv.pathBrondi");
     private static final DateTimeFormatter CSV_TIMESTAMP_FORMAT =
             DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 

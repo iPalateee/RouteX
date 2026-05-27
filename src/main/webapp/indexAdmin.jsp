@@ -184,7 +184,6 @@
                     <button class="welcome-button" type="submit">Send Communication</button>
                 </form>
                 <br>
-                <br>
                 <form action="PathInfoRAS" method="get">
                     <button class="welcome-button" type="submit">View Reports And Statistics</button>
                 </form>
