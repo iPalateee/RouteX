@@ -11,11 +11,10 @@ public class ConfirmCommunicationControllerApplicativo {
 
     public void communication(MessageBean bean) throws DAOExceptionRemoli {
 
-        // TRASFORMAZIONE boundary → dominio
         Notification notification = new Notification(
                 bean.getMessage(),
                 bean.getDate(),
-                false   // nuova comunicazione = non risolta
+                false
         );
 
         LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();

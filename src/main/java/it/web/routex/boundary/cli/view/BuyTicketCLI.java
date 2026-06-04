@@ -8,7 +8,7 @@ import java.util.Scanner;
 public final class BuyTicketCLI
 {
     private BuyTicketCLI(){
-        // Prevent instantiation
+
     }
     public static void mostraBuyTicket()
     {
@@ -31,7 +31,7 @@ public final class BuyTicketCLI
         }
 
         String city = String.valueOf(cities.get(accesso-1));
-        scanner.nextLine(); // consuma il newline rimasto
+        scanner.nextLine();
         System.out.print("Inserisci quantità: ");
         String quantity = scanner.nextLine();
 

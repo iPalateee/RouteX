@@ -18,17 +18,11 @@ import java.util.List;
  */
 public class CityController {
 
-    /**
-     * Recupera tutte le città dal database e le converte in CityBean per la View.
-     */
     public List<CityBean> getAllCities() throws InvalidCityDataExceptionRemoli, DAOExceptionRemoli {
 
         LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
-        List<City> cities = layer.listCitiesRAM(); // ACCESSO DB
+        List<City> cities = layer.listCitiesRAM();
 
-        // === CONTROLLI DI VALIDAZIONE ===
-
-        // NON CARICATO
         if (cities == null) {
             throw new InvalidCityDataExceptionRemoli(
                     "Nessun dato disponibile al momento.",
@@ -36,10 +30,10 @@ public class CityController {
                     InvalidCityDataExceptionRemoli.Severity.CRITICAL
             );
         }
-        // CARICATO MA NESSUN DATO []
+
         if (cities.isEmpty()) {
             throw new InvalidCityDataExceptionRemoli(
-                    "Nessuna città disponibile per l’acquisto al momento.",
+                    "Nessuna città disponibile per l'acquisto al momento.",
                     "La lista delle città è vuota.",
                     InvalidCityDataExceptionRemoli.Severity.MEDIUM
             );
@@ -55,7 +49,6 @@ public class CityController {
             }
         }
 
-        // === COSTRUZIONE BEAN ===
         List<CityBean> cityBeans = new ArrayList<>();
         for (City c : cities) {
             cityBeans.add(new CityBean(c));
@@ -66,7 +59,7 @@ public class CityController {
 
 
     /**
-     * Calcola il prezzo totale per l’acquisto di uno o più biglietti
+     * Calcola il prezzo totale per l'acquisto di uno o più biglietti
      * in base alla città selezionata e alla quantità indicata.
      *
      * @param city     nome della città selezionata
@@ -77,7 +70,7 @@ public class CityController {
     public PrezzoTotaleBean ottieniPrezzoTotale(String city, int quantity) throws DAOExceptionRemoli, InvalidPriceCalculationExceptionRemoli {
 
         LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
-        List<City> cities = layer.listCitiesRAM(); // SOLO CACHE
+        List<City> cities = layer.listCitiesRAM();
         for (City a : cities) {
             if (a.getName().equalsIgnoreCase(city)) {
                 double totale = a.calcolaPrezzoTotale(quantity);

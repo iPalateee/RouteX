@@ -434,7 +434,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             if (lista.isEmpty())
             {
                 throw new PathNotFoundExceptionRemoli(
-                        "Nessun percorso trovato per l’utente.",
+                        "Nessun percorso trovato per l'utente.",
                         cf,
                         404,
                         "RouteDAO.getData"
@@ -443,7 +443,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
 
             return lista;
         } catch (SQLException e) {
-            // Errore tecnico
+
             throw new DAOExceptionRemoli(
                     "Errore durante la connessione al database",
                     e

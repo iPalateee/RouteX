@@ -67,7 +67,7 @@
                 String messaggio = (String) request.getAttribute("messaggio");
                 List<String> codiciBiglietti = (List<String>) request.getAttribute("codiciBiglietti");
 
-                // concateno tutti i codici in un’unica stringa per il QR
+                // concateno tutti i codici in un'unica stringa per il QR
                 StringBuilder qrContent = new StringBuilder();
                 if (codiciBiglietti != null && !codiciBiglietti.isEmpty()) {
                     for (String codice : codiciBiglietti) {

@@ -115,7 +115,7 @@ RouteX is a powerful metro route finder that allows users to search for stations
       The idea behind RouteX was conceived by Simone Remoli, a computer engineering student at the University of Rome Tor Vergata.<br><br>
       As someone who has relied on <b>public transportation for most of his daily</b> commuting and has <i>rarely</i> used a car, he began to reflect on a simple yet meaningful question:<br>
       <i>“What would the world look like if every commuter had access to an easy-to-use application designed to simplify metropolitan travel?”</i><br><br>
-      This question led to a long period of reflection and experimentation, eventually resulting in the development of RouteX, whose core engine is based on <b>Dijkstra’s algorithm</b> the beating heart of the system.
+      This question led to a long period of reflection and experimentation, eventually resulting in the development of RouteX, whose core engine is based on <b>Dijkstra's algorithm</b> the beating heart of the system.
       </p>
     </td>
   </tr>

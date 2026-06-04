@@ -8,7 +8,7 @@ public final class PaypalCLI
     private static String codiceTransazione;
 
     private PaypalCLI(){
-        //Prevent the instantiation
+
     }
 
     public static void from(PaypalData p){

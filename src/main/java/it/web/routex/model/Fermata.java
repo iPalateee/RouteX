@@ -22,10 +22,6 @@ public class Fermata {
         return linea;
     }
 
-    /* =========================
-       LOGICA DI DOMINIO
-       ========================= */
-
     public boolean isLineaComposta() {
         return linea != null && linea.contains("-");
     }

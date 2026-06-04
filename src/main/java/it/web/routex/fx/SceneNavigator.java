@@ -13,7 +13,7 @@ public final class SceneNavigator {
     private static Stage stage;
 
     private SceneNavigator(){
-        //Prevent the init
+
     }
 
     public static void setStage(Stage s) {

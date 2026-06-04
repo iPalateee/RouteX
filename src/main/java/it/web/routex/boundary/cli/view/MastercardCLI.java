@@ -7,7 +7,7 @@ public final class MastercardCLI
     private static String cvv;
 
     private MastercardCLI(){
-        //Prevent the instantiation
+
     }
     public static void init(String a, String b, String c)
     {

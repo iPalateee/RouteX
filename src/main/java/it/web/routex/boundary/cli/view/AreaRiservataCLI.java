@@ -12,7 +12,7 @@ public final class AreaRiservataCLI
     private static List<TicketBean> tickets = new ArrayList<>();
 
     private AreaRiservataCLI(){
-        // Prevent instantiation
+
     }
 
     public static void setListaPercorsi(List<RouteBean> listaPercorsi) {

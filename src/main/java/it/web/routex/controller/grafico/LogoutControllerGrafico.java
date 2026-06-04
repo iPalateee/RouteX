@@ -14,16 +14,13 @@ public class LogoutControllerGrafico extends LoggedHttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
-            // 1. Svuota il singleton delle credenziali
             Credentials.getInstanceSingleton().clear();
 
-            // 2. Invalida anche la sessione (per sicurezza)
             HttpSession session = request.getSession(false);
             if (session != null) {
                 session.invalidate();
             }
 
-            // 3. Torna alla home / login
             response.sendRedirect("index.jsp");
             logger.info("Logout avvenuto correttamente");
             ConnectionFactory.cambioDiRuolo(Ruolo.LOGIN);

@@ -34,18 +34,20 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet
                         return;
                     }
                 }
-                // Se non sei loggato o cf è null, reindirizza a login
+
                 redirectToLogin(response);
             } catch (PathNotFoundExceptionRemoli remoli) {
                 logger.error("Errore PathNotFoundExceptionRemoli. Messaggio={} Cf={} CodiceErrore={} Dettagli={}.", remoli.getMessage(), remoli.getCodiceFiscaleUtente(), remoli.getCodiceDiErrore(), remoli.getDetails());
                 request.setAttribute("errore", remoli.getMessage());
+                String indexUrl = request.getContextPath() + "/indexLogged.jsp";
+                request.setAttribute("indexUrl", indexUrl);
                 try {
                     request.getRequestDispatcher("/error.jsp").forward(request, response);
                 }catch(Exception e) {
                     logger.error("Errore durante il forward alla pagina di errore", e);
                 }
             } catch (DAOExceptionRemoli remoli) {
-                logger.error("Errore DAOExceptionRemoli. Messaggio={} Causa{}", remoli.getMessage(), remoli.getCause());
+                logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());
                 request.setAttribute("errore", remoli.getMessage());
                 try {
                     request.getRequestDispatcher("/error.jsp").forward(request, response);

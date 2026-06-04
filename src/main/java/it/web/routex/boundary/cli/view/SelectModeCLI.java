@@ -12,7 +12,7 @@ public final class SelectModeCLI {
     private static String mode = "";
 
     private SelectModeCLI(){
-        //Prevent the init
+
     }
 
     public static void choiceDemoFull() {

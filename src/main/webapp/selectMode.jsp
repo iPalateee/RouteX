@@ -83,7 +83,7 @@
 <div class="container">
     <h2>Seleziona modalità di esecuzione</h2>
     <div class="subtitle">
-        Scegli come avviare l’applicazione
+        Scegli come avviare l'applicazione
     </div>
 
     <form action="selectMode" method="post">

@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * Incapsula i dati persistenti associati a una comunicazione
  * (contenuto del messaggio, data di creazione e stato di risoluzione),
  * ed è utilizzato dallo strato applicativo per applicare la logica di business.
- * @author Lorenzo Brondi
+ * @LorenzoBrondi
  */
 
 

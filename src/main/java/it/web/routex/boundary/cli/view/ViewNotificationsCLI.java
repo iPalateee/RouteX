@@ -15,7 +15,7 @@ public final class ViewNotificationsCLI
     private static List<String> risolte = new ArrayList<>();
 
     private ViewNotificationsCLI(){
-        //Prevent the init
+
     }
 
     public static void mostra()

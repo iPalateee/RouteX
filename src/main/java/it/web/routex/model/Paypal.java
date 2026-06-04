@@ -1,15 +1,5 @@
 package it.web.routex.model;
-/**
- * Rappresenta il modello di dominio per il pagamento tramite PayPal.
- *
- * Questa classe incapsula i dati e le regole di business associate a una
- * transazione PayPal, occupandosi della validazione delle credenziali
- * di pagamento e dell’identificazione del metodo di pagamento utilizzato.
- *
- * In quanto Model di dominio, la classe non gestisce aspetti di
- * presentazione né di persistenza, ma definisce esclusivamente
- * il comportamento e i vincoli legati al pagamento PayPal.
- */
+
 
 import it.web.routex.interfaces.Payment;
 import it.web.routex.enumerator.PaymentMethod;
@@ -17,6 +7,11 @@ import it.web.routex.exception.PaymentValidationExceptionRemoli;
 
 import java.util.regex.Pattern;
 
+/**
+ * Model di dominio per i pagamenti tramite PayPal.
+ * Incapsula i dati della transazione e contiene la logica interna
+ * per la validazione delle credenziali dell'utente.
+ */
 public class Paypal implements Payment
 {
     String email;

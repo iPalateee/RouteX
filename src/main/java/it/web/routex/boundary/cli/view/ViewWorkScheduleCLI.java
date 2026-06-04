@@ -12,7 +12,7 @@ public final class ViewWorkScheduleCLI
 
 
     private ViewWorkScheduleCLI(){
-        //Prevent the init
+
     }
 
     public static void mostra()

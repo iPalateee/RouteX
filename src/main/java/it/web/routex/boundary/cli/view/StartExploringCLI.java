@@ -11,7 +11,7 @@ public final class StartExploringCLI
     private static String stazioneArrivo;
 
     private StartExploringCLI(){
-        //Prevent the init
+
     }
 
     public static void mostra()

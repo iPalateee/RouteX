@@ -3,7 +3,7 @@ package it.web.routex.boundary.cli.view;
 public final class ErrorePath
 {
     private ErrorePath(){
-        // Prevent instantiation
+
     }
     public static void mostraErrore() {
         System.out.println("\n================================");

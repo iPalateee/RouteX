@@ -11,7 +11,6 @@ public class LogoutControllerGraficoCLI extends LoggedCLI {
     public void doGet()
     {
         try {
-            // 1. Svuota il singleton delle credenziali
             Credentials.getInstanceSingleton().clear();
 
             logger.info("Logout avvenuto correttamente");

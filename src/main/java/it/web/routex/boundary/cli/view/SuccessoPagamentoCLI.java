@@ -13,7 +13,7 @@ public final class SuccessoPagamentoCLI{
     private static List<String> codiciBiglietti = new ArrayList<>();
 
     private SuccessoPagamentoCLI(){
-        //Prevent the init
+
     }
 
     public static void setCity(String city) {

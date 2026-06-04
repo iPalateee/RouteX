@@ -8,7 +8,6 @@ import it.web.routex.controller.applicativo.SelectModeControllerApplicativo;
 public final class SelectModeControllerGraficoCLI {
 
     private SelectModeControllerGraficoCLI() {
-        // Prevent instantiation
     }
 
     public static void doPost() {

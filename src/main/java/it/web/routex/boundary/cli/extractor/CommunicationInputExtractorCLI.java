@@ -15,14 +15,13 @@ public final class CommunicationInputExtractorCLI {
     private static final Set<String> FORBIDDEN_WORDS = loadForbiddenWords();
 
     private CommunicationInputExtractorCLI() {
-        // utility class
+
     }
 
     public static CommunicationInput extract() throws BrondiInvalidCommunicationInputException {
 
         String testo = SendCommunicationCLI.getMessage();
 
-        // Controllo input vuoto
         if (testo == null || testo.trim().isEmpty()) {
             throw new BrondiInvalidCommunicationInputException(
                     "Il messaggio della comunicazione non può essere vuoto."
@@ -33,7 +32,6 @@ public final class CommunicationInputExtractorCLI {
 
         String normalized = cleanText.toLowerCase().replaceAll("[^a-zàèéìòù]", " ");
 
-        // Controllo parole proibite
         for (String forbidden : FORBIDDEN_WORDS) {
             if (normalized.contains(forbidden)) {
                 throw new BrondiInvalidCommunicationInputException(
@@ -42,7 +40,6 @@ public final class CommunicationInputExtractorCLI {
             }
         }
 
-        // Input valido
         return new CommunicationInput(
                 cleanText,
                 new Timestamp(System.currentTimeMillis())

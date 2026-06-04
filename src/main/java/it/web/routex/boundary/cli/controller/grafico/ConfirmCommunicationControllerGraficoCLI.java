@@ -13,20 +13,16 @@ public class ConfirmCommunicationControllerGraficoCLI extends LoggedCLI {
     public static void doPost()
     {
         try {
-            //Estrazione + validazione input
             CommunicationInput input = CommunicationInputExtractorCLI.extract();
 
-            // Bean di trasporto
             MessageBean mess = new MessageBean();
             mess.setMessage(input.message());
             mess.setDate(input.date());
 
-            // Chiamata applicativa
             ConfirmCommunicationControllerApplicativo service = new ConfirmCommunicationControllerApplicativo();
 
             service.communication(mess);
 
-            // Successo
             ComunicazioneInviataCLI.invioComunicazioneConfirm(
                     "La comunicazione è stata correttamente inviata a tutti i lavoratori del sistema."
             );
@@ -35,11 +31,9 @@ public class ConfirmCommunicationControllerGraficoCLI extends LoggedCLI {
         } catch (BrondiInvalidCommunicationInputException e) {
 
             GenericErrorCLI.mostraErrore(e.getMessage());
-            // ERRORE DI INPUT (BOUNDARY)
 
 
         } catch (Exception e) {
-            // ERRORE TECNICO / APPLICATIVO
 
             GenericErrorCLI.mostraErrore("Errore durante l'invio della comunicazione.");
 

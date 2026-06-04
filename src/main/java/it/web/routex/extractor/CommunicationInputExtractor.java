@@ -16,7 +16,7 @@ public final class CommunicationInputExtractor {
     private static final Set<String> FORBIDDEN_WORDS = loadForbiddenWords();
 
     private CommunicationInputExtractor() {
-        // utility class
+
     }
 
     public static CommunicationInput extract(HttpServletRequest request)

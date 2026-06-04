@@ -22,12 +22,10 @@ public class UpdateNotificationsControllerGrafico extends LoggedHttpServlet {
             if (risolte != null) {
                 for (String r : risolte) {
 
-                    // PARSING TECNICO (boundary)
                     String[] parts = r.split("\\|", 2);
                     long timestamp = Long.parseLong(parts[0]);
                     String message = parts[1];
 
-                    // BEAN di trasporto
                     MessageBean bean = new MessageBean(
                             message,
                             new Timestamp(timestamp)
@@ -43,7 +41,6 @@ public class UpdateNotificationsControllerGrafico extends LoggedHttpServlet {
 
         } catch (DAOExceptionRemoli e) {
 
-            // ERRORE TECNICO DI PERSISTENZA
             request.setAttribute(
                     "errore",
                     "Impossibile aggiornare le notifiche. Riprovare più tardi."
@@ -58,7 +55,6 @@ public class UpdateNotificationsControllerGrafico extends LoggedHttpServlet {
 
         } catch (Exception e) {
 
-            // ERRORE IMPREVISTO
             request.setAttribute(
                     "errore",
                     "Errore generico durante l'operazione."

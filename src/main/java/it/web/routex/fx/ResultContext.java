@@ -12,7 +12,7 @@ public final class ResultContext {
 
 
     private ResultContext() {
-        // utility class
+
     }
 
     public static void setResult(InformazioniPercorsoBean dto, String status, String start, String end, String city) {

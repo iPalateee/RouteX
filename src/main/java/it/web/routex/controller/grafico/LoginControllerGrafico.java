@@ -17,7 +17,7 @@ import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 /**
  * Controller grafico per la gestione del login utente.
  * Si occupa di ricevere i dati dal form, delegare la logica al controller applicativo
- * e reindirizzare l’utente alla pagina corretta in base al ruolo.
+ * e reindirizzare l'utente alla pagina corretta in base al ruolo.
  */
 @WebServlet("/login")
 public class LoginControllerGrafico extends LoggedHttpServlet {
@@ -59,12 +59,12 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
     }
 
     /**
-     * Gestisce il reindirizzamento in base al ruolo dell’utente autenticato.
+     * Gestisce il reindirizzamento in base al ruolo dell'utente autenticato.
      */
     private void gestisciReindirizzamento(UtenteBeanGenerico utente, HttpServletResponse response)
     {
         try {
-            // Imposta la connessione corretta in base al ruolo
+
             ConnectionFactory.cambioDiRuolo(utente.getRuolo());
 
             switch (utente.getRuolo().toString().toUpperCase()) {
@@ -116,14 +116,12 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            //  Crea una nuova sessione e imposta il timeout
+
             HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(180); // 3 minuti di inattività
 
-            //  Costruisce il bean con i dati del form
             AutenticazioneBean credenziali = creaBeanAutenticazione(request,response);
 
-            //  Delegazione al controller applicativo
             LoginController loginController = new LoginController(credenziali);
             UtenteBeanGenerico utente = loginController.autenticaUtente();
 
@@ -133,7 +131,6 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
 
             logger.info("Utente perfettamente autenticato: nome={}, cognome={}, ruolo={}", utente.getNome(), utente.getCognome(), utente.getRuolo());
 
-            //  Reindirizzamento in base al ruolo
             gestisciReindirizzamento(utente, response);
 
         } catch (DAOExceptionRemoli ex) {

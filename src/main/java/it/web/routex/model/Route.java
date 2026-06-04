@@ -49,7 +49,7 @@ public class Route {
 
 
         try {
-            // Conversione sicura di listacambi
+            //conversione listacambi
             Object objListaCambi = c.getChanges(dto.getCityLife().getSequenzeDiCambiamento());
             List<String> listaCambiList = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class Route {
             }
             this.listaCambi = String.join(", ", listaCambiList);
 
-            // Conversione sicura di nodicruciali
+            //conversione nodicruciali
             Object objStazInterscambio = c.getChanges(dto.getCityLife().getSequenzeNodiCruciali());
             List<String> stazInterList = new ArrayList<>();
             if (objStazInterscambio instanceof List) {

@@ -10,11 +10,6 @@ import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.DAOExceptionRemoli;
 import it.web.routex.exception.LoginNotFoundRemoli;
 
-
-/**
- * Controller applicativo responsabile della logica di autenticazione utente.
- * Interagisce con il DAO per verificare le credenziali e costruisce il singleton Credentials.
- */
 public class LoginController {
 
     private final AutenticazioneBean autenticazione;
@@ -23,19 +18,13 @@ public class LoginController {
         this.autenticazione = autenticazione;
     }
 
-    /**
-     * Esegue l’autenticazione dell’utente, crea (o aggiorna) il singleton `Credentials`
-     * e restituisce un `UtenteBeanGenerico` per la parte grafica.
-     */
     public UtenteBeanGenerico autenticaUtente() throws DAOExceptionRemoli, LoginNotFoundRemoli {
 
         final Logger logger = LoggerFactory.getLogger(getClass());
 
-        // Chiamata al DAO
         LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
         Credentials credFromDb = layer.login(autenticazione.getEmail(), autenticazione.getPassword());
-        
-        // Ottieni l'istanza singleton delle credenziali
+
         Credentials sessionCred = Credentials.getInstanceSingleton();
 
         sessionCred.setCodiceFiscale(credFromDb.getCodiceFiscale());
@@ -50,7 +39,6 @@ public class LoginController {
 
         logger.info("Funzione autenticaUtente() dentro LoginController.java con autenticazione {} e {}", sessionCred.getNome(), sessionCred.getCognome());
 
-        // Popola anche il bean (solo per il layer grafico)
         UtenteBeanGenerico utente = new UtenteBeanGenerico();
         utente.setNome(sessionCred.getNome());
         utente.setCognome(sessionCred.getCognome());

@@ -40,7 +40,7 @@ public class AreaRiservata
 
         for (Ticket t : tickets) {
             try {
-                // VALIDAZIONE FORTE DI DOMINIO
+
                 t.validate();
 
                 TicketBean b = new TicketBean();
@@ -52,9 +52,8 @@ public class AreaRiservata
 
             } catch (InvalidTicketExceptionRemoli e) {
 
-                // scelta progettuale
                 throw new PathNotFoundExceptionRemoli(
-                        "Sono stati trovati ticket non validi associati all’utente.",
+                        "Sono stati trovati ticket non validi associati all'utente.",
                         cf,
                         500,
                         "Errore dominio Ticket: " + e.getMessage()
@@ -71,10 +70,9 @@ public class AreaRiservata
         LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
         List<Route> listaPercorsi = layer.getData(cf);
 
-        // LOGICA APPLICATIVA: interpretazione del risultato
         if (listaPercorsi == null || listaPercorsi.isEmpty()) {
             throw new PathNotFoundExceptionRemoli(
-                    "Nessun percorso trovato per l’utente.",
+                    "Nessun percorso trovato per l'utente.",
                     cf,
                     404,
                     "PathControllerApplicativo.runPath"
@@ -106,7 +104,6 @@ public class AreaRiservata
             rb.setnStazioniCitta(r.getnStazioniCitta());
             rb.setPercTerrenoUtilizzato(r.getPercTerrenoUtilizzato());
 
-            // Decorator applicativo
             rb = component.update(rb, r);
 
             listaPercorsiBean.add(rb);

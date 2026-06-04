@@ -9,10 +9,8 @@ public class FermataRecordBean {
     private String nome;
     private String linea;
 
-    // Costruttore vuoto (obbligatorio per JavaBean)
     public FermataRecordBean() {}
 
-    // Costruttore parametrico (comodo per creazione rapida)
     public FermataRecordBean(String nome, String linea) {
         this.nome = nome;
         this.linea = linea;

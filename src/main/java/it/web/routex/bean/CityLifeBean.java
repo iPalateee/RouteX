@@ -3,7 +3,7 @@ package it.web.routex.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityLifeBean //OGGETTO DI TRASPORTO
+public class CityLifeBean
 {
     private List<String> percorsiConNomi = new ArrayList<>();
     private int numeroCambi;

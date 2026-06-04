@@ -21,7 +21,7 @@ public class CityLifeController
     }
 
     private static class StatoPercorso {
-        // boolean
+
         boolean check = false;
         boolean noPass = false;
         boolean controllo = false;
@@ -30,7 +30,6 @@ public class CityLifeController
         boolean ancora = false;
         boolean uno = false;
 
-        // contatori
         int countBin = 0;
         int cambiLineeMetropolitane = 0;
         int quantoCiPasso = 0;
@@ -39,7 +38,6 @@ public class CityLifeController
         int conta = 0;
         int checkino = 0;
 
-        // stringhe
         String nomeStazioneCambio = "";
         String ev = "";
         String lineaTemp = "";
@@ -49,7 +47,6 @@ public class CityLifeController
         String success="";
         String daNonRipetere="";
 
-        // liste
         List<String> percorsiConFermate = new ArrayList<>();
         List<Integer> percorsiCodifica = new ArrayList<>();
         List<String> sequenzeDiCambiamento = new ArrayList<>();

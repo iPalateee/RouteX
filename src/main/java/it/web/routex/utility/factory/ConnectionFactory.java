@@ -42,15 +42,15 @@ public class ConnectionFactory {
     }
 
     /**
-     * 🔹 Restituisce una nuova connessione viva ogni volta.
+     *  Restituisce una nuova connessione viva ogni volta.
      */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(connectionUrl, currentUser, currentPass);
     }
 
     /**
-     * 🔹 Cambia ruolo (utente DB) aggiornando le credenziali per le connessioni future.
-     *     Non chiude connessioni usate da altri thread.
+     *  Cambia ruolo (utente DB) aggiornando le credenziali per le connessioni future.
+     *  Non chiude connessioni usate da altri thread.
      */
     public static void cambioDiRuolo(Ruolo ruolo) throws SQLException
     {
@@ -65,7 +65,6 @@ public class ConnectionFactory {
             currentUser = properties.getProperty(ruolo.name() + "_USER");
             currentPass = properties.getProperty(ruolo.name() + "_PASS");
 
-            // Log diagnostico
             logger.info("[ConnectionFactory] Cambio ruolo a  {} ! (user: {}).",ruolo, currentUser);
         } catch (IOException e) {
             throw new SQLException("Errore durante il cambio di ruolo: " + e.getMessage());

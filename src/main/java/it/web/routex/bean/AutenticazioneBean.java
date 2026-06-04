@@ -7,7 +7,7 @@ public class AutenticazioneBean
 
 
     public AutenticazioneBean() {
-        // Only create an Object
+
     }
 
     public String getPassword() {

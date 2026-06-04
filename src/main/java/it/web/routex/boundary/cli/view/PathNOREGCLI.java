@@ -21,7 +21,7 @@ public final class PathNOREGCLI
     static String city;
 
     private PathNOREGCLI(){
-        //Prevent the instantiation
+
     }
 
     public static double getMinutaggio() {

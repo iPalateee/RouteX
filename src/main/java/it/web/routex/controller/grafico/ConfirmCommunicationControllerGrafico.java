@@ -17,20 +17,17 @@ public class ConfirmCommunicationControllerGrafico extends LoggedHttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     {
         try {
-            //Estrazione + validazione input
+
             CommunicationInput input = CommunicationInputExtractor.extract(request);
 
-            // Bean di trasporto
             MessageBean mess = new MessageBean();
             mess.setMessage(input.message());
             mess.setDate(input.date());
 
-            // Chiamata applicativa
             ConfirmCommunicationControllerApplicativo service = new ConfirmCommunicationControllerApplicativo();
 
             service.communication(mess);
 
-            // Successo
             request.setAttribute("successTitle", "Comunicazione inviata");
             request.setAttribute(
                     "successMessage",
@@ -41,7 +38,6 @@ public class ConfirmCommunicationControllerGrafico extends LoggedHttpServlet {
 
         } catch (BrondiInvalidCommunicationInputException e) {
 
-            // ERRORE DI INPUT (BOUNDARY)
             request.setAttribute("errore", e.getMessage());
             try {
                 request.getRequestDispatcher("/adminError.jsp").forward(request, response);
@@ -50,7 +46,7 @@ public class ConfirmCommunicationControllerGrafico extends LoggedHttpServlet {
             }
 
         } catch (Exception e) {
-            // ERRORE TECNICO / APPLICATIVO
+
             request.setAttribute(
                     "errore",
                     "Errore durante l'invio della comunicazione."

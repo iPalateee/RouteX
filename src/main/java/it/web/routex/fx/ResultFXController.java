@@ -7,9 +7,7 @@ import javafx.scene.control.ListView;
 
 public class ResultFXController {
 
-    /* =======================
-       COMPONENTI FXML
-       ======================= */
+    /* COMPONENTI FXML */
 
     @FXML private Label startLabel;
     @FXML private Label endLabel;
@@ -25,9 +23,7 @@ public class ResultFXController {
     @FXML private ListView<String> changesList;
     @FXML private ListView<String> interchangeList;
 
-    /* =======================
-       INIZIALIZZAZIONE
-       ======================= */
+    /* INIZIALIZZAZIONE */
 
     @FXML
     public void initialize() {
@@ -43,10 +39,7 @@ public class ResultFXController {
             return;
         }
 
-        /* =======================
-           DATI SINGOLI
-           ======================= */
-
+        /* DATI SINGOLI */
 
 
         startLabel.setText(start);
@@ -59,9 +52,7 @@ public class ResultFXController {
         totalStationsLabel.setText(String.valueOf(dto.getCityLife().getNumeroStazioniTotali()));
         soilLabel.setText(String.format("%.2f %%", dto.getPercentualeStazioniUsate()));
 
-        /* =======================
-           LISTE
-           ======================= */
+        /* LISTE */
 
         routeStepsList.setItems(
                 FXCollections.observableArrayList(dto.getCityLife().getPercorsiConNomi())
@@ -76,9 +67,7 @@ public class ResultFXController {
         );
     }
 
-    /* =======================
-       NAVIGAZIONE
-       ======================= */
+    /* NAVIGAZIONE */
 
     @FXML
     public void onBack() {

@@ -23,7 +23,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
                 if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
 
-                    Credentials cred = new Credentials(); // OGGETTO NORMALE
+                    Credentials cred = new Credentials();
 
                     cred.setCodiceFiscale(u.getCodiceFiscale());
                     cred.setNome(u.getNome());
@@ -98,7 +98,6 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
                 }
             }
 
-            // nessun pagamento trovato decisione applicativa
             return null;
 
         } catch (Exception e) {
@@ -126,7 +125,6 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
                 );
             }
 
-            // può essere vuota, decisione rimandata al controller applicativo
             return informazioni;
 
         } catch (Exception e) {
@@ -163,7 +161,6 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return fermateAll;
 
         } catch (Exception e) {
-            // equivalente concettuale della SQLException
             throw new SQLException("Errore durante il recupero delle fermate (DEMO)", e);
         }
     }

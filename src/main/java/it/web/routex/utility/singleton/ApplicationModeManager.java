@@ -17,7 +17,7 @@ public class ApplicationModeManager {
     }
 
     protected ApplicationModeManager() {
-        // Default ragionevole: FULL
+        //default ragionevole: FULL
         this.mode = ApplicationMode.FULL;
     }
 

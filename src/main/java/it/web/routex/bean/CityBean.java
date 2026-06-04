@@ -10,15 +10,12 @@ public class CityBean {
 
     private String nome;
 
-    /** Costruttore vuoto richiesto per JSP/Servlet */
     public CityBean() {}
 
-    /** Costruttore che riceve un oggetto City del Model */
     public CityBean(City city) {
         this.nome = city.getName();
     }
 
-    // === GETTER E SETTER ===
     public String getName() {
         return nome;
     }

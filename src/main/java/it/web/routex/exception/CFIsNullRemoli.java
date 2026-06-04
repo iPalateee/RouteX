@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 public class CFIsNullRemoli extends Exception {
 
     private final String errorCode;          // codice errore interno
-    private final String userMessage;        // messaggio per l’utente
+    private final String userMessage;        // messaggio per l'utente
     private final String technicalMessage;   // messaggio tecnico per log
     private final LocalDateTime timestamp;   // quando è accaduto
     private final Severity severity;         // livello di gravità

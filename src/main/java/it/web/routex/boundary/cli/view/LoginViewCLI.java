@@ -10,7 +10,7 @@ public final class LoginViewCLI {
     private static String passwordUtente;
 
     private LoginViewCLI(){
-        // Prevent instantiation
+
     }
 
 

@@ -1,9 +1,9 @@
 package it.web.routex.exception;
 
 /**
- * Eccezione applicativa che rappresenta una condizione di warning:
+ * Eccezione applicativa che rappresenta una condizione di warning
  * non ci sono notifiche da visualizzare perché risultano tutte risolte.
- * @author Lorenzo Brondi
+ * @LorenzoBrondi
  */
 public class BrondiNoNotificationsWarningException extends Exception {
 

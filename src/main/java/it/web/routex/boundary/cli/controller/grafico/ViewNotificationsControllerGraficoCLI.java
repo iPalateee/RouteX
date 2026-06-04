@@ -23,7 +23,6 @@ public class ViewNotificationsControllerGraficoCLI extends LoggedCLI {
 
         } catch (BrondiNoNotificationsWarningException w) {
 
-            // WARNING APPLICATIVO
             logger.info(
                     "Nessuna notifica da mostrare. Dettagli={}",
                     w.getDetails()

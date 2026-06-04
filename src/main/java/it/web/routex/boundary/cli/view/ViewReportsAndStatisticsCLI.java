@@ -7,7 +7,7 @@ import it.web.routex.boundary.cli.controller.grafico.ReportsControllerGraficoCLI
 public final class ViewReportsAndStatisticsCLI {
 
     private ViewReportsAndStatisticsCLI(){
-        //Prevent the init
+
     }
 
     public static void mostra()

@@ -9,7 +9,7 @@ import it.web.routex.utility.decorator.decoratorchange.Component;
 public final class RouteDecoratorServiceCLI {
 
     private RouteDecoratorServiceCLI(){
-        // Prevent instantiation
+
     }
 
     public static void decorate(InformazioniPercorsoBean dto)

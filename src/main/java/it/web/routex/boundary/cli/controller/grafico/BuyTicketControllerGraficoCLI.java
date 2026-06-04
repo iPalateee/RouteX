@@ -22,11 +22,8 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
     {
 
         try {
-            // Recupero delle città tramite il controller applicativo
             CityController cityController = new CityController();
             List<CityBean> cities = cityController.getAllCities();
-
-            // Passo la lista alla view
 
             forwardToBuyTicket(cities);
 
@@ -39,10 +36,6 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
 
     }
 
-    /**
-     * Gestisce la richiesta di acquisto di uno o più biglietti.
-     * Calcola il prezzo totale e inoltra alla pagina di conferma pagamento.
-     */
     public void doPost(String city, String quantity) {
 
         BuyTicketRecord buyTicket;
@@ -52,7 +45,6 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
         logger.info("Elaborazione richiesta acquisto biglietti per città='{}', quantità={}", buyTicket.city(), buyTicket.quantity());
 
         try {
-            // Delego al controller applicativo il calcolo del prezzo totale
             CityController cityController = new CityController();
             PrezzoTotaleBean prezzo = cityController.ottieniPrezzoTotale(buyTicket.city(), buyTicket.quantity());
             logger.info("Elaborazione prezzo: prezzo={}",prezzo.getPrezzoTotale());

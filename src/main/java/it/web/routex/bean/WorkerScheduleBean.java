@@ -7,7 +7,6 @@ public class WorkerScheduleBean {
     private String luogoDiLavoro;
     private int durataTurno;
 
-    // Costruttore vuoto
     public WorkerScheduleBean(Integer oraInizio, Integer oraFine, String luogoDiLavoro, int durataTurno) {
         this.oraInizio = oraInizio;
         this.oraFine = oraFine;

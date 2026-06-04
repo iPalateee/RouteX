@@ -3,7 +3,7 @@ package it.web.routex.boundary.cli.view;
 public final class TuttoRisoltoCLIView
 {
     private TuttoRisoltoCLIView(){
-        //Prevent the init
+
     }
     public static void mostraRisoluzione(String messaggio) {
         System.out.println("\n================================");

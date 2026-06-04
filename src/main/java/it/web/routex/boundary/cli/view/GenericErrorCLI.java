@@ -3,7 +3,7 @@ package it.web.routex.boundary.cli.view;
 public final class GenericErrorCLI
 {
     private GenericErrorCLI(){
-        // Prevent instantiation
+
     }
     public static void mostraErrore(String messaggio) {
         System.out.println("\n================================");

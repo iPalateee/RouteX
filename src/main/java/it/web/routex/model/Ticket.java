@@ -1,23 +1,16 @@
 package it.web.routex.model;
-/**
- * Modello di dominio che rappresenta un Ticket di viaggio acquistato dall’utente.
- *
- * La classe incapsula le informazioni essenziali del biglietto (codice univoco,
- * città associata e data di acquisto) ed espone esplicitamente le regole di
- * validazione del dominio tramite metodi dedicati.
- *
- * La validazione non viene effettuata nel costruttore, ma è demandata ai metodi
- * {@link #isValid()} e {@link #validate()}, in modo da separare la creazione
- * dell’oggetto dall’enforcement delle invarianti di dominio. Questo consente
- * al controller applicativo di gestire in maniera consapevole il flusso di
- * esecuzione e la propagazione degli errori.
- *
- */
+
 
 import it.web.routex.exception.InvalidTicketExceptionRemoli;
 
 import java.time.LocalDateTime;
 
+/**
+ * Model di dominio per il Ticket di viaggio.
+ * Incapsula i dati essenziali del biglietto (codice, città, data) e fornisce
+ * i metodi di validazione ({@link #isValid()}, {@link #validate()}) per
+ * consentire al controller di gestire dinamicamente eventuali errori.
+ */
 public class Ticket {
 
     private final String codice;

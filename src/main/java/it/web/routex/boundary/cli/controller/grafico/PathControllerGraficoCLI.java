@@ -22,11 +22,9 @@ public class PathControllerGraficoCLI extends LoggedCLI
     public void doGet()
     {
         try {
-            // Recupero delle città tramite il controller applicativo
             CityController cityController = new CityController();
             List<CityBean> cities = cityController.getAllCities();
 
-            // Passo la lista alla view
             StartExploringCLI.mostraExploring(cities);
 
 
@@ -74,10 +72,7 @@ public class PathControllerGraficoCLI extends LoggedCLI
         else
             logger.info("[CLI]Percorso non salvato per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.city());
 
-
-        //inoltro la richiesta al jsp
         PathNOREGCLI.stampa();
-        //  logica per calcolare il percorso o qualsiasi altra logica
         String result = "[CLI]Route from " + route.start() + " to " + route.end() + " in " + route.city();
         logger.info(result);
     }

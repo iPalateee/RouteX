@@ -3,7 +3,7 @@ package it.web.routex.boundary.cli.view;
 public final class ComunicazioneInviataCLI
 {
     private ComunicazioneInviataCLI() {
-        // Prevent instantiation
+
     }
     public static void invioComunicazioneConfirm(String messaggio) {
         System.out.println("        Comunicazione Inviata !          ");

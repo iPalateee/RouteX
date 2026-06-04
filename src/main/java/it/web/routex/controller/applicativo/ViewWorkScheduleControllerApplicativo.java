@@ -12,7 +12,6 @@ public class ViewWorkScheduleControllerApplicativo {
     public WorkerScheduleBean getSchedule(String cf) throws BrondiException {
 
         try {
-            //Recupero MODEL
 
             LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
             WorkerSchedule model = layer.getWorkerSchedule(cf);
@@ -25,7 +24,6 @@ public class ViewWorkScheduleControllerApplicativo {
                 );
             }
 
-            //logica applicativa
             if (!model.isValid()) {
                 throw new BrondiException(
                         "Orario di lavoro non valido",
@@ -36,7 +34,6 @@ public class ViewWorkScheduleControllerApplicativo {
 
             int durata = model.durataTurno();
 
-            //  Creo SOLO ORA la Bean di trasporto
             return new WorkerScheduleBean(
                     model.getOraInizio(),
                     model.getOraFine(),

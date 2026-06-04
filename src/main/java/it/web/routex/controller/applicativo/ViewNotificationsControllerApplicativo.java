@@ -19,7 +19,7 @@ public class ViewNotificationsControllerApplicativo {
         LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
         try {
             List<Notification> notifications = layer.getMessagesRAM();
-            // LOGICA DI BUSINESS: solo NON risolte
+
             for (Notification n : notifications) {
                 if (!n.isRisolto()) {
                     MessageBean bean = new MessageBean(n.getMessage(), n.getDate());
@@ -27,7 +27,6 @@ public class ViewNotificationsControllerApplicativo {
                 }
             }
 
-            //  CONDIZIONE DI WARNING
             if (result.isEmpty()) {
                 throw new BrondiNoNotificationsWarningException(
                         "Nessuna notifica da visualizzare",

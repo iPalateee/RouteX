@@ -30,14 +30,13 @@ public class AreaRiservataControllerGraficoCLI extends LoggedCLI
                     return;
                 }
 
-            // Se non sei loggato o cf è null, reindirizza a login
             redirectToLogin();
         } catch (PathNotFoundExceptionRemoli remoli) {
             logger.error("Errore PathNotFoundExceptionRemoli. Messaggio={} Cf={} CodiceErrore={} Dettagli={}.", remoli.getMessage(), remoli.getCodiceFiscaleUtente(), remoli.getCodiceDiErrore(), remoli.getDetails());
             GenericErrorCLI.mostraErrore(remoli.getMessage());
 
         } catch (DAOExceptionRemoli remoli) {
-            logger.error("Errore DAOExceptionRemoli. Messaggio={} Causa{}", remoli.getMessage(), remoli.getCause());
+            logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());
             GenericErrorCLI.mostraErrore(remoli.getMessage());
         }
 

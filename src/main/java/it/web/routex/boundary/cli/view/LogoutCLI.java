@@ -5,7 +5,7 @@ import it.web.routex.boundary.cli.controller.grafico.LogoutControllerGraficoCLI;
 public final class LogoutCLI
 {
     private LogoutCLI(){
-        // Prevent instantiation
+
     }
     public static void logoutUser()
     {

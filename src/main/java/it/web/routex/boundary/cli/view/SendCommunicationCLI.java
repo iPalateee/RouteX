@@ -10,7 +10,7 @@ public final class SendCommunicationCLI
     private static String message;
 
     private SendCommunicationCLI(){
-        //Prevent the init
+
     }
     public static void mostra()
     {

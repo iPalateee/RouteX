@@ -92,7 +92,7 @@ public final class ConfermaPagamentoCLI
     }
     private static void gestisciDatiPagamento(Scanner scanner, String metodo) {
 
-        scanner.nextLine(); // pulizia buffer
+        scanner.nextLine();
 
         if ("Mastercard".equals(metodo)) {
             System.out.print("Numero carta: ");

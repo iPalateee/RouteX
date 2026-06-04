@@ -23,9 +23,6 @@ import java.util.List;
 @WebServlet("/buyTicket")
 public class BuyTicketControllerGrafico extends LoggedHttpServlet {
 
-    /**
-     * Mostra la pagina di acquisto dei biglietti con la lista delle città disponibili.
-     */
 
     private static final String ERRORE = "errore";
     private static final String PAGE_ERROR = "error.jsp";
@@ -37,11 +34,10 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
         String pageErr = PAGE_ERROR;
 
             try {
-                // Recupero delle città tramite il controller applicativo
+
                 CityController cityController = new CityController();
                 List<CityBean> cities = cityController.getAllCities();
 
-                // Passo la lista alla view
                 request.setAttribute("cities", cities);
 
                 forwardToBuyTicket(request, response, cities.size());
@@ -66,8 +62,8 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
     }
 
     /**
-     * Gestisce la richiesta di acquisto di uno o più biglietti.
-     * Calcola il prezzo totale e inoltra alla pagina di conferma pagamento.
+      Gestisce la richiesta di acquisto di uno o più biglietti.
+      Calcola il prezzo totale e inoltra alla pagina di conferma pagamento.
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -88,17 +84,16 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
             logger.info("Elaborazione richiesta acquisto biglietti per città='{}', quantità={}", buyTicket.city(), buyTicket.quantity());
 
             try {
-                // Delego al controller applicativo il calcolo del prezzo totale
+
                 CityController cityController = new CityController();
                 PrezzoTotaleBean prezzo = cityController.ottieniPrezzoTotale(buyTicket.city(), buyTicket.quantity());
                 logger.info("Elaborazione prezzo: prezzo={}",prezzo.getPrezzoTotale());
 
 
-                // Passo i dati alla pagina di conferma
                 request.setAttribute("city", buyTicket.city());
                 request.setAttribute("quantity", String.valueOf(buyTicket.quantity()));
                 request.setAttribute("prezzo", prezzo.getPrezzoTotale());
-                // Mostro la pagina di conferma
+
                 forwardingConferma(request, response);
 
             } catch (DAOExceptionRemoli e) {

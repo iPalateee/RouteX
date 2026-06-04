@@ -10,7 +10,7 @@ import java.util.List;
 public final class UpdateNotificationsControllerGraficoCLI
 {
     private UpdateNotificationsControllerGraficoCLI() {
-        // Prevent instantiation
+
     }
 
     public static void doPost() {
@@ -23,12 +23,10 @@ public final class UpdateNotificationsControllerGraficoCLI
             if (risolte != null) {
                 for (String r : risolte) {
 
-                    // PARSING TECNICO (boundary)
                     String[] parts = r.split("\\|", 2);
                     long timestamp = Long.parseLong(parts[0]);
                     String message = parts[1];
 
-                    // BEAN di trasporto
                     MessageBean bean = new MessageBean(
                             message,
                             new Timestamp(timestamp)
@@ -44,7 +42,6 @@ public final class UpdateNotificationsControllerGraficoCLI
         } catch (DAOExceptionRemoli e) {
             GenericErrorCLI.mostraErrore("Impossibile aggiornare le notifiche. Riprovare più tardi.");
         } catch (Exception e) {
-            // ERRORE IMPREVISTO
             GenericErrorCLI.mostraErrore("Errore imprevisto durante l'operazione.");
         }
     }

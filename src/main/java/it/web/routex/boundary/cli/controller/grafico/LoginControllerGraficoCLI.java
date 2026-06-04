@@ -24,8 +24,6 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
 
         if (credenziali == null) return;
 
-
-        //  Delegazione al controller applicativo
         LoginController loginController = new LoginController(credenziali);
         UtenteBeanGenerico utente = loginController.autenticaUtente();
         logger.info("[CLI]Utente perfettamente autenticato: nome={}, cognome={}, ruolo={}", utente.getNome(), utente.getCognome(), utente.getRuolo());
@@ -69,7 +67,6 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
     private void gestisciReindirizzamento(UtenteBeanGenerico utente)
     {
         try {
-            // Imposta la connessione corretta in base al ruolo
             ConnectionFactory.cambioDiRuolo(utente.getRuolo());
 
             switch (utente.getRuolo().toString().toUpperCase()) {

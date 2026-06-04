@@ -39,11 +39,10 @@ public class PathControllerGrafico extends LoggedHttpServlet {
     {
         Credentials cred = Credentials.getInstanceSingleton();
         try {
-            // Recupero delle città tramite il controller applicativo
+
             CityController cityController = new CityController();
             List<CityBean> cities = cityController.getAllCities();
 
-            // Passo la lista alla view
             request.setAttribute("cities2", cities);
 
             forward(request, response);
@@ -108,7 +107,6 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
 
 
-        //inoltro la richiesta al jsp
         RequestDispatcher dispatcher;
         if(cred.getCodiceFiscale()!=null) {
             dispatcher = request.getRequestDispatcher("PathREG.jsp");
@@ -121,7 +119,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             }catch(Exception e){
                 logger.info(FORWARDING, e);
             }
-            //  logica per calcolare il percorso o qualsiasi altra logica
+
             String result = "Route from " + route.start() + " to " + route.end() + " in " + route.city();
             logger.info(result);
 

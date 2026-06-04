@@ -8,7 +8,7 @@ import it.web.routex.record.LoginRecord;
 public final class LoginExtractorCLI {
 
     private LoginExtractorCLI(){
-        // Prevent instantiation
+
     }
 
     private static String sanitize(String s) {
