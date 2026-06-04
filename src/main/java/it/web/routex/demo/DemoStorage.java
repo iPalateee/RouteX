@@ -114,7 +114,6 @@ public final class DemoStorage {
         Paypal demoPaypal = new Paypal();
         demoPaypal.setEmail("demo@paypal.it");
         demoPaypal.setCodice("TXN-A1B2C3");
-        //demoPaypal.setCodice("PAYPAL123");
         paypals.add(demoPaypal);
 
         fermate.add(new Fermate(0, "Rebibbia", false, "MB"));

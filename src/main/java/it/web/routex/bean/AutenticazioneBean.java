@@ -7,7 +7,7 @@ public class AutenticazioneBean
 
 
     public AutenticazioneBean() {
-
+        //Costruttore vuoto
     }
 
     public String getPassword() {
