@@ -34,7 +34,8 @@ class UpdateNotificationsTest {
         // 2. Creazione Bean (come fa il controller grafico)
         MessageBean bean = new MessageBean(
                 RB.getString("msgDaRisolvere"),
-                new Timestamp(System.currentTimeMillis())
+                Timestamp.valueOf(RB.getString("orarioMsg"))
+                //new Timestamp(System.currentTimeMillis())
         );
 
         // 3. Controller applicativo
