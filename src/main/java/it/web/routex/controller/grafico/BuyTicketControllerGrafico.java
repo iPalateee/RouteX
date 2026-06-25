@@ -68,7 +68,7 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
+            //
             BuyTicketRecord buyTicket;
             final HttpSession session = request.getSession(false);
             if (session == null) {
