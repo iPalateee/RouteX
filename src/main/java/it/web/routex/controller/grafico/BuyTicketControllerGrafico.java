@@ -18,7 +18,7 @@ import java.util.List;
  * Controller grafico per la gestione del flusso "Buy Ticket".
  * Gestisce sia la visualizzazione della pagina di acquisto (GET)
  * che l'elaborazione dei dati di acquisto (POST).
- * @SimoneRemoli
+ * @author Lorenzo Brondi
  */
 @WebServlet("/buyTicket")
 public class BuyTicketControllerGrafico extends LoggedHttpServlet {
@@ -64,6 +64,7 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
     /**
       Gestisce la richiesta di acquisto di uno o più biglietti.
       Calcola il prezzo totale e inoltra alla pagina di conferma pagamento.
+      @author Lorenzo Brondi
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
