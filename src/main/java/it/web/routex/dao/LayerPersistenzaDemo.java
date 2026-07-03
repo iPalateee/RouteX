@@ -16,7 +16,7 @@ import java.util.List;
 public class LayerPersistenzaDemo extends LayerPersistenza{
     @Override
     public Credentials login(String email, String password)
-            throws DAOExceptionRemoli, LoginNotFoundRemoli {
+            throws DAOExceptionBrondi, LoginNotFoundRemoli {
 
         try {
             for (User u : DemoStorage.getUsers()) {
@@ -43,7 +43,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
         } catch (LoginNotFoundRemoli e) {
             throw e;
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante il login in modalità DEMO: " + e.getMessage(),
                     e
             );
@@ -52,7 +52,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
     @Override
     public Mastercard getPaymentMastercard(String nC, String sc, String cvv)
-            throws DAOExceptionRemoli {
+            throws DAOExceptionBrondi {
 
         try {
             for (Mastercard m : DemoStorage.getMastercards()) {
@@ -74,7 +74,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return null;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore interno alla persistenza DEMO: " + e.getMessage(),
                     e
             );
@@ -83,7 +83,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
     @Override
     public Paypal getPaymentPaypal(String email, String codice)
-            throws DAOExceptionRemoli {
+            throws DAOExceptionBrondi {
 
         try {
             for (Paypal p : DemoStorage.getPaypals()) {
@@ -101,7 +101,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return null;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nel recupero del pagamento Paypal in modalità DEMO: " + e.getMessage(),
                     e
             );
@@ -110,7 +110,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
 
     @Override
-    public List<City> listCities() throws DAOExceptionRemoli {
+    public List<City> listCities() throws DAOExceptionBrondi {
 
         try {
             List<City> informazioni = new ArrayList<>();
@@ -128,7 +128,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return informazioni;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nella comunicazione con il database: " + e.getMessage(),
                     e
             );
@@ -209,7 +209,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
 
     @Override
-    public List<Notification> getMessages() throws DAOExceptionRemoli {
+    public List<Notification> getMessages() throws DAOExceptionBrondi {
 
         List<Notification> result = new ArrayList<>();
 
@@ -230,7 +230,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return result;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nel recupero delle notifiche (DEMO)",
                     e
             );
@@ -240,11 +240,11 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
 
     @Override
-    public void save(Route route) throws DAOExceptionRemoli {
+    public void save(Route route) throws DAOExceptionBrondi {
 
         try {
             if (route == null) {
-                throw new DAOExceptionRemoli(
+                throw new DAOExceptionBrondi(
                         "Errore durante la registrazione del percorso: route null"
                 );
             }
@@ -260,11 +260,11 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
             DemoStorage.getRoutes().add(copy);
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             throw e;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante la registrazione del percorso: " + e.getMessage()
             );
         }
@@ -273,7 +273,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
     @Override
     public WorkerSchedule getWorkerSchedule(String codiceFiscale)
-            throws DAOExceptionRemoli {
+            throws DAOExceptionBrondi {
 
         try {
             for (WorkerScheduleRecord r : DemoStorage.getWorkerSchedules()) {
@@ -289,7 +289,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return null;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante il recupero degli orari di lavoro in modalità DEMO",
                     e
             );
@@ -299,11 +299,11 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
 
     @Override
-    public void sendMessage(Notification n) throws DAOExceptionRemoli {
+    public void sendMessage(Notification n) throws DAOExceptionBrondi {
 
         try {
             if (n == null) {
-                throw new DAOExceptionRemoli("Errore durante l'invio della comunicazione");
+                throw new DAOExceptionBrondi("Errore durante l'invio della comunicazione");
             }
 
             // simulazione INSERT INTO communication
@@ -315,11 +315,11 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
             DemoStorage.getNotifications().add(copy);
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             throw e;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante l'invio della comunicazione",
                     e
             );
@@ -328,11 +328,11 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
 
     @Override
-    public void solvedNotification(Notification n) throws DAOExceptionRemoli {
+    public void solvedNotification(Notification n) throws DAOExceptionBrondi {
 
         try {
             if (n == null) {
-                throw new DAOExceptionRemoli(
+                throw new DAOExceptionBrondi(
                         "Errore durante l'aggiornamento della notifica"
                 );
             }
@@ -352,16 +352,16 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
             if (!updated) {
                 // simulazione: UPDATE che non trova righe
-                throw new DAOExceptionRemoli(
+                throw new DAOExceptionBrondi(
                         "Errore durante l'aggiornamento della notifica"
                 );
             }
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             throw e;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante l'aggiornamento della notifica",
                     e
             );
@@ -370,7 +370,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
 
     @Override
-    public List<Route> getAllPathInfo() throws DAOExceptionRemoli {
+    public List<Route> getAllPathInfo() throws DAOExceptionBrondi {
 
         List<Route> resultList = new ArrayList<>();
 
@@ -392,7 +392,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return resultList;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nel recupero delle statistiche PathInfo",
                     e
             );
@@ -427,7 +427,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             );
         }
     }
-    public List<Ticket> getTicketByCFDemo(String cf) throws DAOExceptionRemoli, PathNotFoundExceptionRemoli {
+    public List<Ticket> getTicketByCFDemo(String cf) throws DAOExceptionBrondi, PathNotFoundExceptionRemoli {
 
         try {
             List<Ticket> result = new ArrayList<>();
@@ -465,14 +465,14 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             throw e;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore DEMO durante il recupero dei biglietti",
                     e
             );
         }
     }
     @Override
-    public List<Route> getData(String cf) throws DAOExceptionRemoli {
+    public List<Route> getData(String cf) throws DAOExceptionBrondi {
 
         try {
             List<Route> result = new ArrayList<>();
@@ -502,7 +502,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             return result;
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante il recupero dei percorsi in modalità DEMO: " + e.getMessage()
             );
         }

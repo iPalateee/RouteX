@@ -7,7 +7,7 @@ import it.web.routex.boundary.cli.LoggedCLI;
 import it.web.routex.boundary.cli.extractor.LoginExtractorCLI;
 import it.web.routex.boundary.cli.view.*;
 import it.web.routex.controller.applicativo.LoginController;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 import it.web.routex.exception.LoginNotFoundRemoli;
 import it.web.routex.record.LoginRecord;
@@ -31,7 +31,7 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
         gestisciReindirizzamento(utente);
 
 
-        } catch (DAOExceptionRemoli ex) {
+        } catch (DAOExceptionBrondi ex) {
             gestisciErroreLogin(ex);
 
         } catch (LoginNotFoundRemoli ex) {
@@ -107,7 +107,7 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
             logger.error("[CLI]Errore nel redirect CLI verso {}", route, e);
         }
     }
-    private void gestisciErroreLogin(DAOExceptionRemoli ex)
+    private void gestisciErroreLogin(DAOExceptionBrondi ex)
     {
         try {
             ErroreLoginCLI.mostraErrore("Errore nella connesione al database.");

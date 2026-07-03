@@ -3,7 +3,7 @@ import it.web.routex.bean.MessageBean;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.boundary.cli.view.ViewNotificationsCLI;
 import it.web.routex.controller.applicativo.UpdateNotificationsControllerApplicativo;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public final class UpdateNotificationsControllerGraficoCLI
             ViewNotificationsControllerGraficoCLI not = new ViewNotificationsControllerGraficoCLI();
             not.doGet();
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Impossibile aggiornare le notifiche. Riprovare più tardi.");
         } catch (Exception e) {
             GenericErrorCLI.mostraErrore("Errore imprevisto durante l'operazione.");

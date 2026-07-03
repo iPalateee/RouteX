@@ -2,12 +2,11 @@ package it.web.routex.controller.applicativo;
 
 import it.web.routex.bean.AutenticazioneBean;
 import it.web.routex.bean.UtenteBeanGenerico;
-import it.web.routex.dao.LayerPersistenza;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.LoginNotFoundRemoli;
 
 public class LoginController {
@@ -18,11 +17,11 @@ public class LoginController {
         this.autenticazione = autenticazione;
     }
 
-    public UtenteBeanGenerico autenticaUtente() throws DAOExceptionRemoli, LoginNotFoundRemoli {
+    public UtenteBeanGenerico autenticaUtente() throws DAOExceptionBrondi, LoginNotFoundRemoli {
 
         final Logger logger = LoggerFactory.getLogger(getClass());
 
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         Credentials credFromDb = layer.login(autenticazione.getEmail(), autenticazione.getPassword());
 
         Credentials sessionCred = Credentials.getInstanceSingleton();

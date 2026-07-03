@@ -9,7 +9,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.utility.factory.ConnectionFactory;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
+
 /**
  * ------------------------------------------------------------
  *  Test Class : <PercorsoTest>
@@ -27,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *  Description: Test di integrazione per la classe PathController.
  * ------------------------------------------------------------
  */
+@TestMethodOrder(MethodOrderer.MethodName.class)
+
 class PercorsoTest
 {
     private static final ResourceBundle RB = ResourceBundle.getBundle("configurations/testpaths");
@@ -66,7 +68,7 @@ class PercorsoTest
 
         String[] parts = strings.split(":");
         PathController path = new PathController();
-        assertThrows(DAOExceptionRemoli.class, () ->
+        assertThrows(DAOExceptionBrondi.class, () ->
         {
             path.run(parts[0], parts[1], parts[2]);
         });

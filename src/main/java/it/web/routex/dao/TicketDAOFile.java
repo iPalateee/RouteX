@@ -6,7 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.model.Ticket;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.CredentialsExceptionRemoli;
@@ -22,7 +22,7 @@ public class TicketDAOFile extends TicketDAOLayer
             DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
     public List<Ticket> getTicketByCF(String cf)
-            throws DAOExceptionRemoli, PathNotFoundExceptionRemoli {
+            throws DAOExceptionBrondi, PathNotFoundExceptionRemoli {
 
         List<Ticket> tickets = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class TicketDAOFile extends TicketDAOLayer
             // Salta header
             String header = br.readLine();
             if (header == null) {
-                throw new DAOExceptionRemoli("File tickets CSV vuoto o corrotto");
+                throw new DAOExceptionBrondi("File tickets CSV vuoto o corrotto");
             }
 
             while ((line = br.readLine()) != null) {
@@ -66,7 +66,7 @@ public class TicketDAOFile extends TicketDAOLayer
             }
 
         } catch (IOException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore lettura CSV: " + e.getMessage(),
                     e
             );
@@ -120,11 +120,11 @@ public class TicketDAOFile extends TicketDAOLayer
                     "Errore in TicketDAOFile.java");
         }
     }
-    private LocalDateTime parseTimestamp(String timestamp) throws DAOExceptionRemoli {
+    private LocalDateTime parseTimestamp(String timestamp) throws DAOExceptionBrondi {
         try {
             return LocalDateTime.parse(timestamp, CSV_TIMESTAMP_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Timestamp non valido nel CSV: " + timestamp,
                     e
             );

@@ -1,19 +1,18 @@
 package it.web.routex.controller.applicativo;
 
 import it.web.routex.bean.MessageBean;
-import it.web.routex.dao.LayerPersistenza;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.model.Notification;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 import it.web.routex.utility.observer.Notifier;
 
 import java.util.List;
 
 public class UpdateNotificationsControllerApplicativo {
 
-    public void aggiornaStatoNotifica(MessageBean bean) throws DAOExceptionRemoli {
+    public void aggiornaStatoNotifica(MessageBean bean) throws DAOExceptionBrondi {
 
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
 
         List<Notification> cached = layer.getMessagesRAM();
 
@@ -27,6 +26,6 @@ public class UpdateNotificationsControllerApplicativo {
                 return;
             }
         }
-        throw new DAOExceptionRemoli("Notifica non trovata in cache");
+        throw new DAOExceptionBrondi("Notifica non trovata in cache");
     }
 }

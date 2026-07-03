@@ -3,9 +3,10 @@ package Testing.Remoli;
 import it.web.routex.bean.AutenticazioneBean;
 import it.web.routex.bean.UtenteBeanGenerico;
 import it.web.routex.controller.applicativo.LoginController;
+import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.LoginNotFoundRemoli;
 
 import java.util.ResourceBundle;
@@ -26,7 +27,7 @@ class LoginTest
     }
     @ParameterizedTest
     @MethodSource("invalidCredentialsProvider")
-    void testLoginInvalidCredentials(String strings) {
+    void testLoginInvalidCredentials(String strings) throws InvalidLoginInputExceptionRemoli {
 
         String[] parts = strings.split(":");
         AutenticazioneBean credenziali = new AutenticazioneBean();
@@ -39,7 +40,7 @@ class LoginTest
     }
     @ParameterizedTest
     @MethodSource("validCredentialsProvider")
-    void testLoginValidCredentials(String strings) throws DAOExceptionRemoli, LoginNotFoundRemoli {
+    void testLoginValidCredentials(String strings) throws DAOExceptionBrondi, LoginNotFoundRemoli, InvalidLoginInputExceptionRemoli {
 
         String[] parts = strings.split(":");
         AutenticazioneBean credenziali = new AutenticazioneBean();

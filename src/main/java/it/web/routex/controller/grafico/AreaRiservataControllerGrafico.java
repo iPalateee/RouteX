@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 
 @WebServlet("/areaRiservata")
 public class AreaRiservataControllerGrafico extends LoggedHttpServlet
@@ -46,7 +46,7 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet
                 }catch(Exception e) {
                     logger.error("Errore durante il forward alla pagina di errore", e);
                 }
-            } catch (DAOExceptionRemoli remoli) {
+            } catch (DAOExceptionBrondi remoli) {
                 logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());
                 request.setAttribute("errore", remoli.getMessage());
                 try {

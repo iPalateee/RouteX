@@ -2,14 +2,15 @@ package it.web.routex.controller.grafico;
 
 import it.web.routex.bean.CityBean;
 import it.web.routex.bean.PrezzoTotaleBean;
+import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.CityController;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.extractor.BuyTicketExtractor;
 import it.web.routex.record.BuyTicketRecord;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
 import it.web.routex.exception.InvalidPriceCalculationExceptionRemoli;
-import it.web.routex.exception.InvalidCityDataExceptionRemoli;
+import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.util.List;
@@ -42,14 +43,14 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
 
                 forwardToBuyTicket(request, response, cities.size());
 
-            } catch (DAOExceptionRemoli e) {
+            } catch (DAOExceptionBrondi e) {
                 request.setAttribute(s, "Errore nel caricamento delle città: " + e.getMessage());
                 try {
                     request.getRequestDispatcher(pageErr).forward(request, response);
                 }catch(Exception a) {
                     logger.error("Errore nella presentazione della view il caricamento delle città: {}", a.toString());
                 }
-            } catch (InvalidCityDataExceptionRemoli e) {
+            } catch (InvalidCityDataExceptionBrondi e) {
                 request.setAttribute(s, e.getUserMessage());
                 try {
                     request.getRequestDispatcher(pageErr).forward(request, response);
@@ -82,7 +83,14 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
 
             buyTicket = estraiBuyTicket(request, response);
 
-            logger.info("Elaborazione richiesta acquisto biglietti per città='{}', quantità={}", buyTicket.city(), buyTicket.quantity());
+        if (buyTicket == null) {
+            logger.warn("Impossibile procedere: l'estrazione di buyTicket ha restituito null.");
+            GenericErrorCLI.mostraErrore("Dati non validi.");
+            return;
+        }
+
+        logger.info("Elaborazione richiesta acquisto biglietti per città='{}', quantità={}",
+                buyTicket.city(), buyTicket.quantity());
 
             try {
 
@@ -97,7 +105,7 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
 
                 forwardingConferma(request, response);
 
-            } catch (DAOExceptionRemoli e) {
+            } catch (DAOExceptionBrondi e) {
                 request.setAttribute(ERRORE, "Errore durante l'elaborazione dell'acquisto: " + e.getMessage());
                 try {
                     request.getRequestDispatcher(PAGE_ERROR).forward(request, response);

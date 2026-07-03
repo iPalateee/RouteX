@@ -3,7 +3,7 @@ package it.web.routex.controller.grafico;
 import it.web.routex.bean.MessageBean;
 import it.web.routex.controller.applicativo.UpdateNotificationsControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -39,7 +39,7 @@ public class UpdateNotificationsControllerGrafico extends LoggedHttpServlet {
                     request.getContextPath() + "/viewNotifications"
             );
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
 
             request.setAttribute(
                     "errore",

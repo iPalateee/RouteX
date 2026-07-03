@@ -1,7 +1,7 @@
 package it.web.routex.dao;
 import it.web.routex.enumerator.Ruolo;
 import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.LoginNotFoundRemoli;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
 import it.web.routex.model.*;
@@ -22,7 +22,7 @@ import java.util.List;
 public class LayerPersistenzaFull extends LayerPersistenza
 {
     public Credentials login(String email, String password)
-            throws DAOExceptionRemoli, LoginNotFoundRemoli {
+            throws DAOExceptionBrondi, LoginNotFoundRemoli {
 
         try (Connection conn = ConnectionFactory.getConnection();
              CallableStatement cs = conn.prepareCall("{ CALL RouteX_Update.login_user(?, ?) }")) {
@@ -49,13 +49,13 @@ public class LayerPersistenzaFull extends LayerPersistenza
             return c;
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli("Errore durante il login: " + e.getMessage(), e);
+            throw new DAOExceptionBrondi("Errore durante il login: " + e.getMessage(), e);
         }
     }
 
 
     public Mastercard getPaymentMastercard(String nC, String sc, String cvv)
-            throws DAOExceptionRemoli {
+            throws DAOExceptionBrondi {
 
         final String query = "{ CALL RouteX_Update.getMastercardPayment(?,?,?) }";
 
@@ -81,7 +81,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             }
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore interno alla connessione: " + e.getMessage(),
                     e
             );
@@ -90,7 +90,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
 
     @Override
     public Paypal getPaymentPaypal(String email, String codice)
-            throws DAOExceptionRemoli {
+            throws DAOExceptionBrondi {
 
         final String query = "{ CALL RouteX_Update.getPaypalPayment(?,?) }";
 
@@ -114,7 +114,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             }
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante il recupero del pagamento Paypal: " + e.getMessage(),
                     e
             );
@@ -123,7 +123,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
 
 
     @Override
-    public List<City> listCities() throws DAOExceptionRemoli {
+    public List<City> listCities() throws DAOExceptionBrondi {
 
         final List<City> informazioni = new ArrayList<>();
 
@@ -143,7 +143,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             return informazioni;
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nella comunicazione con il database: " + e.getMessage(),
                     e
             );
@@ -217,7 +217,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
     }
 
     @Override
-    public List<Notification> getMessages() throws DAOExceptionRemoli {
+    public List<Notification> getMessages() throws DAOExceptionBrondi {
 
         List<Notification> result = new ArrayList<>();
 
@@ -240,7 +240,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             return result;
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nel recupero delle notifiche",
                     e
             );
@@ -248,7 +248,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
     }
 
     @Override
-    public void save(Route route) throws DAOExceptionRemoli {
+    public void save(Route route) throws DAOExceptionBrondi {
         try (Connection conn = ConnectionFactory.getConnection()){
             String sp = "{ CALL RouteX_Update.saveRoute(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement cs = conn.prepareCall(sp);
@@ -269,14 +269,14 @@ public class LayerPersistenzaFull extends LayerPersistenza
             cs.execute();
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli("Errore durante la registrazione del percorso: " + e.getMessage());
+            throw new DAOExceptionBrondi("Errore durante la registrazione del percorso: " + e.getMessage());
         }
     }
 
 
     @Override
     public WorkerSchedule getWorkerSchedule(String codiceFiscale)
-            throws DAOExceptionRemoli {
+            throws DAOExceptionBrondi {
 
         String sp = "{ CALL RouteX_Update.viewWorkSchedule(?) }";
 
@@ -304,7 +304,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             }
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante la chiamata a viewWorkSchedule",
                     e
             );
@@ -313,7 +313,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
 
 
     @Override
-    public void sendMessage(Notification n) throws DAOExceptionRemoli {
+    public void sendMessage(Notification n) throws DAOExceptionBrondi {
 
         try (Connection conn = ConnectionFactory.getConnection()) {
 
@@ -326,7 +326,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             cs.execute();
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante l'invio della comunicazione",
                     e
             );
@@ -334,7 +334,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
     }
 
     @Override
-    public void solvedNotification(Notification n) throws DAOExceptionRemoli {
+    public void solvedNotification(Notification n) throws DAOExceptionBrondi {
 
         try (Connection conn = ConnectionFactory.getConnection()) {
 
@@ -347,14 +347,14 @@ public class LayerPersistenzaFull extends LayerPersistenza
             cs.execute();
 
         } catch (Exception e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante l'aggiornamento della notifica",
                     e
             );
         }
     }
     @Override
-    public List<Route> getAllPathInfo() throws DAOExceptionRemoli {
+    public List<Route> getAllPathInfo() throws DAOExceptionBrondi {
 
         List<Route> resultList = new ArrayList<>();
 
@@ -388,7 +388,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             }
 
         } catch (SQLException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore nel recupero delle statistiche PathInfo",
                     e
             );
@@ -399,7 +399,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
 
     @Override
     public List<Route> getData(String cf)
-            throws PathNotFoundExceptionRemoli, DAOExceptionRemoli {
+            throws PathNotFoundExceptionRemoli, DAOExceptionBrondi {
 
         try (Connection conn = ConnectionFactory.getConnection())
         {
@@ -444,7 +444,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             return lista;
         } catch (SQLException e) {
 
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Errore durante la connessione al database",
                     e
             );

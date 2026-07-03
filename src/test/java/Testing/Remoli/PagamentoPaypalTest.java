@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import it.web.routex.utility.factory.ConnectionFactory;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.CredentialsExceptionRemoli;
 
 import java.util.ResourceBundle;
@@ -18,7 +18,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
 
 /**
  * ------------------------------------------------------------
@@ -27,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  *  Description: Test della classe PagamentoPaypal che gestisce i pagamenti tramite PayPal.
  * ------------------------------------------------------------
  */
+@TestMethodOrder(MethodOrderer.MethodName.class)
+
+
 
 
 class PagamentoPaypalTest {
@@ -67,7 +69,7 @@ class PagamentoPaypalTest {
                 city
         );
 
-        assertThrows(DAOExceptionRemoli.class, pagamento::run);
+        assertThrows(DAOExceptionBrondi.class, pagamento::run);
     }
 
     @ParameterizedTest

@@ -1,18 +1,17 @@
 package it.web.routex.utility.factory;
 
-import it.web.routex.dao.LayerPersistenza;
 import it.web.routex.dao.LayerPersistenzaDemo;
 import it.web.routex.dao.LayerPersistenzaFull;
 import it.web.routex.enumerator.ApplicationMode;
 import it.web.routex.utility.singleton.ApplicationModeManager;
 
-public class FactoryLayerPersistenza {
+public class LayerPersistenza {
 
-    private static LayerPersistenza instance;
+    private static it.web.routex.dao.LayerPersistenza instance;
 
-    private FactoryLayerPersistenza() {}
+    private LayerPersistenza() {}
 
-    public static LayerPersistenza createLayerPersistenza() {
+    public static it.web.routex.dao.LayerPersistenza createLayerPersistenza() {
 
         if (instance == null) {
 

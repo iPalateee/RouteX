@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import it.web.routex.utility.factory.ConnectionFactory;
-import it.web.routex.exception.DAOExceptionRemoli;
-import it.web.routex.exception.InvalidCityDataExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
+import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -54,7 +54,7 @@ class CityTest {
         assertEquals(expected, prezzo.getPrezzoTotale());
     }
     @Test
-    void OttieniCity() throws InvalidCityDataExceptionRemoli, SQLException, DAOExceptionRemoli {
+    void OttieniCity() throws InvalidCityDataExceptionBrondi, SQLException, DAOExceptionBrondi {
 
         ConnectionFactory.cambioDiRuolo(Ruolo.TRAVELER);
         CityController cityController = new CityController();

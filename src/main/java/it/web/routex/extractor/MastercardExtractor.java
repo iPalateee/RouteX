@@ -3,7 +3,8 @@ import javax.servlet.http.HttpServletRequest;
 import it.web.routex.exception.InvalidCardInputExceptionRemoli;
 import it.web.routex.record.MastercardRecord;
 
-import static it.web.routex.extractor.RouteInputExtractor.sanitize;
+import static it.web.routex.utility.text.TextUtils.sanitize;
+
 
 public final class MastercardExtractor {
 

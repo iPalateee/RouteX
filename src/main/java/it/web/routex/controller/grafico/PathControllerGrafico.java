@@ -1,6 +1,7 @@
 package it.web.routex.controller.grafico;
 import it.web.routex.bean.CityBean;
 import it.web.routex.bean.InformazioniPercorsoBean;
+import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.CityController;
 import it.web.routex.controller.applicativo.PathController;
 import it.web.routex.exception.*;
@@ -47,11 +48,11 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
             forward(request, response);
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             forwardToError(request, response, "Errore nel caricamento delle città: " + e.getMessage(), cred);
             logger.error("Errore nella presentazione della view il caricamento delle città: {}", e.toString());
 
-        } catch (InvalidCityDataExceptionRemoli e) {
+        } catch (InvalidCityDataExceptionBrondi e) {
             forwardToError(request, response, e.getUserMessage(), cred);
             logger.error("Errore nei dati delle città: {}", e.toString());
         }
@@ -78,14 +79,20 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             String status = UserStatusResolver.resolve(cred);
 
 
-            logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}", route.city(), route.start(), route.end());
-            InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
+        if (route == null) {
+            logger.warn("Impossibile acquisire i dati del percorso: l'oggetto route è null.");
+            GenericErrorCLI.mostraErrore("Dati non validi.");
+            return;
+        }
+
+        logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}",
+                route.city(), route.start(), route.end());            InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
 
             try {
                 PathController path = new PathController();
                 dto = path.run(route.start(), route.end(), route.city()); //controller applicativo
             } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
-                     FuoriRangeExceptionRemoli | DAOExceptionRemoli | SQLException e)
+                     FuoriRangeExceptionRemoli | DAOExceptionBrondi | SQLException e)
             {
                 forwardToError(request, response, "Errore processamento dati percorso" + e.getMessage(), cred);
                 logger.error("Errore processamento dati percorso {}", e.toString());

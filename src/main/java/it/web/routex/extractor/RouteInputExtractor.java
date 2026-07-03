@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.record.RouteRecord;
 
+import static it.web.routex.utility.text.TextUtils.sanitize;
+
 public final class RouteInputExtractor {
 
     private RouteInputExtractor()
@@ -30,7 +32,7 @@ public final class RouteInputExtractor {
         return new RouteRecord(city, start, end);
     }
 
-    static String sanitize(String s) {
+    /*static String sanitize(String s) {
         return (s == null) ? null : s.trim();
-    }
+    }*/
 }

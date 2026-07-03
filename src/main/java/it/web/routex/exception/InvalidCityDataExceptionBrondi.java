@@ -2,7 +2,7 @@ package it.web.routex.exception;
 
 import java.time.LocalDateTime;
 
-public class InvalidCityDataExceptionRemoli extends Exception {
+public class InvalidCityDataExceptionBrondi extends Exception {
 
     private final String errorCode;
     private final String userMessage;
@@ -12,7 +12,7 @@ public class InvalidCityDataExceptionRemoli extends Exception {
 
     public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 
-    public InvalidCityDataExceptionRemoli(String userMessage,
+    public InvalidCityDataExceptionBrondi(String userMessage,
                                           String technicalMessage,
                                           Severity severity) {
         super(technicalMessage);
@@ -27,13 +27,9 @@ public class InvalidCityDataExceptionRemoli extends Exception {
         return userMessage;
     }
 
-    public String getTechnicalMessage() {
-        return technicalMessage;
-    }
-
     @Override
     public String toString() {
-        return "InvalidCityDataExceptionRemoli {" +
+        return "InvalidCityDataExceptionBrondi {" +
                 "errorCode='" + errorCode + '\'' +
                 ", userMessage='" + userMessage + '\'' +
                 ", technicalMessage='" + technicalMessage + '\'' +

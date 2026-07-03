@@ -14,7 +14,7 @@ import it.web.routex.record.PaypalRecord;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.PaymentValidationExceptionRemoli;
 import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.utility.singleton.PersistenceMode;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -160,7 +160,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         try {
             return controllerPagamento.run();
 
-        } catch (PaymentValidationExceptionRemoli | DAOExceptionRemoli | CredentialsExceptionRemoli e) {
+        } catch (PaymentValidationExceptionRemoli | DAOExceptionBrondi | CredentialsExceptionRemoli e) {
 
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getMessage());
             try {

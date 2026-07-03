@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
 import it.web.routex.validator.BuyTicketValidator;
 
-import static it.web.routex.extractor.RouteInputExtractor.sanitize;
+import static it.web.routex.utility.text.TextUtils.sanitize;
+
 
 public final class BuyTicketExtractor {
 

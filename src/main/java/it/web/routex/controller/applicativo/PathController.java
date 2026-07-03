@@ -1,12 +1,11 @@
 package it.web.routex.controller.applicativo;
 import it.web.routex.bean.InformazioniPercorsoBean;
 import it.web.routex.bean.RoutingRequestBean;
-import it.web.routex.dao.LayerPersistenza;
 import it.web.routex.exception.*;
 import it.web.routex.model.Route;
 import it.web.routex.model.Station;
 import it.web.routex.record.RouteRecord;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.web.routex.utility.facade.FacadePath;
@@ -17,13 +16,13 @@ import java.util.List;
 
 public class PathController
 {
-    public InformazioniPercorsoBean run(String startStation, String endStation, String city) throws IllegalArgumentException, FuoriRangeExceptionRemoli, UnreacheableNodeExceptionRemoli, SQLException, DAOExceptionRemoli
+    public InformazioniPercorsoBean run(String startStation, String endStation, String city) throws IllegalArgumentException, FuoriRangeExceptionRemoli, UnreacheableNodeExceptionRemoli, SQLException, DAOExceptionBrondi
     {
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Station> stations = layer.restituisciIdStazioni(startStation, endStation, city);
 
         if (stations.size() != 2) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Numero di stazioni restituito non valido: " + stations.size()
             );
         }
@@ -36,7 +35,7 @@ public class PathController
             partenza.validate();
             arrivo.validate();
         } catch (IllegalStateException e) {
-            throw new DAOExceptionRemoli(
+            throw new DAOExceptionBrondi(
                     "Stazioni non valide nella città selezionata: " + city,
                     e
             );
@@ -58,7 +57,7 @@ public class PathController
 
             if (cf != null) {
                 Route info = new Route(dto,route,status);
-                LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+                it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
                 layer.save(info);
                 //uso route per salvare il percorso. Poi RouteBean è diverso, non ha utente
                 return true;
@@ -72,7 +71,7 @@ public class PathController
         {
             logger.error("Utente non autenticato, impossibile salvare il percorso. {}", e.toString());
         }
-        catch (DAOExceptionRemoli e)
+        catch (DAOExceptionBrondi e)
         {
             logger.error("Errore nel salvataggio del percorso. {}", e.toString());
         } catch (InvalidRouteException e) {

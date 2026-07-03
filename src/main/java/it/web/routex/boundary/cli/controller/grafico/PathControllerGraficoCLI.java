@@ -28,10 +28,10 @@ public class PathControllerGraficoCLI extends LoggedCLI
             StartExploringCLI.mostraExploring(cities);
 
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Errore nel caricamento delle città: " + e.getMessage());
             logger.error("Errore nella presentazione della view il caricamento delle città: {}", e.toString());
-        } catch (InvalidCityDataExceptionRemoli e) {
+        } catch (InvalidCityDataExceptionBrondi e) {
             GenericErrorCLI.mostraErrore(e.getUserMessage());
             logger.error("Errore nei dati delle città: {}", e.toString());
 
@@ -49,13 +49,13 @@ public class PathControllerGraficoCLI extends LoggedCLI
         String status = UserStatusResolver.resolve(cred);
 
         logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}", route.city(), route.start(), route.end());
-        InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
+        InformazioniPercorsoBean dto;
 
         try {
             PathController path = new PathController();
             dto = path.run(route.start(), route.end(), route.city()); //controller applicativo
         } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
-                 FuoriRangeExceptionRemoli | DAOExceptionRemoli | SQLException e) {
+                 FuoriRangeExceptionRemoli | DAOExceptionBrondi | SQLException e) {
             logger.error("Errore processamento dati percorso {}", e.toString());
             GenericErrorCLI.mostraErrore("Errore processamento dati percorso");
             return;

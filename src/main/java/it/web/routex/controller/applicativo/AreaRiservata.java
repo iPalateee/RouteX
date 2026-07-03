@@ -2,27 +2,26 @@ package it.web.routex.controller.applicativo;
 
 import it.web.routex.bean.RouteBean;
 import it.web.routex.bean.TicketBean;
-import it.web.routex.dao.LayerPersistenza;
 import it.web.routex.dao.LayerPersistenzaDemo;
 import it.web.routex.dao.TicketDAOLayer;
 import it.web.routex.model.Route;
 import java.util.ArrayList;
 import java.util.List;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.InvalidTicketExceptionRemoli;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
 import it.web.routex.model.Ticket;
 import it.web.routex.utility.decorator.decoratorpath.*;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 import it.web.routex.utility.factory.FactoryPersistence;
 import it.web.routex.utility.singleton.ApplicationModeManager;
 
 public class AreaRiservata
 {
     public List<TicketBean> runTicket(String cf)
-            throws DAOExceptionRemoli, PathNotFoundExceptionRemoli {
+            throws DAOExceptionBrondi, PathNotFoundExceptionRemoli {
 
-        List<Ticket> tickets = null;
+        List<Ticket> tickets;
 
         if(ApplicationModeManager.getSingletonInstance().getMode().toString().equals("DEMO")){
 
@@ -65,9 +64,9 @@ public class AreaRiservata
 
 
     public List<RouteBean> runPath(String cf)
-            throws PathNotFoundExceptionRemoli, DAOExceptionRemoli {
+            throws PathNotFoundExceptionRemoli, DAOExceptionBrondi {
 
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Route> listaPercorsi = layer.getData(cf);
 
         if (listaPercorsi == null || listaPercorsi.isEmpty()) {

@@ -3,12 +3,11 @@ import it.web.routex.bean.CityLifeBean;
 import java.sql.SQLException;
 import java.util.*;
 
-import it.web.routex.dao.LayerPersistenza;
 import it.web.routex.exception.FuoriRangeExceptionRemoli;
 import it.web.routex.exception.UnreacheableNodeExceptionRemoli;
 import it.web.routex.model.CityModel;
 import it.web.routex.model.Fermata;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +87,7 @@ public class CityLifeController
         final Logger logger = LoggerFactory.getLogger(getClass());
         StatoPercorso stato = new StatoPercorso();
 
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Fermata> fermateTot = layer.getFermateByIds(ids, city);
 
         for (int i = 0; i < fermateTot.size(); i++)
@@ -158,7 +157,7 @@ public class CityLifeController
     }
     private int nodoCostoMinore(int[]cost, int[]know)
     {
-        int min=0;
+        int min;
         int minimoNodo=0;
         int temp = 10000;
         for(int i=0;i<cost.length;i++)
@@ -224,7 +223,7 @@ public class CityLifeController
             throw new FuoriRangeExceptionRemoli("ID arrivo fuori range: " + arrivo, FuoriRangeExceptionRemoli.Severity.CRITICAL);
 
 
-        ArrayList<Integer> percorsiCodifica = new ArrayList<Integer>();
+        ArrayList<Integer> percorsiCodifica = new ArrayList<>();
         int nodoPartenza = partenza;
         int nodoArrivo = arrivo;
         int [] know = new int[citylife.getMatriceAdiacenza().length];

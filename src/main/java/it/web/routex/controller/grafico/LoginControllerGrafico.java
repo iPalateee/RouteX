@@ -2,10 +2,8 @@ package it.web.routex.controller.grafico;
 import it.web.routex.bean.AutenticazioneBean;
 import it.web.routex.bean.UtenteBeanGenerico;
 import it.web.routex.controller.applicativo.LoginController;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.extractor.LoginExtractor;
-import it.web.routex.record.LoginRecord;
 import it.web.routex.utility.factory.ConnectionFactory;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -32,27 +30,24 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
 
 
 
-    private AutenticazioneBean creaBeanAutenticazione(HttpServletRequest request, HttpServletResponse response) {
-        AutenticazioneBean aut = new AutenticazioneBean();
-        LoginRecord login = null;
+    private AutenticazioneBean creaBeanAutenticazione(HttpServletRequest request)
+            throws InvalidLoginInputExceptionRemoli {
 
-        try {
-            login = LoginExtractor.from(request);
-        } catch (InvalidLoginInputExceptionRemoli e) {
-            request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getUserMessage());
-            try {
-                request.getRequestDispatcher(PAGE_ERRORE_LOGIN).forward(request, response);
-            }catch(Exception ex){
-                logger.error(FORWARDING,ex);
-            }
-            logger.error("Errore di validazione input login: {}", e.toString());
-        }
-        aut.setEmail(login.email());
-        aut.setPassword(login.password());
+        AutenticazioneBean aut = new AutenticazioneBean();
+
+        String rawEmail = request.getParameter("Email");
+        String rawPassword = request.getParameter("Password");
+
+        // Nessun try/catch qui: la validazione è responsabilità della Bean.
+        // L'eccezione, se lanciata, propaga verso il chiamante (doPost),
+        // che è l'unico punto che decide come gestirla verso la view.
+        aut.setEmail(rawEmail);
+        aut.setPassword(rawPassword);
+
         logger.info(
                 "Bean di autenticazione creato con email: {}, password presente={}",
-                login.email(),
-                login.password() != null
+                aut.getEmail(),
+                aut.getPassword() != null
         );
 
         return aut;
@@ -97,7 +92,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
     /**
      * Gestisce eventuali errori di login (DAO o credenziali errate).
      */
-    private void gestisciErroreLogin(HttpServletRequest request, HttpServletResponse response, DAOExceptionRemoli ex)
+    private void gestisciErroreLogin(HttpServletRequest request, HttpServletResponse response, DAOExceptionBrondi ex)
     {
         try {
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, "Errore nella connessione al DB [500 internal error]");
@@ -106,6 +101,21 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
         }catch(Exception e) {
             logger.error("Errore generico non catturato: message={}", e.getMessage());
         }
+    }
+
+    /**
+     * Gestisce gli errori di validazione sintattica sollevati dalla Bean
+     * durante la creazione (es. email non conforme, password mancante).
+     */
+    private void gestisciErroreValidazione(HttpServletRequest request, HttpServletResponse response, InvalidLoginInputExceptionRemoli ex)
+    {
+        request.setAttribute(ATTR_MESSAGGIO_ERRORE, ex.getUserMessage());
+        try {
+            request.getRequestDispatcher(PAGE_ERRORE_LOGIN).forward(request, response);
+        } catch (Exception e) {
+            logger.error(FORWARDING, e);
+        }
+        logger.error("Errore di validazione input login: {}", ex.toString());
     }
 
     /**
@@ -120,7 +130,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
             HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(180); // 3 minuti di inattività
 
-            AutenticazioneBean credenziali = creaBeanAutenticazione(request,response);
+            AutenticazioneBean credenziali = creaBeanAutenticazione(request);
 
             LoginController loginController = new LoginController(credenziali);
             UtenteBeanGenerico utente = loginController.autenticaUtente();
@@ -133,7 +143,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
 
             gestisciReindirizzamento(utente, response);
 
-        } catch (DAOExceptionRemoli ex) {
+        } catch (DAOExceptionBrondi ex) {
             gestisciErroreLogin(request, response, ex);
 
         } catch (LoginNotFoundRemoli ex) {
@@ -144,9 +154,10 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
                 logger.error(FORWARDING,e);
             }
             logger.error("Tentativo di login fallito: email={}, Maskedpassw={}, message={}", ex.getEmail(), ex.getMaskedPassword(), ex.getMessage());
+
+        } catch (InvalidLoginInputExceptionRemoli e) {
+            gestisciErroreValidazione(request, response, e);
         }
-
-
     }
 }
 

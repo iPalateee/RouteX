@@ -9,14 +9,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import it.web.routex.utility.factory.ConnectionFactory;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.CredentialsExceptionRemoli;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
 
 /**
  * ------------------------------------------------------------
@@ -25,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  *  Description: Test della classe PagamentoMastercard
  * ------------------------------------------------------------
  */
+@TestMethodOrder(MethodOrderer.MethodName.class)
+
+
 
 class PagamentoMastercardTest
 {
@@ -47,7 +49,7 @@ class PagamentoMastercardTest
         int quantitativo = Integer.parseInt(parts[4]);
         PagamentoMastercard pagamento = new PagamentoMastercard(parts[0], parts[1], parts[2], null, tot, quantitativo, parts[5]);
 
-        assertThrows(DAOExceptionRemoli.class, () -> //l'utente login_user non ha i permessi sul db per una stored procedure
+        assertThrows(DAOExceptionBrondi.class, () -> //l'utente login_user non ha i permessi sul db per una stored procedure
         {
             pagamento.run();
         });

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.CredentialsExceptionRemoli;
 
@@ -17,7 +17,7 @@ public class TicketDAODB extends TicketDAOLayer {
 
     @Override
     public List<Ticket> getTicketByCF(String cf)
-            throws DAOExceptionRemoli, PathNotFoundExceptionRemoli {
+            throws DAOExceptionBrondi, PathNotFoundExceptionRemoli {
 
         List<Ticket> lista = new ArrayList<>();
         String sP = "{ CALL RouteX_Update.getTicketByCF(?) }";
@@ -51,7 +51,7 @@ public class TicketDAODB extends TicketDAOLayer {
             return lista;
 
         } catch (SQLException ex) {
-            throw new DAOExceptionRemoli("Errore DB", ex);
+            throw new DAOExceptionBrondi("Errore DB", ex);
         }
     }
 

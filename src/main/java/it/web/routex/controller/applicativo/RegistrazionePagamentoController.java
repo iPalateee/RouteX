@@ -2,7 +2,7 @@ package it.web.routex.controller.applicativo;
 
 import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.PaymentValidationExceptionRemoli;
 import it.web.routex.utility.singleton.Credentials;
 
@@ -20,5 +20,5 @@ public abstract class RegistrazionePagamentoController
         this.city = city;
         this.credenziali = cred;
     }
-    public abstract PaymentResultBean run() throws DAOExceptionRemoli, PaymentValidationExceptionRemoli, CredentialsExceptionRemoli;
+    public abstract PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionRemoli, CredentialsExceptionRemoli;
 }

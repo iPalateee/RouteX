@@ -2,18 +2,17 @@ package it.web.routex.controller.applicativo;
 
 import it.web.routex.bean.PathInfoBean;
 import it.web.routex.bean.ReportsStatsBean;
-import it.web.routex.dao.LayerPersistenza;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.model.Route;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 
 import java.util.*;
 
 public class ReportsControllerApplicativo {
 
-    public ReportsStatsBean recuperaStatistiche() throws DAOExceptionRemoli {
+    public ReportsStatsBean recuperaStatistiche() throws DAOExceptionBrondi {
 
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Route> models=layer.getAllPathInfo();
 
         ReportsStatsBean stats = new ReportsStatsBean();

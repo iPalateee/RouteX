@@ -2,7 +2,7 @@ package it.web.routex.controller.grafico;
 import it.web.routex.bean.ReportsStatsBean;
 import it.web.routex.controller.applicativo.ReportsControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ public class ReportsControllerGrafico extends LoggedHttpServlet {
             request.setAttribute("stats", stats);
             forwardToView(request, response, "/viewRAS.jsp");
 
-        } catch (DAOExceptionRemoli e) {
+        } catch (DAOExceptionBrondi e) {
             logger.error("Errore statistiche admin", e);
             request.setAttribute("errore", "Errore nel recupero statistiche.");
             try {

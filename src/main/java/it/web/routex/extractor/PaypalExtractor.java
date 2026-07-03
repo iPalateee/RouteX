@@ -6,7 +6,8 @@ import it.web.routex.validator.PaypalValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static it.web.routex.extractor.RouteInputExtractor.sanitize;
+import static it.web.routex.utility.text.TextUtils.sanitize;
+
 
 public final class PaypalExtractor {
 

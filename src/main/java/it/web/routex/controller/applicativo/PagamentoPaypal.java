@@ -1,10 +1,9 @@
 package it.web.routex.controller.applicativo;
 import it.web.routex.bean.PaymentResultBean;
-import it.web.routex.dao.LayerPersistenza;
 import it.web.routex.enumerator.PaymentMethod;
-import it.web.routex.exception.DAOExceptionRemoli;
+import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.model.Paypal;
-import it.web.routex.utility.factory.FactoryLayerPersistenza;
+import it.web.routex.utility.factory.LayerPersistenza;
 import it.web.routex.utility.decorator.decoratorticket.BaseTicketCode;
 import it.web.routex.utility.decorator.decoratorticket.CittaDecorator;
 import it.web.routex.utility.decorator.decoratorticket.Component;
@@ -23,11 +22,11 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
     String email;
     String codice;
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    public PaymentResultBean run() throws DAOExceptionRemoli, PaymentValidationExceptionRemoli, CredentialsExceptionRemoli
+    public PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionRemoli, CredentialsExceptionRemoli
     {
         final List<String> codiciBiglietti;
 
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         Paypal p = layer.getPaymentPaypal(email,codice);
 
         if (p == null) {
@@ -71,7 +70,7 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
         if (credenziali == null) {
             throw new CredentialsExceptionRemoli("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoPaypal.java");
         }
-        LayerPersistenza layer = FactoryLayerPersistenza.createLayerPersistenza();
+        it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         layer.salvataggio(credenziali, codiciBiglietti, paypal.getMethod().getDisplayName(), city);
         if(logger.isInfoEnabled()) {
             logger.info("Pagamento effettuato con Paypal {}", paypal.maskedAccount());
