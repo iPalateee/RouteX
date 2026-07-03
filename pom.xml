@@ -12,7 +12,8 @@
   <name>RouteX_MVC_Project Maven Webapp</name>
 
   <properties>
-    <javafx.version>21</javafx.version>
+      <javafx.version>21</javafx.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
