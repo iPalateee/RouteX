@@ -102,8 +102,10 @@
         <h2>RouteX - Login</h2>
 
         <form action="login" method="post">
-            <input type="text" name="Email" placeholder="Email Address"><br>
-            <input type="text" name="Password" placeholder="Password"><br>
+            <label for="email">Email Address:</label>
+            <input type="text" id="email" name="Email" placeholder="Email Address"><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="Password" placeholder="Password"><br>
 
             <button type="submit">Login</button>
         </form>

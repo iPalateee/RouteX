@@ -272,9 +272,9 @@
             <h1>Send Global Communication</h1>
 
             <form id="sendForm" action="confirmCommunicationWorker" method="post">
+                <label for="message">Your Message:</label>
                 <textarea id="message" name="message" maxlength="250" placeholder="Write your message..." required></textarea>
                 <div class="char-counter" id="counter">0 / 250</div>
-
                 <button class="send-btn" type="button" id="sendBtn" disabled>Send message</button>
             </form>
 

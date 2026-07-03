@@ -119,6 +119,7 @@
                             <td><%= m.getMessage() %></td>
                             <td><%= sdf.format(m.getDate()) %></td>
                             <td class="text-center">
+                                <label for="risolta_<%= m.getDate().getTime() %>" class="visually-hidden">Segna come risolta</label>
                                 <input type="checkbox" class="checkbox-custom" name="risolte" value="<%= m.getDate().getTime() + "|" + m.getMessage() %>" />
                             </td>
                         </tr>

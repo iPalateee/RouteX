@@ -128,6 +128,7 @@
     <p>This message will be delivered to all workers of the platform.</p>
 
     <form action="confirmCommunication" method="post">
+        <label for="message">Message:</label>
         <textarea
                 id="message"
                 name="message"

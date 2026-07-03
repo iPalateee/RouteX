@@ -32,7 +32,4 @@ public final class RouteInputExtractor {
         return new RouteRecord(city, start, end);
     }
 
-    /*static String sanitize(String s) {
-        return (s == null) ? null : s.trim();
-    }*/
 }

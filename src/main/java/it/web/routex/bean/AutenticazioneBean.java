@@ -27,9 +27,9 @@ public class AutenticazioneBean
                     InvalidLoginInputExceptionRemoli.Severity.LOW
             );
 
-        String password = sanitize(rawPassword);
+        String cleanPassword = sanitize(rawPassword);
 
-        if (password.isBlank()) {
+        if (cleanPassword.isBlank()) {
             throw new InvalidLoginInputExceptionRemoli(
                     "Password mancante.",
                     "Password = null.",
@@ -37,7 +37,7 @@ public class AutenticazioneBean
             );
         }
 
-        this.password = password;
+        this.password = cleanPassword;
     }
 
     public String getEmail() {
@@ -51,23 +51,23 @@ public class AutenticazioneBean
                     "Parametro 'Email' null dal form.",
                     InvalidLoginInputExceptionRemoli.Severity.LOW
             );
-        String email = sanitize(rawEmail);
+        String cleanEmail = sanitize(rawEmail);
 
-        if (email.isBlank())
+        if (cleanEmail.isBlank())
             throw new InvalidLoginInputExceptionRemoli(
                     "Email mancante.",
                     "Email = null",
                     InvalidLoginInputExceptionRemoli.Severity.MEDIUM
             );
 
-        if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+        if (!cleanEmail.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
             throw new InvalidLoginInputExceptionRemoli(
                     "Inserisci un'email valida.",
-                    "Regex email non rispettata: " + email,
+                    "Regex email non rispettata: " + cleanEmail,
                     InvalidLoginInputExceptionRemoli.Severity.MEDIUM
             );
         }
 
-        this.email = email;
+        this.email = cleanEmail;
     }
 }

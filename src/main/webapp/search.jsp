@@ -241,7 +241,8 @@
             <h2>RouteX - Find Your Metro Route</h2>
             <form action="PathControllerGrafico" method="post" name="select">
 
-               <select id="citySelect" name="city" class="form-select" onchange="updateStationsAndMap()">
+                <label for="citySelect">Seleziona Città:</label>
+                <select id="citySelect" name="city" class="form-select" onchange="updateStationsAndMap()">
                 <option value="" disabled selected>-- Choose a city --</option>
                 <%
                     List<it.web.routex.bean.CityBean> cities = (List<it.web.routex.bean.CityBean>) request.getAttribute("cities2");
@@ -263,8 +264,10 @@
 
                 <br><br><br>
 
+                <label for="startSearchBox">Start Station:</label>
                 <input type="text" name="startStation" id="startSearchBox" class="searchBox" placeholder="Search start station...">
 
+                <label for="endSearchBox">End Station:</label>
                 <input type="text" name="endStation" id="endSearchBox" class="searchBox" placeholder="Search end station...">
 
                 <button type="submit" id="submitBtn">
