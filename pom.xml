@@ -13,7 +13,7 @@
 
   <properties>
       <javafx.version>21</javafx.version>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
   </properties>
 
   <dependencies>
