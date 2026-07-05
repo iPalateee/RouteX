@@ -1,6 +1,7 @@
 package it.web.routex.controller.grafico;
 import it.web.routex.bean.CityBean;
 import it.web.routex.bean.InformazioniPercorsoBean;
+import it.web.routex.bean.RouteBean;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.CityController;
 import it.web.routex.controller.applicativo.PathController;
@@ -8,8 +9,6 @@ import it.web.routex.exception.*;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.domain.RouteDecoratorService;
 import it.web.routex.domain.UserStatusResolver;
-import it.web.routex.extractor.RouteInputExtractor;
-import it.web.routex.record.RouteRecord;
 import it.web.routex.utility.singleton.Credentials;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
+
 
 @WebServlet("/PathControllerGrafico")
 public class PathControllerGrafico extends LoggedHttpServlet {
@@ -62,7 +62,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     {
-            RouteRecord route;
+            RouteBean route;
             final HttpSession session = request.getSession(false);
             if (session == null) {
                 try {
@@ -86,11 +86,13 @@ public class PathControllerGrafico extends LoggedHttpServlet {
         }
 
         logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}",
-                route.city(), route.start(), route.end());            InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
+                route.getCitta(), route.getPartenza(), route.getArrivo());
+
+        InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
 
             try {
                 PathController path = new PathController();
-                dto = path.run(route.start(), route.end(), route.city()); //controller applicativo
+                dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta()); //controller applicativo
             } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
                      FuoriRangeExceptionRemoli | DAOExceptionBrondi | SQLException e)
             {
@@ -100,17 +102,17 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
             RouteDecoratorService.decorate(dto, request);
             request.setAttribute("status", status);
-            request.setAttribute("inizio", route.start());
-            request.setAttribute("fine", route.end());
-            request.setAttribute("city", route.city());
+            request.setAttribute("inizio", route.getPartenza());
+            request.setAttribute("fine", route.getArrivo());
+            request.setAttribute("city", route.getCitta());
 
 
             PathController pathCtrl = new PathController();
             boolean salvato = pathCtrl.saveRoute(cred,dto,route, status);
             if(salvato)
-                logger.info("Percorso salvato correttamente per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.city());
+                logger.info("Percorso salvato correttamente per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.getCitta());
             else
-                logger.info("Percorso non salvato per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.city());
+                logger.info("Percorso non salvato per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.getCitta());
 
 
 
@@ -127,14 +129,19 @@ public class PathControllerGrafico extends LoggedHttpServlet {
                 logger.info(FORWARDING, e);
             }
 
-            String result = "Route from " + route.start() + " to " + route.end() + " in " + route.city();
+            String result = "Route from " + route.getPartenza() + " to " + route.getArrivo() + " in " + route.getCitta();
             logger.info(result);
 
     }
-    private RouteRecord estrattorePercorso(HttpServletRequest request, HttpServletResponse response, Credentials cred)
+    private RouteBean estrattorePercorso(HttpServletRequest request, HttpServletResponse response, Credentials cred)
     {
         try {
-            return RouteInputExtractor.from(request);
+            RouteBean rb = new RouteBean();
+            rb.setCitta(request.getParameter("city"));
+            rb.setPartenza(request.getParameter("startStation"));
+            rb.setArrivo(request.getParameter("endStation"));
+
+            return rb;
         } catch (InvalidRouteInputExceptionRemoli e)
         {
             forwardToError(request, response, "Errore nell'input del percorso {}. -" + e.getMessage(), cred);

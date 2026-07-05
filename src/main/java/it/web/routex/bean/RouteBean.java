@@ -1,5 +1,9 @@
 package it.web.routex.bean;
 
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
+
+import static it.web.routex.utility.text.TextUtils.sanitize;
+
 public class RouteBean
 {
     private String partenza;
@@ -53,12 +57,24 @@ public class RouteBean
         return stazInterscambio;
     }
 
-    public void setArrivo(String arrivo) {
+    public void setArrivo(String a) throws InvalidRouteInputExceptionRemoli {
+
+        String arrivo = sanitize(a);
+
+        if (arrivo == null || arrivo.isEmpty())
+            throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
+
+
         this.arrivo = arrivo;
     }
 
-    public void setCitta(String citta) {
-        this.citta = citta;
+    public void setCitta(String citta) throws InvalidRouteInputExceptionRemoli {
+        String city = sanitize(citta);
+
+        if (city == null || city.isEmpty())
+            throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
+
+        this.citta = city;
     }
 
     public void setListaCambi(String listaCambi) {
@@ -73,7 +89,13 @@ public class RouteBean
         this.nStazAttraversate = nStazAttraversate;
     }
 
-    public void setPartenza(String partenza) {
+    public void setPartenza(String p) throws InvalidRouteInputExceptionRemoli {
+
+        String partenza = sanitize(p);
+
+        if (partenza == null || partenza.isEmpty())
+            throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
+
         this.partenza = partenza;
     }
 

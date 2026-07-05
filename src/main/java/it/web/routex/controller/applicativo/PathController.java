@@ -1,10 +1,10 @@
 package it.web.routex.controller.applicativo;
 import it.web.routex.bean.InformazioniPercorsoBean;
+import it.web.routex.bean.RouteBean;
 import it.web.routex.bean.RoutingRequestBean;
 import it.web.routex.exception.*;
 import it.web.routex.model.Route;
 import it.web.routex.model.Station;
-import it.web.routex.record.RouteRecord;
 import it.web.routex.utility.factory.LayerPersistenza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class PathController
         route.setEndId(arrivo.getId());
         return new FacadePath().compute(route);
     }
-    public boolean saveRoute(Credentials cred, InformazioniPercorsoBean dto, RouteRecord route, String status) {
+    public boolean saveRoute(Credentials cred, InformazioniPercorsoBean dto, RouteBean route, String status) {
 
         final Logger logger = LoggerFactory.getLogger(getClass());
         String cf = cred.getCodiceFiscale();

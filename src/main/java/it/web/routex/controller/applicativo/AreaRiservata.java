@@ -4,6 +4,7 @@ import it.web.routex.bean.RouteBean;
 import it.web.routex.bean.TicketBean;
 import it.web.routex.dao.LayerPersistenzaDemo;
 import it.web.routex.dao.TicketDAOLayer;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.model.Route;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class AreaRiservata
 
 
     public List<RouteBean> runPath(String cf)
-            throws PathNotFoundExceptionRemoli, DAOExceptionBrondi {
+            throws PathNotFoundExceptionRemoli, DAOExceptionBrondi, InvalidRouteInputExceptionRemoli {
 
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Route> listaPercorsi = layer.getData(cf);

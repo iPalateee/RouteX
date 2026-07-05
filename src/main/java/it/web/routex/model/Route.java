@@ -1,8 +1,8 @@
 package it.web.routex.model;
 import it.web.routex.bean.InformazioniPercorsoBean;
+import it.web.routex.bean.RouteBean;
 import it.web.routex.utility.builder.data.RouteData;
 import it.web.routex.exception.InvalidRouteException;
-import it.web.routex.record.RouteRecord;
 import it.web.routex.utility.decorator.decoratorchange.BaseComponent;
 import it.web.routex.utility.decorator.decoratorchange.CheckCambiamentiDecorator;
 import it.web.routex.utility.decorator.decoratorchange.Component;
@@ -42,7 +42,7 @@ public class Route {
     }
 
 
-    public Route(InformazioniPercorsoBean dto, RouteRecord route, String status) throws InvalidRouteException {
+    public Route(InformazioniPercorsoBean dto, RouteBean route, String status) throws InvalidRouteException {
 
         Credentials cred = Credentials.getInstanceSingleton();
         Component c = new CheckCambiamentiDecorator(new BaseComponent());
@@ -53,26 +53,27 @@ public class Route {
             Object objListaCambi = c.getChanges(dto.getCityLife().getSequenzeDiCambiamento());
             List<String> listaCambiList = new ArrayList<>();
 
-            if (objListaCambi instanceof List) {
-                listaCambiList = (List<String>) objListaCambi;
-            } else if (objListaCambi instanceof String string) {
-                listaCambiList.add(string);
+            if (objListaCambi instanceof List<?> tempList) {
+                for (Object item : tempList) {
+                    if (item != null) listaCambiList.add(item.toString());
+                }
             }
             this.listaCambi = String.join(", ", listaCambiList);
 
             //conversione nodicruciali
             Object objStazInterscambio = c.getChanges(dto.getCityLife().getSequenzeNodiCruciali());
             List<String> stazInterList = new ArrayList<>();
-            if (objStazInterscambio instanceof List) {
-                stazInterList = (List<String>) objStazInterscambio;
-            } else if (objStazInterscambio instanceof String string) {
-                stazInterList.add(string);
+
+            if (objStazInterscambio instanceof List<?> tempList) {
+                for (Object item : tempList) {
+                    if (item != null) stazInterList.add(item.toString());
+                }
             }
 
             this.stazInterscambio = String.join(", ", stazInterList);
-            this.partenza = route.start();
-            this.arrivo =  route.end();
-            this.citta =  route.city();
+            this.partenza = route.getPartenza();
+            this.arrivo =  route.getArrivo();
+            this.citta =  route.getCitta();
             this.tipoViaggiatore = status;
             this.nCambi = dto.getCityLife().getNumeroCambi();
             this.nStazAttraversate = dto.getNumeroStazioniUsate();
@@ -81,7 +82,7 @@ public class Route {
             this.percTerrenoUtilizzato = dto.getPercentualeStazioniUsate();
             this.utente = cred.getCodiceFiscale();
 
-        } catch (NullPointerException | ClassCastException e) {
+        } catch (NullPointerException e) {
             throw new InvalidRouteException(
                     "Errore nei dati della richiesta per la creazione della Route", e
             );

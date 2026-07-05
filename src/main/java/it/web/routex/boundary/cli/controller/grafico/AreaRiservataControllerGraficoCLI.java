@@ -6,6 +6,7 @@ import it.web.routex.boundary.cli.view.AreaRiservataCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.boundary.cli.view.LoginViewCLI;
 import it.web.routex.controller.applicativo.AreaRiservata;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.utility.singleton.Credentials;
 import java.util.List;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
@@ -38,6 +39,8 @@ public class AreaRiservataControllerGraficoCLI extends LoggedCLI
         } catch (DAOExceptionBrondi remoli) {
             logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());
             GenericErrorCLI.mostraErrore(remoli.getMessage());
+        } catch (InvalidRouteInputExceptionRemoli e) {
+            throw new RuntimeException(e);
         }
 
     }
