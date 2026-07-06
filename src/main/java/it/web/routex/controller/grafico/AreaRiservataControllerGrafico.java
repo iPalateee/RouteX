@@ -19,6 +19,7 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
 
     private static final String ATTR_ERRORE = "errore";
     private static final String PAGE_ERRORE = "/error.jsp";
+    private static final String MSG_LOG_FORWARD_ERROR = "Errore durante il forward alla pagina di errore";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -50,29 +51,29 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
             try {
                 request.getRequestDispatcher(PAGE_ERRORE).forward(request, response);
             } catch (Exception e) {
-                logger.error("Errore durante il forward alla pagina di errore", e);
+                logger.error(MSG_LOG_FORWARD_ERROR, e);
             }
 
         } catch (DAOExceptionBrondi remoli) {
             logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());
 
-            request.setAttribute(ATTR_ERRORE, remoli.getMessage()); // COSTANTE
+            request.setAttribute(ATTR_ERRORE, remoli.getMessage());
 
             try {
-                request.getRequestDispatcher(PAGE_ERRORE).forward(request, response); // COSTANTE
+                request.getRequestDispatcher(PAGE_ERRORE).forward(request, response);
             } catch (Exception e) {
-                logger.error("Errore durante il forward alla pagina di errore", e);
+                logger.error(MSG_LOG_FORWARD_ERROR, e);
             }
 
         } catch (InvalidRouteInputExceptionRemoli e) {
             logger.error("Errore di validazione input percorso. Messaggio={}", e.getMessage(), e);
 
-            request.setAttribute(ATTR_ERRORE, e.getMessage()); // COSTANTE
+            request.setAttribute(ATTR_ERRORE, e.getMessage());
 
             try {
-                request.getRequestDispatcher(PAGE_ERRORE).forward(request, response); // COSTANTE
+                request.getRequestDispatcher(PAGE_ERRORE).forward(request, response);
             } catch (Exception forwardEx) {
-                logger.error("Errore durante il forward alla pagina di errore", forwardEx);
+                logger.error(MSG_LOG_FORWARD_ERROR, forwardEx);
             }
         }
     }
