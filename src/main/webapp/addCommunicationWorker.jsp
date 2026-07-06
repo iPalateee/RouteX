@@ -3,75 +3,8 @@
 <head>
 <%@ include file="imports.jsp" %>
 <title>RouteX - Comunicazione</title>
+<link rel="stylesheet" type="text/css" href="css/dashWork.css">
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Arial Rounded MT Bold', sans-serif;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        background: url('images/light.jpg') no-repeat center center/cover;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .background-blur {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(6px);
-        z-index: -1;
-    }
-
-    .main-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        color: white;
-    }
-
-    .left-box {
-        flex: 1;
-        padding: 30px;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .left-box img {
-        width: 150px;
-        margin-bottom: 20px;
-    }
-
-    .left-box h1 {
-        font-size: 24px;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .left-box p {
-        font-size: 18px;
-        text-align: center;
-        line-height: 1.5;
-    }
-
-    .right-content {
-        flex: 3;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-    }
 
     .form-container {
         text-align: center;
