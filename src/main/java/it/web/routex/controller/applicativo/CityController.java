@@ -1,9 +1,9 @@
 package it.web.routex.controller.applicativo;
 import it.web.routex.bean.CityBean;
 import it.web.routex.bean.PrezzoTotaleBean;
+import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
 import it.web.routex.model.City;
 import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.InvalidPriceCalculationExceptionRemoli;
 import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 import it.web.routex.utility.factory.LayerPersistenza;
 
@@ -66,7 +66,7 @@ public class CityController {
      * @return Bean contenente il prezzo totale
      * @throws DAOExceptionBrondi in caso di errore logico o di accesso ai dati
      */
-    public PrezzoTotaleBean ottieniPrezzoTotale(String city, int quantity) throws DAOExceptionBrondi, InvalidPriceCalculationExceptionRemoli {
+    public PrezzoTotaleBean ottieniPrezzoTotale(String city, int quantity) throws DAOExceptionBrondi, InvalidPriceCalculationExceptionBrondi {
 
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<City> cities = layer.listCitiesRAM();
@@ -76,10 +76,10 @@ public class CityController {
                 return new PrezzoTotaleBean(totale);
             }
         }
-        throw new InvalidPriceCalculationExceptionRemoli(
+        throw new InvalidPriceCalculationExceptionBrondi(
                 "La città selezionata non è disponibile nel database.",
                 "Nessuna corrispondenza per la city='" + city + "'",
-                InvalidPriceCalculationExceptionRemoli.Severity.HIGH
+                InvalidPriceCalculationExceptionBrondi.Severity.HIGH
         );
     }
 }

@@ -3,7 +3,7 @@ import it.web.routex.bean.CityLifeBean;
 import java.sql.SQLException;
 import java.util.*;
 
-import it.web.routex.exception.FuoriRangeExceptionRemoli;
+import it.web.routex.exception.FuoriRangeExceptionBrondi;
 import it.web.routex.exception.UnreacheableNodeExceptionRemoli;
 import it.web.routex.model.CityModel;
 import it.web.routex.model.Fermata;
@@ -215,12 +215,12 @@ public class CityLifeController
     }
 
 
-    public List<Integer> dijkstra(int partenza, int arrivo) throws FuoriRangeExceptionRemoli, UnreacheableNodeExceptionRemoli {
+    public List<Integer> dijkstra(int partenza, int arrivo) throws FuoriRangeExceptionBrondi, UnreacheableNodeExceptionRemoli {
         if (partenza < 0 || partenza >= citylife.getMatriceAdiacenza().length)
-            throw new FuoriRangeExceptionRemoli("ID partenza fuori range: " + partenza, FuoriRangeExceptionRemoli.Severity.CRITICAL );
+            throw new FuoriRangeExceptionBrondi("ID partenza fuori range: " + partenza, FuoriRangeExceptionBrondi.Severity.CRITICAL );
 
         if (arrivo < 0 || arrivo >= citylife.getMatriceAdiacenza().length)
-            throw new FuoriRangeExceptionRemoli("ID arrivo fuori range: " + arrivo, FuoriRangeExceptionRemoli.Severity.CRITICAL);
+            throw new FuoriRangeExceptionBrondi("ID arrivo fuori range: " + arrivo, FuoriRangeExceptionBrondi.Severity.CRITICAL);
 
 
         ArrayList<Integer> percorsiCodifica = new ArrayList<>();

@@ -54,7 +54,7 @@ public class PathControllerGraficoCLI extends LoggedCLI
             PathController path = new PathController();
             dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta()); //controller applicativo
         } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
-                 FuoriRangeExceptionRemoli | DAOExceptionBrondi | SQLException e) {
+                 FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException e) {
             logger.error("Errore processamento dati percorso {}", e.toString());
             GenericErrorCLI.mostraErrore("Errore processamento dati percorso");
             return;

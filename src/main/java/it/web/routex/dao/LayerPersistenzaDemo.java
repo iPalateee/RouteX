@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -443,7 +444,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
                         Ticket t = new Ticket(
                                 codice.trim(),
                                 p.getCity(),
-                                LocalDateTime.now() // simulazione data_pagamento
+                                LocalDateTime.now(ZoneId.systemDefault()) // simulazione data_pagamento // simulazione data_pagamento
                         );
                         result.add(t);
                     }

@@ -1,6 +1,7 @@
 package it.web.routex.exception;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class InvalidRouteInputExceptionRemoli extends Exception {
 
@@ -10,10 +11,9 @@ public class InvalidRouteInputExceptionRemoli extends Exception {
   public InvalidRouteInputExceptionRemoli(String field, String message) {
     super(message);
     this.field = field;
-    this.timestamp = LocalDateTime.now();
+    this.timestamp = LocalDateTime.now(ZoneId.systemDefault());
   }
 
-  public String getField() { return field; }
   public LocalDateTime getTimestamp() { return timestamp; }
 
   @Override

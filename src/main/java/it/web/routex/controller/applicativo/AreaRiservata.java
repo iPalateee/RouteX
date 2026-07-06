@@ -56,7 +56,7 @@ public class AreaRiservata
                         500,
                         "Errore dominio Ticket: " + e.getMessage()
                 );
-            } catch (InvalidBuyTicketInputExceptionRemoli e) {
+            } catch (InvalidBuyTicketInputExceptionBrondi e) {
                 throw new RuntimeException(e);
             }
         }

@@ -49,10 +49,10 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
                     .withPersistenza(ConfermaPagamentoCLI.getPersistenza())
                     .build();
 
-        }catch(InvalidPaymentInputExceptionRemoli e) {
+        }catch(InvalidPaymentInputExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Errore nell'input del pagamento"+ e.getUserMessage());
             return null;
-        } catch (InvalidCardInputExceptionRemoli | InvalidBuyTicketInputExceptionRemoli e) {
+        } catch (InvalidCardInputExceptionRemoli | InvalidBuyTicketInputExceptionBrondi e) {
             throw new RuntimeException(e);
         }
     }

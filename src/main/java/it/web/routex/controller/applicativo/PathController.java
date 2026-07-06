@@ -16,7 +16,7 @@ import java.util.List;
 
 public class PathController
 {
-    public InformazioniPercorsoBean run(String startStation, String endStation, String city) throws IllegalArgumentException, FuoriRangeExceptionRemoli, UnreacheableNodeExceptionRemoli, SQLException, DAOExceptionBrondi
+    public InformazioniPercorsoBean run(String startStation, String endStation, String city) throws IllegalArgumentException, FuoriRangeExceptionBrondi, UnreacheableNodeExceptionRemoli, SQLException, DAOExceptionBrondi
     {
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Station> stations = layer.restituisciIdStazioni(startStation, endStation, city);
@@ -62,12 +62,12 @@ public class PathController
                 //uso route per salvare il percorso. Poi RouteBean è diverso, non ha utente
                 return true;
             } else {
-                throw new CFIsNullRemoli("Devi effettuare il login per salvare il percorso.",
+                throw new CFIsNullBrondi("Devi effettuare il login per salvare il percorso.",
                         "CF nullo: richiesta di salvataggio senza autenticazione.",
                         "ERR-CF-NULL",
-                        CFIsNullRemoli.Severity.CRITICAL);
+                        CFIsNullBrondi.Severity.CRITICAL);
             }
-        }catch (CFIsNullRemoli e)
+        }catch (CFIsNullBrondi e)
         {
             logger.error("Utente non autenticato, impossibile salvare il percorso. {}", e.toString());
         }

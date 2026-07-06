@@ -2,9 +2,9 @@ package it.web.routex.utility.builder;
 
 import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.enumerator.TypesOfPersistenceLayer;
-import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCardInputExceptionRemoli;
-import it.web.routex.exception.InvalidPaymentInputExceptionRemoli;
+import it.web.routex.exception.InvalidPaymentInputExceptionBrondi;
 import it.web.routex.utility.singleton.PersistenceMode;
 
 public class PaymentBuilder {
@@ -17,17 +17,17 @@ public class PaymentBuilder {
         this.prb = new PaymentResultBean();
     }
 
-    public PaymentBuilder withCity(String rawCity) throws InvalidBuyTicketInputExceptionRemoli {
+    public PaymentBuilder withCity(String rawCity) throws InvalidBuyTicketInputExceptionBrondi {
         this.prb.setCity(rawCity);
         return this;
     }
 
-    public PaymentBuilder withQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionRemoli {
+    public PaymentBuilder withQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {
         this.prb.setQuantity(rawQuantity);
         return this;
     }
 
-    public PaymentBuilder withTotale(String rawTotale) throws InvalidBuyTicketInputExceptionRemoli {
+    public PaymentBuilder withTotale(String rawTotale) throws InvalidBuyTicketInputExceptionBrondi {
         this.prb.setTotale(rawTotale);
         return this;
     }
@@ -43,23 +43,23 @@ public class PaymentBuilder {
     }
 
 
-    public PaymentResultBean build() throws InvalidPaymentInputExceptionRemoli {
+    public PaymentResultBean build() throws InvalidPaymentInputExceptionBrondi {
 
         if (this.rawPersistenza == null) {
-            throw new InvalidPaymentInputExceptionRemoli(
+            throw new InvalidPaymentInputExceptionBrondi(
                     "Campo mancante: persistence.",
                     "Parametro 'persistence' è null.",
-                    InvalidPaymentInputExceptionRemoli.Severity.LOW
+                    InvalidPaymentInputExceptionBrondi.Severity.LOW
             );
         }
 
         switch (this.rawPersistenza) {
             case "JDBC" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.JDBC);
             case "FileSystem" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.FILE_SYSTEM);
-            default -> throw new InvalidPaymentInputExceptionRemoli(
+            default -> throw new InvalidPaymentInputExceptionBrondi(
                     "Tipo di persistenza non valido.",
                     "Parametro persistence='" + this.rawPersistenza + "' non riconosciuto.",
-                    InvalidPaymentInputExceptionRemoli.Severity.HIGH
+                    InvalidPaymentInputExceptionBrondi.Severity.HIGH
             );
         }
 

@@ -1,8 +1,9 @@
 package it.web.routex.exception;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-public class InvalidBuyTicketInputExceptionRemoli extends Exception {
+public class InvalidBuyTicketInputExceptionBrondi extends Exception {
 
   private final String errorCode;
   private final String userMessage;
@@ -12,7 +13,7 @@ public class InvalidBuyTicketInputExceptionRemoli extends Exception {
 
   public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 
-  public InvalidBuyTicketInputExceptionRemoli(String userMessage,
+  public InvalidBuyTicketInputExceptionBrondi(String userMessage,
                                               String technicalMessage,
                                               Severity severity) {
     super(technicalMessage);
@@ -20,7 +21,7 @@ public class InvalidBuyTicketInputExceptionRemoli extends Exception {
     this.userMessage = userMessage;
     this.technicalMessage = technicalMessage;
     this.severity = severity;
-    this.timestamp = LocalDateTime.now();
+    this.timestamp = LocalDateTime.now(ZoneId.systemDefault());
   }
 
   public String getUserMessage() {
@@ -29,7 +30,7 @@ public class InvalidBuyTicketInputExceptionRemoli extends Exception {
 
   @Override
   public String toString() {
-    return "InvalidBuyTicketInputExceptionRemoli {" +
+    return "InvalidBuyTicketInputExceptionBrondi {" +
             "errorCode='" + errorCode + '\'' +
             ", userMessage='" + userMessage + '\'' +
             ", technicalMessage='" + technicalMessage + '\'' +

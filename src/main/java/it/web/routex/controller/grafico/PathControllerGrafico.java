@@ -94,7 +94,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
                 PathController path = new PathController();
                 dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta()); //controller applicativo
             } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
-                     FuoriRangeExceptionRemoli | DAOExceptionBrondi | SQLException e)
+                     FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException e)
             {
                 forwardToError(request, response, "Errore processamento dati percorso" + e.getMessage(), cred);
                 logger.error("Errore processamento dati percorso {}", e.toString());

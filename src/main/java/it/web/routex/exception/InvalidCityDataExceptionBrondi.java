@@ -1,6 +1,7 @@
 package it.web.routex.exception;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class InvalidCityDataExceptionBrondi extends Exception {
 
@@ -20,7 +21,7 @@ public class InvalidCityDataExceptionBrondi extends Exception {
         this.userMessage = userMessage;
         this.technicalMessage = technicalMessage;
         this.severity = severity;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now(ZoneId.systemDefault());
     }
 
     public String getUserMessage() {

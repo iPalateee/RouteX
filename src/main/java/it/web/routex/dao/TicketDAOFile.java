@@ -1,6 +1,7 @@
 package it.web.routex.dao;
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class TicketDAOFile extends TicketDAOLayer
             String listaCodici = String.join(";", codiciBiglietti);
 
             // Timestamp formattato
-            String timestamp = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+            String timestamp = java.time.LocalDateTime.now(ZoneId.systemDefault()).format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
             // Scrittura della riga
             bw.write(

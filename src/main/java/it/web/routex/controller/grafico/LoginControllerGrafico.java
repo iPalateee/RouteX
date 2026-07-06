@@ -4,13 +4,13 @@ import it.web.routex.bean.UtenteBeanGenerico;
 import it.web.routex.controller.applicativo.LoginController;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.domain.LoggedHttpServlet;
+import it.web.routex.exception.InvalidLoginInputExceptionBrondi;
 import it.web.routex.utility.factory.ConnectionFactory;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import it.web.routex.exception.LoginNotFoundRemoli;
-import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 
 /**
  * Controller grafico per la gestione del login utente.
@@ -31,7 +31,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
 
 
     private AutenticazioneBean creaBeanAutenticazione(HttpServletRequest request)
-            throws InvalidLoginInputExceptionRemoli {
+            throws InvalidLoginInputExceptionBrondi {
 
         AutenticazioneBean aut = new AutenticazioneBean();
 
@@ -107,7 +107,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
      * Gestisce gli errori di validazione sintattica sollevati dalla Bean
      * durante la creazione (es. email non conforme, password mancante).
      */
-    private void gestisciErroreValidazione(HttpServletRequest request, HttpServletResponse response, InvalidLoginInputExceptionRemoli ex)
+    private void gestisciErroreValidazione(HttpServletRequest request, HttpServletResponse response, InvalidLoginInputExceptionBrondi ex)
     {
         request.setAttribute(ATTR_MESSAGGIO_ERRORE, ex.getUserMessage());
         try {
@@ -155,7 +155,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
             }
             logger.error("Tentativo di login fallito: email={}, Maskedpassw={}, message={}", ex.getEmail(), ex.getMaskedPassword(), ex.getMessage());
 
-        } catch (InvalidLoginInputExceptionRemoli e) {
+        } catch (InvalidLoginInputExceptionBrondi e) {
             gestisciErroreValidazione(request, response, e);
         }
     }

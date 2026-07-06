@@ -1,7 +1,8 @@
 package it.web.routex.exception;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-public class CFIsNullRemoli extends Exception {
+public class CFIsNullBrondi extends Exception {
 
     private final String errorCode;          // codice errore interno
     private final String userMessage;        // messaggio per l'utente
@@ -12,14 +13,14 @@ public class CFIsNullRemoli extends Exception {
     public enum Severity {
         LOW, MEDIUM, HIGH, CRITICAL
     }
-    public CFIsNullRemoli(String userMessage, String technicalMessage, String errorCode, Severity severity)
+    public CFIsNullBrondi(String userMessage, String technicalMessage, String errorCode, Severity severity)
     {
         super(technicalMessage);
         this.userMessage = userMessage;
         this.technicalMessage = technicalMessage;
         this.errorCode = errorCode;
         this.severity = severity;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now(ZoneId.systemDefault());
     }
     @Override
     public String toString() {

@@ -9,9 +9,9 @@ import it.web.routex.boundary.cli.view.ConfermaPagamentoCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.CityController;
 import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCityDataExceptionBrondi;
-import it.web.routex.exception.InvalidPriceCalculationExceptionRemoli;
+import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
 import it.web.routex.record.BuyTicketRecord;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
         } catch (DAOExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Errore durante l'elaborazione dell'acquisto: " + e.getMessage());
             logger.error("Errore nella DAO {}. ", e.getMessage());
-        } catch (InvalidPriceCalculationExceptionRemoli e) {
+        } catch (InvalidPriceCalculationExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Errore nei dati inseriti " + e.getUserMessage());
         }
     }
@@ -75,7 +75,7 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
 
             return new BuyTicketRecord(prb.getCity(), prb.getQuantity());
 
-        } catch (InvalidBuyTicketInputExceptionRemoli e) {
+        } catch (InvalidBuyTicketInputExceptionBrondi e) {
             logger.error("Errore di validazione input nell'acquisto biglietti", e);
             GenericErrorCLI.mostraErrore("Errore di validazione input nell'acquisto biglietti" + e.getUserMessage());
             return null;

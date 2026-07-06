@@ -1,8 +1,9 @@
 package it.web.routex.exception;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-public class InvalidPriceCalculationExceptionRemoli extends Exception {
+public class InvalidPriceCalculationExceptionBrondi extends Exception {
 
     private final String errorCode;
     private final String userMessage;
@@ -12,7 +13,7 @@ public class InvalidPriceCalculationExceptionRemoli extends Exception {
 
     public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 
-    public InvalidPriceCalculationExceptionRemoli(String userMessage,
+    public InvalidPriceCalculationExceptionBrondi(String userMessage,
                                                   String technicalMessage,
                                                   Severity severity) {
         super(technicalMessage);
@@ -20,11 +21,11 @@ public class InvalidPriceCalculationExceptionRemoli extends Exception {
         this.userMessage = userMessage;
         this.technicalMessage = technicalMessage;
         this.severity = severity;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now(ZoneId.systemDefault());
     }
     @Override
     public String toString() {
-        return "InvalidPriceCalculationExceptionRemoli {" +
+        return "InvalidPriceCalculationExceptionBrondi {" +
                 "errorCode='" + errorCode + '\'' +
                 ", userMessage='" + userMessage + '\'' +
                 ", technicalMessage='" + technicalMessage + '\'' +

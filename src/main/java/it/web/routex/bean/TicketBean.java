@@ -1,6 +1,6 @@
 package it.web.routex.bean;
 
-import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 
 import static it.web.routex.utility.text.TextUtils.*;
 
@@ -15,22 +15,22 @@ public class TicketBean
         this.codice = codice;
     }
 
-    public void setCitta(String rawCity) throws InvalidBuyTicketInputExceptionRemoli {
+    public void setCitta(String rawCity) throws InvalidBuyTicketInputExceptionBrondi {
 
         if (rawCity == null)
-            throw new InvalidBuyTicketInputExceptionRemoli(
+            throw new InvalidBuyTicketInputExceptionBrondi(
                     "Parametro mancante.",
                     "Request incompleta.",
-                    InvalidBuyTicketInputExceptionRemoli.Severity.LOW
+                    InvalidBuyTicketInputExceptionBrondi.Severity.LOW
             );
 
         String city = sanitize(rawCity);
 
         if (city.isBlank())
-            errorTicket("Il campo città non può essere vuoto.", InvalidBuyTicketInputExceptionRemoli.Severity.MEDIUM);
+            errorTicket("Il campo città non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
 
         if (!city.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s-]+$"))
-            errorTicket("La città inserita non è valida.", InvalidBuyTicketInputExceptionRemoli.Severity.MEDIUM);
+            errorTicket("La città inserita non è valida.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
 
         this.citta = city;
     }

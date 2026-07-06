@@ -1,35 +1,31 @@
 package it.web.routex.exception;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-/**
- * Eccezione lanciata quando un indice (ID stazione, nodo, ecc.)
- * è fuori dal range della matrice di adiacenza.
- */
-public class FuoriRangeExceptionRemoli extends Exception {
+public class InvalidLoginInputExceptionBrondi extends Exception {
 
     private final String errorCode;
     private final String userMessage;
     private final String technicalMessage;
-    private final LocalDateTime timestamp;
     private final Severity severity;
+    private final LocalDateTime timestamp;
 
-    public enum Severity {
-        LOW, MEDIUM, HIGH, CRITICAL
-    }
+    public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 
-    public FuoriRangeExceptionRemoli(String technicalMessage, Severity severity) {
+    public InvalidLoginInputExceptionBrondi(String userMessage,
+                                            String technicalMessage,
+                                            Severity severity) {
         super(technicalMessage);
-        this.errorCode = "ERR-RANGE-REMOLI";
-        this.userMessage = "Parametro fuori dal range consentito. Verifica la stazione selezionata.";
+        this.errorCode = "ERR-LOGIN-INPUT";
+        this.userMessage = userMessage;
         this.technicalMessage = technicalMessage;
-        this.timestamp = LocalDateTime.now();
         this.severity = severity;
+        this.timestamp = LocalDateTime.now(ZoneId.systemDefault());
     }
-
     @Override
     public String toString() {
-        return "FuoriRangeExceptionRemoli {" +
+        return "InvalidLoginInputExceptionBrondi {" +
                 "errorCode='" + errorCode + '\'' +
                 ", userMessage='" + userMessage + '\'' +
                 ", technicalMessage='" + technicalMessage + '\'' +
@@ -37,4 +33,9 @@ public class FuoriRangeExceptionRemoli extends Exception {
                 ", timestamp=" + timestamp +
                 '}';
     }
+
+    public String getUserMessage() {
+        return userMessage;
+    }
+
 }

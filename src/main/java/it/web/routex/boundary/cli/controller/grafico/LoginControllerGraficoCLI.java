@@ -7,7 +7,7 @@ import it.web.routex.boundary.cli.LoggedCLI;
 import it.web.routex.boundary.cli.view.*;
 import it.web.routex.controller.applicativo.LoginController;
 import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
+import it.web.routex.exception.InvalidLoginInputExceptionBrondi;
 import it.web.routex.exception.LoginNotFoundRemoli;
 import it.web.routex.utility.factory.ConnectionFactory;
 import java.sql.SQLException;
@@ -57,7 +57,7 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
 
             return aut;
 
-        } catch (InvalidLoginInputExceptionRemoli e) {
+        } catch (InvalidLoginInputExceptionBrondi e) {
             ErroreLoginCLI.mostraErrore(e.getUserMessage());
             logger.error("[CLI]Errore di validazione input login: {}", e.toString());
             return null;

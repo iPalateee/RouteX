@@ -14,7 +14,6 @@ import it.web.routex.utility.singleton.PersistenceMode;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import it.web.routex.utility.text.TextUtils.*;
 
 @WebServlet("/confermaPagamento")
 public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
@@ -57,7 +56,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
                     .withPersistenza(request.getParameter("persistence"))
                     .build();
 
-        } catch (InvalidPaymentInputExceptionRemoli e) {
+        } catch (InvalidPaymentInputExceptionBrondi e) {
             logger.error("Errore nell'input del pagamento: {}", e.toString());
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getUserMessage());
             try {
@@ -66,7 +65,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
                 logger.error("Errore durante il forward alla pagina di errore", a);
             }
             return null;
-        } catch (InvalidBuyTicketInputExceptionRemoli | InvalidCardInputExceptionRemoli e) {
+        } catch (InvalidBuyTicketInputExceptionBrondi | InvalidCardInputExceptionRemoli e) {
 
             logger.error("Errore di validazione input: {}", e.getMessage());
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getMessage()); // o e.getUserMessage() se lo hai implementato

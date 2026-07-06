@@ -3,7 +3,7 @@ import it.web.routex.bean.CityLifeBean;
 import it.web.routex.bean.InformazioniPercorsoBean;
 import it.web.routex.bean.RoutingRequestBean;
 import it.web.routex.controller.applicativo.CityLifeController;
-import it.web.routex.exception.FuoriRangeExceptionRemoli;
+import it.web.routex.exception.FuoriRangeExceptionBrondi;
 import it.web.routex.exception.UnreacheableNodeExceptionRemoli;
 import it.web.routex.model.CityModel;
 import it.web.routex.utility.factory.CityLifeFactory;
@@ -12,11 +12,11 @@ import java.util.List;
 
 public class FacadePath
 {
-    public InformazioniPercorsoBean compute(RoutingRequestBean route) throws IllegalArgumentException, FuoriRangeExceptionRemoli, UnreacheableNodeExceptionRemoli, SQLException {
+    public InformazioniPercorsoBean compute(RoutingRequestBean route) throws IllegalArgumentException, FuoriRangeExceptionBrondi, UnreacheableNodeExceptionRemoli, SQLException {
         CityLifeBean cityLife = routingProcess(route);
         return settingProcess(cityLife);
     }
-    private CityLifeBean routingProcess (RoutingRequestBean route) throws IllegalArgumentException, FuoriRangeExceptionRemoli, UnreacheableNodeExceptionRemoli, SQLException {
+    private CityLifeBean routingProcess (RoutingRequestBean route) throws IllegalArgumentException, FuoriRangeExceptionBrondi, UnreacheableNodeExceptionRemoli, SQLException {
         CityModel modelcity = CityLifeFactory.createCity(route.getCity());
         CityLifeController controller = new CityLifeController(modelcity);
         List<Integer> path = controller.dijkstra(

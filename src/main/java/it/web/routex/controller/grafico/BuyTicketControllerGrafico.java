@@ -7,9 +7,9 @@ import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.CityController;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.domain.LoggedHttpServlet;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.record.BuyTicketRecord;
-import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
-import it.web.routex.exception.InvalidPriceCalculationExceptionRemoli;
+import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
 import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 
 import javax.servlet.annotation.WebServlet;
@@ -115,7 +115,7 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
                     logger.error("Errore nel forwarding",e);
                 }
                 logger.error("Errore nella DAO {}. ", e.getMessage());
-            } catch (InvalidPriceCalculationExceptionRemoli e) {
+            } catch (InvalidPriceCalculationExceptionBrondi e) {
                 logger.error("Errore nei dati inseriti: {}", e.toString());
                 request.setAttribute(ERRORE, e.getUserMessage());
                 try {
@@ -148,7 +148,7 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
 
 
             return new BuyTicketRecord(prb.getCity(), prb.getQuantity());
-        } catch (InvalidBuyTicketInputExceptionRemoli e) {
+        } catch (InvalidBuyTicketInputExceptionBrondi e) {
             logger.error("Errore di validazione input nell'acquisto biglietti", e);
             request.setAttribute(ERRORE, e.getUserMessage());
             try {

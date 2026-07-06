@@ -1,6 +1,6 @@
 package it.web.routex.utility.text;
 
-import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCardInputExceptionRemoli;
 
 
@@ -36,8 +36,8 @@ public final class TextUtils {
         );
     }
 
-    public static void errorTicket(String msg, InvalidBuyTicketInputExceptionRemoli.Severity severity) throws InvalidBuyTicketInputExceptionRemoli {
-        throw new InvalidBuyTicketInputExceptionRemoli(msg, msg, severity);
+    public static void errorTicket(String msg, InvalidBuyTicketInputExceptionBrondi.Severity severity) throws InvalidBuyTicketInputExceptionBrondi {
+        throw new InvalidBuyTicketInputExceptionBrondi(msg, msg, severity);
     }
 
 }
