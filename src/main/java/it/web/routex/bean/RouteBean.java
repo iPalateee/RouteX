@@ -59,13 +59,13 @@ public class RouteBean
 
     public void setArrivo(String a) throws InvalidRouteInputExceptionRemoli {
 
-        String arrivo = sanitize(a);
+        String arrivoo = sanitize(a);
 
-        if (arrivo == null || arrivo.isEmpty())
+        if (arrivoo == null || arrivoo.isEmpty())
             throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
 
 
-        this.arrivo = arrivo;
+        this.arrivo = arrivoo;
     }
 
     public void setCitta(String citta) throws InvalidRouteInputExceptionRemoli {
@@ -91,12 +91,12 @@ public class RouteBean
 
     public void setPartenza(String p) throws InvalidRouteInputExceptionRemoli {
 
-        String partenza = sanitize(p);
+        String partenzaa = sanitize(p);
 
-        if (partenza == null || partenza.isEmpty())
+        if (partenzaa == null || partenzaa.isEmpty())
             throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
 
-        this.partenza = partenza;
+        this.partenza = partenzaa;
     }
 
     public void setPercTerrenoUtilizzato(Double percTerrenoUtilizzato) {

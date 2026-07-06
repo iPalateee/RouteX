@@ -89,11 +89,6 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         TypesOfPersistenceLayer persistenceLayer = PersistenceMode.getSingletonInstance().getTipo();
         logger.info("Tipo di persistenza scelto: {}", persistenceLayer);
     }
-    /*private void impostaPersistenza(PaymentResultBean paymentRecord) {
-        TypesOfPersistenceLayer persistenceLayer = paymentRecord.persistenceLayer();
-        logger.info("Tipo di persistenza scelto {}", persistenceLayer);
-        PersistenceMode.getSingletonInstance().setTipo(persistenceLayer);
-    }*/
     private RegistrazionePagamentoController creaControllerPagamento(PaymentResultBean paymentRecord, Credentials cred) {
 
         String metodo = paymentRecord.getPaymentMethod().toLowerCase();

@@ -56,7 +56,16 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet
                     logger.error("Errore durante il forward alla pagina di errore", e);
                 }
             } catch (InvalidRouteInputExceptionRemoli e) {
-                throw new RuntimeException(e);
+
+                logger.error("Errore di validazione input percorso. Messaggio={}", e.getMessage(), e);
+
+                request.setAttribute("errore", e.getMessage());
+
+                try {
+                    request.getRequestDispatcher("/error.jsp").forward(request, response);
+                } catch (Exception forwardEx) {
+                    logger.error("Errore durante il forward alla pagina di errore", forwardEx);
+                }
             }
 
     }
