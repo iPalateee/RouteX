@@ -9,6 +9,7 @@ import it.web.routex.controller.applicativo.PagamentoPaypal;
 import it.web.routex.controller.applicativo.RegistrazionePagamentoController;
 import it.web.routex.exception.*;
 import it.web.routex.enumerator.TypesOfPersistenceLayer;
+import it.web.routex.utility.builder.PaymentBuilder;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.utility.singleton.PersistenceMode;
 
@@ -40,38 +41,14 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
     {
         try{
 
-            PaymentResultBean prb = new PaymentResultBean();
+            return new PaymentBuilder()
+                    .withCity(ConfermaPagamentoCLI.getCity())
+                    .withQuantity(ConfermaPagamentoCLI.getQuantity())
+                    .withTotale(String.valueOf(ConfermaPagamentoCLI.getPrezzoTotale()))
+                    .withMetodoPagamento(ConfermaPagamentoCLI.getMetodoPagamento())
+                    .withPersistenza(ConfermaPagamentoCLI.getPersistenza())
+                    .build();
 
-            String rawCity = ConfermaPagamentoCLI.getCity();
-            String rawQuantity = ConfermaPagamentoCLI.getQuantity();
-            String rawTotale = String.valueOf(ConfermaPagamentoCLI.getPrezzoTotale());
-            String rawMetodoPagamento = ConfermaPagamentoCLI.getMetodoPagamento();
-            String rawPersistenza = ConfermaPagamentoCLI.getPersistenza();
-
-            prb.setCity(rawCity);
-            prb.setQuantity(rawQuantity);
-            prb.setTotale(rawTotale);
-            prb.setMetodoPagamento(rawMetodoPagamento);
-
-            if (rawPersistenza == null) {
-                throw new InvalidPaymentInputExceptionRemoli(
-                        "Campo mancante: persistence.",
-                        "Parametro 'persistence' è null.",
-                        InvalidPaymentInputExceptionRemoli.Severity.LOW
-                );
-            }
-
-            switch (rawPersistenza) {
-                case "JDBC" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.JDBC);
-                case "FileSystem" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.FILE_SYSTEM);
-                default -> throw new InvalidPaymentInputExceptionRemoli(
-                        "Tipo di persistenza non valido.",
-                        "Parametro persistence='" + rawPersistenza + "' non riconosciuto.",
-                        InvalidPaymentInputExceptionRemoli.Severity.HIGH
-                );
-            }
-
-            return prb;
         }catch(InvalidPaymentInputExceptionRemoli e) {
             GenericErrorCLI.mostraErrore("Errore nell'input del pagamento"+ e.getUserMessage());
             return null;
