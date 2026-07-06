@@ -3,6 +3,7 @@ package it.web.routex.bean;
 import it.web.routex.exception.InvalidCardInputExceptionRemoli;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import static it.web.routex.utility.text.TextUtils.*;
 
@@ -25,25 +26,25 @@ public class MastercardBean {
 
     public void setNumero(String rawNumero) throws InvalidCardInputExceptionRemoli {
 
-        String numero = sanitizeParam(rawNumero);
+        String numeroo = sanitizeParam(rawNumero);
 
-        if (!numero.isBlank() && !numero.matches("^\\d{16}$")) {
+        if (!numeroo.isBlank() && !numeroo.matches("^\\d{16}$")) {
             error("Numero carta non valido.");
         }
 
-        this.numero = numero;
+        this.numero = numeroo;
 
     }
 
     public void setScadenza(String rawScadenza) throws InvalidCardInputExceptionRemoli {
 
-        String scadenza = sanitizeParam(rawScadenza);
+        String scadenzaa = sanitizeParam(rawScadenza);
 
-        if (!scadenza.isBlank() && !scadenza.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
+        if (!scadenzaa.isBlank() && !scadenzaa.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
             error("Scadenza non valida.");
         }
 
-        String[] parts = scadenza.split("-");
+        String[] parts = scadenzaa.split("-");
         int year = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
 
@@ -51,7 +52,7 @@ public class MastercardBean {
             error("Mese della carta non valido.");
         }
 
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.systemDefault());
         LocalDate expiry = LocalDate.of(year, month, 1)
                 .plusMonths(1)
                 .minusDays(1);
@@ -64,21 +65,21 @@ public class MastercardBean {
             );
         }
 
-        this.scadenza = scadenza;
+        this.scadenza = scadenzaa;
     }
 
     public void setCvv(String rawCvv) throws InvalidCardInputExceptionRemoli {
 
-        String cvv = sanitizeParam(rawCvv);
+        String cvvv = sanitizeParam(rawCvv);
 
-        if (!cvv.matches("^\\d{3}$")) {
+        if (!cvvv.matches("^\\d{3}$")) {
             error("Il codice CVV non è valido.");
         }
-        if (!cvv.isBlank() && !cvv.matches("^\\d{3}$")) {
+        if (!cvvv.isBlank() && !cvvv.matches("^\\d{3}$")) {
             error("CVV non valido.");
         }
 
-        this.cvv = cvv;
+        this.cvv = cvvv;
     }
 
 }

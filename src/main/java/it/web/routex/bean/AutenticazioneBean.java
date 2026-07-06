@@ -8,10 +8,6 @@ public class AutenticazioneBean {
     private String email;
     private String password;
 
-    public AutenticazioneBean() {
-
-    }
-
     public String getEmail() { return email; }
     public String getPassword() { return password; }
 

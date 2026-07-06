@@ -19,31 +19,31 @@ public class PaypalBean {
 
     public void setCodice(String c) throws InvalidCardInputExceptionRemoli {
 
-        String codice = sanitizeParam(c);
+        String codicee = sanitizeParam(c);
 
-        if (codice.isBlank()) {
+        if (codicee.isBlank()) {
             error("Il codice transazione è obbligatorio.");
         }
         
-        if (!codice.matches("^TXN-[A-Za-z0-9]{6,20}$")) {
+        if (!codicee.matches("^TXN-[A-Za-z0-9]{6,20}$")) {
             error("Il codice transazione non è valido.");
         }
         
-        this.codice = codice;
+        this.codice = codicee;
     }
 
     public void setEmail(String e) throws InvalidCardInputExceptionRemoli {
 
-        String email = sanitizeParam(e);
+        String emaill = sanitizeParam(e);
 
-        if (email.isBlank()) {
+        if (emaill.isBlank()) {
             error("Inserisci la tua email PayPal.");
         }
-        if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+        if (!emaill.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
             error("L'email PayPal inserita non è valida.");
         }
 
-        this.email = email;
+        this.email = emaill;
     }
 
 }
