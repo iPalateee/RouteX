@@ -1,23 +1,24 @@
 package it.web.routex.boundary.cli.controller.grafico;
 import it.web.routex.bean.MessageBean;
 import it.web.routex.boundary.cli.LoggedCLI;
-import it.web.routex.boundary.cli.extractor.CommunicationInputExtractorCLI;
 import it.web.routex.boundary.cli.view.ComunicazioneInviataCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
+import it.web.routex.boundary.cli.view.SendCommunicationCLI;
 import it.web.routex.controller.applicativo.ConfirmCommunicationControllerApplicativo;
 import it.web.routex.exception.BrondiInvalidCommunicationInputException;
-import it.web.routex.record.CommunicationInput;
+
+import java.sql.Timestamp;
 
 public class ConfirmCommunicationControllerGraficoCLI extends LoggedCLI {
 
     public static void doPost()
     {
         try {
-            CommunicationInput input = CommunicationInputExtractorCLI.extract();
+            String testo = SendCommunicationCLI.getMessage();
 
             MessageBean mess = new MessageBean();
-            mess.setMessage(input.message());
-            mess.setDate(input.date());
+            mess.setMessage(testo);
+            mess.setDate(new Timestamp(System.currentTimeMillis()));
 
             ConfirmCommunicationControllerApplicativo service = new ConfirmCommunicationControllerApplicativo();
 

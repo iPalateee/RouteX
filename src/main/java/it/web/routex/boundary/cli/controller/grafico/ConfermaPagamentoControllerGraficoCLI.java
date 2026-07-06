@@ -1,26 +1,16 @@
 package it.web.routex.boundary.cli.controller.grafico;
+import it.web.routex.bean.MastercardBean;
 import it.web.routex.bean.PaymentResultBean;
+import it.web.routex.bean.PaypalBean;
 import it.web.routex.boundary.cli.LoggedCLI;
-import it.web.routex.boundary.cli.extractor.MastercardExtractorCLI;
-import it.web.routex.boundary.cli.extractor.PagamentoExtractorCLI;
-import it.web.routex.boundary.cli.extractor.PaypalExtractorCLI;
-import it.web.routex.boundary.cli.view.ErroreLoginCLI;
-import it.web.routex.boundary.cli.view.GenericErrorCLI;
-import it.web.routex.boundary.cli.view.SuccessoPagamentoCLI;
+import it.web.routex.boundary.cli.view.*;
 import it.web.routex.controller.applicativo.PagamentoMastercard;
 import it.web.routex.controller.applicativo.PagamentoPaypal;
 import it.web.routex.controller.applicativo.RegistrazionePagamentoController;
-import it.web.routex.record.MastercardRecord;
-import it.web.routex.record.PaymentRecord;
+import it.web.routex.exception.*;
 import it.web.routex.enumerator.TypesOfPersistenceLayer;
-import it.web.routex.record.PaypalRecord;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
-import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.utility.singleton.PersistenceMode;
-import it.web.routex.exception.InvalidPaymentInputExceptionRemoli;
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
 
 public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
 
@@ -30,10 +20,10 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         logUtente(cred);
 
 
-        PaymentRecord paymentRecord = estraiPagamento();
+        PaymentResultBean paymentRecord = estraiPagamento();
         if (paymentRecord == null) return;
 
-        impostaPersistenza(paymentRecord);
+        logPersistenzaScelta();
 
         RegistrazionePagamentoController controllerPagamento = creaControllerPagamento(paymentRecord,cred);
 
@@ -46,13 +36,47 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         mostraSuccesso(result);
     }
 
-    private PaymentRecord estraiPagamento()
+    private PaymentResultBean estraiPagamento()
     {
         try{
-            return PagamentoExtractorCLI.from();
+
+            PaymentResultBean prb = new PaymentResultBean();
+
+            String rawCity = ConfermaPagamentoCLI.getCity();
+            String rawQuantity = ConfermaPagamentoCLI.getQuantity();
+            String rawTotale = String.valueOf(ConfermaPagamentoCLI.getPrezzoTotale());
+            String rawMetodoPagamento = ConfermaPagamentoCLI.getMetodoPagamento();
+            String rawPersistenza = ConfermaPagamentoCLI.getPersistenza();
+
+            prb.setCity(rawCity);
+            prb.setQuantity(rawQuantity);
+            prb.setTotale(rawTotale);
+            prb.setMetodoPagamento(rawMetodoPagamento);
+
+            if (rawPersistenza == null) {
+                throw new InvalidPaymentInputExceptionRemoli(
+                        "Campo mancante: persistence.",
+                        "Parametro 'persistence' è null.",
+                        InvalidPaymentInputExceptionRemoli.Severity.LOW
+                );
+            }
+
+            switch (rawPersistenza) {
+                case "JDBC" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.JDBC);
+                case "FileSystem" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.FILE_SYSTEM);
+                default -> throw new InvalidPaymentInputExceptionRemoli(
+                        "Tipo di persistenza non valido.",
+                        "Parametro persistence='" + rawPersistenza + "' non riconosciuto.",
+                        InvalidPaymentInputExceptionRemoli.Severity.HIGH
+                );
+            }
+
+            return prb;
         }catch(InvalidPaymentInputExceptionRemoli e) {
             GenericErrorCLI.mostraErrore("Errore nell'input del pagamento"+ e.getUserMessage());
             return null;
+        } catch (InvalidCardInputExceptionRemoli | InvalidBuyTicketInputExceptionRemoli e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,14 +84,19 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         logger.info("[PROCESSAMENTO PAGAMENTO] Utente loggato: nome={}, cognome={}, ruolo={}",
                 cred.getNome(), cred.getCognome(), cred.getRuolo());
     }
-    private void impostaPersistenza(PaymentRecord paymentRecord) {
+
+    private void logPersistenzaScelta() {
+        TypesOfPersistenceLayer persistenceLayer = PersistenceMode.getSingletonInstance().getTipo();
+        logger.info("Tipo di persistenza scelto: {}", persistenceLayer);
+    }
+    /*private void impostaPersistenza(PaymentResultBean paymentRecord) {
         TypesOfPersistenceLayer persistenceLayer = paymentRecord.persistenceLayer();
         logger.info("Tipo di persistenza scelto {}", persistenceLayer);
         PersistenceMode.getSingletonInstance().setTipo(persistenceLayer);
-    }
-    private RegistrazionePagamentoController creaControllerPagamento(PaymentRecord paymentRecord, Credentials cred) {
+    }*/
+    private RegistrazionePagamentoController creaControllerPagamento(PaymentResultBean paymentRecord, Credentials cred) {
 
-        String metodo = paymentRecord.method().toLowerCase();
+        String metodo = paymentRecord.getPaymentMethod().toLowerCase();
 
         return switch (metodo) {
             case "mastercard" -> creaPagamentoMastercard(paymentRecord, cred);
@@ -75,35 +104,54 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
             default           -> gestisciMetodoNonValido();
         };
     }
-    private RegistrazionePagamentoController creaPagamentoMastercard(PaymentRecord paymentRecord, Credentials cred) {
+    private RegistrazionePagamentoController creaPagamentoMastercard(PaymentResultBean paymentRecord, Credentials cred) {
 
         try {
-            MastercardRecord master = MastercardExtractorCLI.from();
+
+            String rawNumero = MastercardCLI.getNumeroCarta();
+            String rawScadenza = MastercardCLI.getScadenza();
+            String rawCvv = MastercardCLI.getCvv();
+
+            MastercardBean mb = new MastercardBean();
+
+            mb.setNumero(rawNumero);
+            mb.setNumero(rawScadenza);
+            mb.setNumero(rawCvv);
+
             return new PagamentoMastercard(
-                    master.numero_carta(),
-                    master.scadenza(),
-                    master.cvv(),
+                    mb.getNumero(),
+                    mb.getScadenza(),
+                    mb.getCvv(),
                     cred,
-                    paymentRecord.total(),
-                    paymentRecord.quantity(),
-                    paymentRecord.city()
+                    paymentRecord.getTotal(),
+                    paymentRecord.getQuantity(),
+                    paymentRecord.getCity()
             );
+
         } catch (InvalidCardInputExceptionRemoli e) {
             gestisciErroreInput(e.getUserMessage(), "Errore nei dati Mastercard", e);
             return null;
         }
     }
-    private RegistrazionePagamentoController creaPagamentoPaypal(PaymentRecord paymentRecord, Credentials cred) {
+    private RegistrazionePagamentoController creaPagamentoPaypal(PaymentResultBean paymentRecord, Credentials cred) {
 
         try {
-            PaypalRecord pay = PaypalExtractorCLI.from();
+
+            String email = PaypalCLI.getEmailPaypal();
+            String codice = PaypalCLI.getCodiceTransazione();
+
+            PaypalBean pb = new PaypalBean();
+
+            pb.setEmail(email);
+            pb.setCodice(codice);
+
             return new PagamentoPaypal(
-                    pay.email_paypal(),
-                    pay.codice_transazione(),
+                    pb.getEmail(),
+                    pb.getCodice(),
                     cred,
-                    paymentRecord.total(),
-                    paymentRecord.quantity(),
-                    paymentRecord.city()
+                    paymentRecord.getTotal(),
+                    paymentRecord.getQuantity(),
+                    paymentRecord.getCity()
             );
         } catch (InvalidCardInputExceptionRemoli e) {
             gestisciErroreInput(e.getUserMessage(), "Errore nei dati Paypal", e);

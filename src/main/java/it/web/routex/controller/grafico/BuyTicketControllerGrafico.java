@@ -1,19 +1,21 @@
 package it.web.routex.controller.grafico;
 
 import it.web.routex.bean.CityBean;
+import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.bean.PrezzoTotaleBean;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.CityController;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.extractor.BuyTicketExtractor;
 import it.web.routex.record.BuyTicketRecord;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionRemoli;
 import it.web.routex.exception.InvalidPriceCalculationExceptionRemoli;
 import it.web.routex.exception.InvalidCityDataExceptionBrondi;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.util.List;
+
 
 /**
  * Controller grafico per la gestione del flusso "Buy Ticket".
@@ -136,7 +138,16 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
     private BuyTicketRecord estraiBuyTicket(HttpServletRequest request, HttpServletResponse response)
     {
         try {
-            return BuyTicketExtractor.from(request);
+
+            PaymentResultBean prb = new PaymentResultBean();
+            String rawCity = request.getParameter("city");
+            String rawQuantity = request.getParameter("quantity");
+
+            prb.setCity(rawCity);
+            prb.setQuantity(rawQuantity);
+
+
+            return new BuyTicketRecord(prb.getCity(), prb.getQuantity());
         } catch (InvalidBuyTicketInputExceptionRemoli e) {
             logger.error("Errore di validazione input nell'acquisto biglietti", e);
             request.setAttribute(ERRORE, e.getUserMessage());

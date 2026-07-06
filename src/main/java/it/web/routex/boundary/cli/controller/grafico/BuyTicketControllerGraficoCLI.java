@@ -1,9 +1,9 @@
 package it.web.routex.boundary.cli.controller.grafico;
 
 import it.web.routex.bean.CityBean;
+import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.bean.PrezzoTotaleBean;
 import it.web.routex.boundary.cli.LoggedCLI;
-import it.web.routex.boundary.cli.extractor.BuyTicketExtractorCLI;
 import it.web.routex.boundary.cli.view.BuyTicketCLI;
 import it.web.routex.boundary.cli.view.ConfermaPagamentoCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
@@ -67,7 +67,14 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
     private BuyTicketRecord estraiBuyTicket(String city, String quantity)
     {
         try {
-            return BuyTicketExtractorCLI.from(city,quantity);
+
+            PaymentResultBean prb = new PaymentResultBean();
+
+            prb.setCity(city);
+            prb.setQuantity(quantity);
+
+            return new BuyTicketRecord(prb.getCity(), prb.getQuantity());
+
         } catch (InvalidBuyTicketInputExceptionRemoli e) {
             logger.error("Errore di validazione input nell'acquisto biglietti", e);
             GenericErrorCLI.mostraErrore("Errore di validazione input nell'acquisto biglietti" + e.getUserMessage());

@@ -4,13 +4,11 @@ import it.web.routex.bean.AutenticazioneBean;
 import it.web.routex.bean.UtenteBeanGenerico;
 import it.web.routex.boundary.cli.CLIRoute;
 import it.web.routex.boundary.cli.LoggedCLI;
-import it.web.routex.boundary.cli.extractor.LoginExtractorCLI;
 import it.web.routex.boundary.cli.view.*;
 import it.web.routex.controller.applicativo.LoginController;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 import it.web.routex.exception.LoginNotFoundRemoli;
-import it.web.routex.record.LoginRecord;
 import it.web.routex.utility.factory.ConnectionFactory;
 import java.sql.SQLException;
 
@@ -44,16 +42,17 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
     }
     private AutenticazioneBean creaBeanAutenticazione() {
         try {
-            LoginRecord login = LoginExtractorCLI.from();
+            String rawEmail = LoginViewCLI.getEmailUtente();
+            String rawPassword = LoginViewCLI.getPasswordUtente();
 
             AutenticazioneBean aut = new AutenticazioneBean();
-            aut.setEmail(login.email());
-            aut.setPassword(login.password());
+            aut.setEmail(rawEmail);
+            aut.setPassword(rawPassword);
 
             logger.info(
                     "Bean di autenticazione creato con email: {}, password presente={}",
-                    login.email(),
-                    login.password() != null
+                    aut.getEmail(),
+                    aut.getPassword() != null
             );
 
             return aut;
@@ -61,7 +60,7 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
         } catch (InvalidLoginInputExceptionRemoli e) {
             ErroreLoginCLI.mostraErrore(e.getUserMessage());
             logger.error("[CLI]Errore di validazione input login: {}", e.toString());
-            return null;   // ✅ SOLO QUESTO
+            return null;
         }
     }
     private void gestisciReindirizzamento(UtenteBeanGenerico utente)

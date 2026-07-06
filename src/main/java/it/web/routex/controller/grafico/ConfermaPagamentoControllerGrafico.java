@@ -1,26 +1,18 @@
 package it.web.routex.controller.grafico;
+import it.web.routex.bean.MastercardBean;
 import it.web.routex.bean.PaymentResultBean;
+import it.web.routex.bean.PaypalBean;
 import it.web.routex.controller.applicativo.PagamentoMastercard;
 import it.web.routex.controller.applicativo.PagamentoPaypal;
 import it.web.routex.controller.applicativo.RegistrazionePagamentoController;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.extractor.MastercardExtractor;
-import it.web.routex.extractor.PagamentoExtractor;
-import it.web.routex.extractor.PaypalExtractor;
-import it.web.routex.record.MastercardRecord;
-import it.web.routex.record.PaymentRecord;
+import it.web.routex.exception.*;
 import it.web.routex.enumerator.TypesOfPersistenceLayer;
-import it.web.routex.record.PaypalRecord;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
-import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.utility.singleton.PersistenceMode;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import it.web.routex.exception.InvalidPaymentInputExceptionRemoli;
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
 
 @WebServlet("/confermaPagamento")
 public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
@@ -36,10 +28,10 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         Credentials cred = Credentials.getInstanceSingleton();
         logUtente(cred);
 
-        PaymentRecord paymentRecord = estraiPagamento(request, response);
+        PaymentResultBean paymentRecord = estraiPagamento(request, response);
         if (paymentRecord == null) return;
 
-        impostaPersistenza(paymentRecord);
+        logPersistenzaScelta();
 
         RegistrazionePagamentoController controllerPagamento = creaControllerPagamento(paymentRecord, request, response, cred);
 
@@ -52,16 +44,58 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         mostraSuccesso(request, response, result);
     }
 
-    private PaymentRecord estraiPagamento(HttpServletRequest request, HttpServletResponse response)
-    {
-        try{
-            return PagamentoExtractor.from(request);
-        }catch(InvalidPaymentInputExceptionRemoli e) {
+    private PaymentResultBean estraiPagamento(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            PaymentResultBean prb = new PaymentResultBean();
+
+            String rawCity = request.getParameter("city");
+            String rawQuantity = request.getParameter("quantity");
+            String rawTotale = request.getParameter("totale");
+            String rawMetodoPagamento = request.getParameter("metodoPagamento");
+            String rawPersistenza = request.getParameter("persistence");
+
+            prb.setCity(rawCity);
+            prb.setQuantity(rawQuantity);
+            prb.setTotale(rawTotale);
+            prb.setMetodoPagamento(rawMetodoPagamento);
+
+            if (rawPersistenza == null) {
+                throw new InvalidPaymentInputExceptionRemoli(
+                        "Campo mancante: persistence.",
+                        "Parametro 'persistence' è null.",
+                        InvalidPaymentInputExceptionRemoli.Severity.LOW
+                );
+            }
+
+            switch (rawPersistenza) {
+                case "JDBC" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.JDBC);
+                case "FileSystem" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.FILE_SYSTEM);
+                default -> throw new InvalidPaymentInputExceptionRemoli(
+                        "Tipo di persistenza non valido.",
+                        "Parametro persistence='" + rawPersistenza + "' non riconosciuto.",
+                        InvalidPaymentInputExceptionRemoli.Severity.HIGH
+                );
+            }
+
+            return prb;
+
+        } catch (InvalidPaymentInputExceptionRemoli e) {
             logger.error("Errore nell'input del pagamento: {}", e.toString());
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getUserMessage());
             try {
                 request.getRequestDispatcher(PAGE_ERRORE_PAGAMENTO).forward(request, response);
-            }catch(Exception a){
+            } catch (Exception a) {
+                logger.error("Errore durante il forward alla pagina di errore", a);
+            }
+            return null;
+        } catch (InvalidBuyTicketInputExceptionRemoli | InvalidCardInputExceptionRemoli e) {
+            // Anche questi errori (lanciati dai setter del Bean)
+            // andrebbero gestiti e mostrati all'utente!
+            logger.error("Errore di validazione input: {}", e.getMessage());
+            request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getMessage()); // o e.getUserMessage() se lo hai implementato
+            try {
+                request.getRequestDispatcher(PAGE_ERRORE_PAGAMENTO).forward(request, response);
+            } catch (Exception a) {
                 logger.error("Errore durante il forward alla pagina di errore", a);
             }
             return null;
@@ -82,18 +116,19 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         logger.info("[PROCESSAMENTO PAGAMENTO] Utente loggato: nome={}, cognome={}, ruolo={}",
                 cred.getNome(), cred.getCognome(), cred.getRuolo());
     }
-    private void impostaPersistenza(PaymentRecord paymentRecord) {
-        TypesOfPersistenceLayer persistenceLayer = paymentRecord.persistenceLayer();
-        logger.info("Tipo di persistenza scelto {}", persistenceLayer);
-        PersistenceMode.getSingletonInstance().setTipo(persistenceLayer);
+
+    private void logPersistenzaScelta() {
+        TypesOfPersistenceLayer persistenceLayer = PersistenceMode.getSingletonInstance().getTipo();
+        logger.info("Tipo di persistenza scelto: {}", persistenceLayer);
     }
+
     private RegistrazionePagamentoController creaControllerPagamento(
-            PaymentRecord paymentRecord,
+            PaymentResultBean paymentRecord,
             HttpServletRequest request,
             HttpServletResponse response,
             Credentials cred) {
 
-        String metodo = paymentRecord.method().toLowerCase();
+        String metodo = paymentRecord.getPaymentMethod().toLowerCase();
 
         return switch (metodo) {
             case "mastercard" -> creaPagamentoMastercard(paymentRecord, request, response, cred);
@@ -102,21 +137,31 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         };
     }
     private RegistrazionePagamentoController creaPagamentoMastercard(
-            PaymentRecord paymentRecord,
+            PaymentResultBean paymentRecord,
             HttpServletRequest request,
             HttpServletResponse response,
             Credentials cred) {
 
         try {
-            MastercardRecord master = MastercardExtractor.from(request);
+
+            String rawNumero = request.getParameter("numeroCarta");
+            String rawScadenza = request.getParameter("scadenza");
+            String rawCvv = request.getParameter("cvv");
+
+            MastercardBean mb = new MastercardBean();
+
+            mb.setNumero(rawNumero);
+            mb.setScadenza(rawScadenza);
+            mb.setCvv(rawCvv);
+
             return new PagamentoMastercard(
-                    master.numero_carta(),
-                    master.scadenza(),
-                    master.cvv(),
+                    mb.getNumero(),
+                    mb.getScadenza(),
+                    mb.getCvv(),
                     cred,
-                    paymentRecord.total(),
-                    paymentRecord.quantity(),
-                    paymentRecord.city()
+                    paymentRecord.getTotal(),
+                    paymentRecord.getQuantity(),
+                    paymentRecord.getCity()
             );
         } catch (InvalidCardInputExceptionRemoli e) {
             gestisciErroreInput(request, response, e.getUserMessage(), "Errore nei dati Mastercard", e);
@@ -124,20 +169,28 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         }
     }
     private RegistrazionePagamentoController creaPagamentoPaypal(
-            PaymentRecord paymentRecord,
+            PaymentResultBean paymentRecord,
             HttpServletRequest request,
             HttpServletResponse response,
             Credentials cred) {
 
         try {
-            PaypalRecord pay = PaypalExtractor.from(request);
+
+            String email = request.getParameter("emailPaypal");
+            String codice = request.getParameter("codiceTransazione");
+
+            PaypalBean pb = new PaypalBean();
+
+            pb.setEmail(email);
+            pb.setCodice(codice);
+
             return new PagamentoPaypal(
-                    pay.email_paypal(),
-                    pay.codice_transazione(),
+                    pb.getEmail(),
+                    pb.getCodice(),
                     cred,
-                    paymentRecord.total(),
-                    paymentRecord.quantity(),
-                    paymentRecord.city()
+                    paymentRecord.getTotal(),
+                    paymentRecord.getQuantity(),
+                    paymentRecord.getCity()
             );
         } catch (InvalidCardInputExceptionRemoli e) {
             gestisciErroreInput(request, response, e.getUserMessage(), "Errore nei dati Paypal", e);

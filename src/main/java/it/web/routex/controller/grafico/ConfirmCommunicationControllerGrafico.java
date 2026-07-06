@@ -4,11 +4,10 @@ import it.web.routex.bean.MessageBean;
 import it.web.routex.controller.applicativo.ConfirmCommunicationControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.exception.BrondiInvalidCommunicationInputException;
-import it.web.routex.extractor.CommunicationInputExtractor;
-import it.web.routex.record.CommunicationInput;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 
 @WebServlet("/confirmCommunication")
 public class ConfirmCommunicationControllerGrafico extends LoggedHttpServlet {
@@ -18,11 +17,11 @@ public class ConfirmCommunicationControllerGrafico extends LoggedHttpServlet {
     {
         try {
 
-            CommunicationInput input = CommunicationInputExtractor.extract(request);
+            String testo = request.getParameter("message");
 
             MessageBean mess = new MessageBean();
-            mess.setMessage(input.message());
-            mess.setDate(input.date());
+            mess.setMessage(testo);
+            mess.setDate(new Timestamp(System.currentTimeMillis()));
 
             ConfirmCommunicationControllerApplicativo service = new ConfirmCommunicationControllerApplicativo();
 

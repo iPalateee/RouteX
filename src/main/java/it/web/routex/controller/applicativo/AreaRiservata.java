@@ -4,13 +4,11 @@ import it.web.routex.bean.RouteBean;
 import it.web.routex.bean.TicketBean;
 import it.web.routex.dao.LayerPersistenzaDemo;
 import it.web.routex.dao.TicketDAOLayer;
-import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
+import it.web.routex.exception.*;
 import it.web.routex.model.Route;
 import java.util.ArrayList;
 import java.util.List;
-import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.InvalidTicketExceptionRemoli;
-import it.web.routex.exception.PathNotFoundExceptionRemoli;
+
 import it.web.routex.model.Ticket;
 import it.web.routex.utility.decorator.decoratorpath.*;
 import it.web.routex.utility.factory.LayerPersistenza;
@@ -58,6 +56,8 @@ public class AreaRiservata
                         500,
                         "Errore dominio Ticket: " + e.getMessage()
                 );
+            } catch (InvalidBuyTicketInputExceptionRemoli e) {
+                throw new RuntimeException(e);
             }
         }
         return beans;
