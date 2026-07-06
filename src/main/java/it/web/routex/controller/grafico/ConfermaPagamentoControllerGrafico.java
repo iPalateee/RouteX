@@ -8,11 +8,13 @@ import it.web.routex.controller.applicativo.RegistrazionePagamentoController;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.exception.*;
 import it.web.routex.enumerator.TypesOfPersistenceLayer;
+import it.web.routex.utility.builder.PaymentBuilder;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.utility.singleton.PersistenceMode;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import it.web.routex.utility.text.TextUtils.*;
 
 @WebServlet("/confermaPagamento")
 public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
@@ -46,38 +48,14 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
 
     private PaymentResultBean estraiPagamento(HttpServletRequest request, HttpServletResponse response) {
         try {
-            PaymentResultBean prb = new PaymentResultBean();
 
-            String rawCity = request.getParameter("city");
-            String rawQuantity = request.getParameter("quantity");
-            String rawTotale = request.getParameter("totale");
-            String rawMetodoPagamento = request.getParameter("metodoPagamento");
-            String rawPersistenza = request.getParameter("persistence");
-
-            prb.setCity(rawCity);
-            prb.setQuantity(rawQuantity);
-            prb.setTotale(rawTotale);
-            prb.setMetodoPagamento(rawMetodoPagamento);
-
-            if (rawPersistenza == null) {
-                throw new InvalidPaymentInputExceptionRemoli(
-                        "Campo mancante: persistence.",
-                        "Parametro 'persistence' è null.",
-                        InvalidPaymentInputExceptionRemoli.Severity.LOW
-                );
-            }
-
-            switch (rawPersistenza) {
-                case "JDBC" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.JDBC);
-                case "FileSystem" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.FILE_SYSTEM);
-                default -> throw new InvalidPaymentInputExceptionRemoli(
-                        "Tipo di persistenza non valido.",
-                        "Parametro persistence='" + rawPersistenza + "' non riconosciuto.",
-                        InvalidPaymentInputExceptionRemoli.Severity.HIGH
-                );
-            }
-
-            return prb;
+            return new PaymentBuilder()
+                    .withCity(request.getParameter("city"))
+                    .withQuantity(request.getParameter("quantity"))
+                    .withTotale(request.getParameter("totale"))
+                    .withMetodoPagamento(request.getParameter("metodoPagamento"))
+                    .withPersistenza(request.getParameter("persistence"))
+                    .build();
 
         } catch (InvalidPaymentInputExceptionRemoli e) {
             logger.error("Errore nell'input del pagamento: {}", e.toString());
@@ -89,8 +67,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
             }
             return null;
         } catch (InvalidBuyTicketInputExceptionRemoli | InvalidCardInputExceptionRemoli e) {
-            // Anche questi errori (lanciati dai setter del Bean)
-            // andrebbero gestiti e mostrati all'utente!
+
             logger.error("Errore di validazione input: {}", e.getMessage());
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getMessage()); // o e.getUserMessage() se lo hai implementato
             try {

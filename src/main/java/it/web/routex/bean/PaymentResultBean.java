@@ -44,7 +44,6 @@ public class PaymentResultBean {
     public String getPaymentMethod() { return paymentMethod; }
     public List<String> getTicketCodes() { return ticketCodes; }
 
-    // --- SETTERS ---
     public void setCity(String c) throws InvalidBuyTicketInputExceptionRemoli {
         if (c == null)
             errorTicket("Il campo città non può essere nullo.", InvalidBuyTicketInputExceptionRemoli.Severity.MEDIUM);
