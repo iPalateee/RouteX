@@ -32,21 +32,8 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
                 AreaRiservata reserved = new AreaRiservata();
 
                 if (cf != null) {
-
-                    List<RouteBean> listaPercorsi = new ArrayList<>();
-                    List<TicketBean> tickets = new ArrayList<>();
-
-                    try {
-                        listaPercorsi = reserved.runPath(cf);
-                    } catch (PathNotFoundExceptionRemoli e) {
-                        logger.info("Nessun percorso trovato per l'utente {}. La tabella percorsi resterà vuota.", cf);
-                    }
-
-                    try {
-                        tickets = reserved.runTicket(cf);
-                    } catch (PathNotFoundExceptionRemoli e) {
-                        logger.info("Nessun biglietto trovato per l'utente {}. La tabella biglietti resterà vuota.", cf);
-                    }
+                    List<RouteBean> listaPercorsi = estraiPercorsi(reserved, cf);
+                    List<TicketBean> tickets = estraiBiglietti(reserved, cf);
 
                     request.setAttribute("listaPercorsi", listaPercorsi);
                     request.setAttribute("tickets", tickets);
@@ -58,9 +45,7 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
 
         } catch (DAOExceptionBrondi remoli) {
             logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());
-
             request.setAttribute(ATTR_ERRORE, remoli.getMessage());
-
             try {
                 request.getRequestDispatcher(PAGE_ERRORE).forward(request, response);
             } catch (Exception e) {
@@ -69,14 +54,30 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
 
         } catch (InvalidRouteInputExceptionRemoli e) {
             logger.error("Errore di validazione input percorso. Messaggio={}", e.getMessage(), e);
-
             request.setAttribute(ATTR_ERRORE, e.getMessage());
-
             try {
                 request.getRequestDispatcher(PAGE_ERRORE).forward(request, response);
             } catch (Exception forwardEx) {
                 logger.error(MSG_LOG_FORWARD_ERROR, forwardEx);
             }
+        }
+    }
+
+    private List<RouteBean> estraiPercorsi(AreaRiservata reserved, String cf) throws DAOExceptionBrondi, InvalidRouteInputExceptionRemoli {
+        try {
+            return reserved.runPath(cf);
+        } catch (PathNotFoundExceptionRemoli e) {
+            logger.info("Nessun percorso trovato per l'utente {}. La tabella percorsi resterà vuota.", cf);
+            return new ArrayList<>();
+        }
+    }
+
+    private List<TicketBean> estraiBiglietti(AreaRiservata reserved, String cf) throws DAOExceptionBrondi {
+        try {
+            return reserved.runTicket(cf);
+        } catch (PathNotFoundExceptionRemoli e) {
+            logger.info("Nessun biglietto trovato per l'utente {}. La tabella biglietti resterà vuota.", cf);
+            return new ArrayList<>();
         }
     }
 

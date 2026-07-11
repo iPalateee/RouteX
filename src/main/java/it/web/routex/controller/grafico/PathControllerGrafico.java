@@ -86,7 +86,9 @@ public class PathControllerGrafico extends LoggedHttpServlet {
         }
 
         logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}",
-                route.getCitta(), route.getPartenza(), route.getArrivo());
+                route.getCitta().replaceAll("[\n\r]", ""),
+                route.getPartenza().replaceAll("[\n\r]", ""),
+                route.getArrivo().replaceAll("[\n\r]", ""));
 
         InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
 
@@ -129,7 +131,9 @@ public class PathControllerGrafico extends LoggedHttpServlet {
                 logger.info(FORWARDING, e);
             }
 
-            String result = "Route from " + route.getPartenza() + " to " + route.getArrivo() + " in " + route.getCitta();
+            String result = "Route from " + route.getPartenza().replaceAll("[\n\r]", "") +
+                    " to " + route.getArrivo().replaceAll("[\n\r]", "") +
+                    " in " + route.getCitta().replaceAll("[\n\r]", "");
             logger.info(result);
 
     }

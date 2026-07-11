@@ -62,7 +62,7 @@ public class RouteBean
         String arrivoo = sanitize(a);
 
         if (arrivoo == null || arrivoo.isEmpty())
-            throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
+            throw new InvalidRouteInputExceptionRemoli("arrivo", "Parameter is missing");
 
 
         this.arrivo = arrivoo;
@@ -94,7 +94,7 @@ public class RouteBean
         String partenzaa = sanitize(p);
 
         if (partenzaa == null || partenzaa.isEmpty())
-            throw new InvalidRouteInputExceptionRemoli("city", "City parameter is missing");
+            throw new InvalidRouteInputExceptionRemoli("partenza", "Parameter is missing");
 
         this.partenza = partenzaa;
     }
