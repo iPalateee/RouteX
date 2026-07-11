@@ -48,10 +48,10 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
         } catch (DAOExceptionBrondi e) {
             forwardToError(request, response, "Errore nel caricamento delle città: " + e.getMessage(), cred);
-            logger.error("Errore nella presentazione della view il caricamento delle città: {}", e.toString());
+            logger.error("Errore nella presentazione della view il caricamento delle città:", e);
         } catch (InvalidCityDataExceptionBrondi e) {
             forwardToError(request, response, e.getUserMessage(), cred);
-            logger.error("Errore nei dati delle città: {}", e.toString());
+            logger.error("Errore nei dati delle città:", e);
         }
     }
 
@@ -70,7 +70,6 @@ public class PathControllerGrafico extends LoggedHttpServlet {
         }
 
         final Credentials cred = Credentials.getInstanceSingleton();
-
         route = estrattorePercorso(request, response, cred);
         String status = UserStatusResolver.resolve(cred);
 
@@ -80,10 +79,12 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             return;
         }
 
-        logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}",
-                route.getCitta().replaceAll(CRLF_REGEX, ""),
-                route.getPartenza().replaceAll(CRLF_REGEX, ""),
-                route.getArrivo().replaceAll(CRLF_REGEX, ""));
+        if (logger.isInfoEnabled()) {
+            logger.info("Dati per il percorso acquisiti correttamente. Città={}, StazPart={}, StazArr={}",
+                    route.getCitta().replaceAll(CRLF_REGEX, ""),
+                    route.getPartenza().replaceAll(CRLF_REGEX, ""),
+                    route.getArrivo().replaceAll(CRLF_REGEX, ""));
+        }
 
         InformazioniPercorsoBean dto = new InformazioniPercorsoBean();
 
@@ -93,7 +94,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
         } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
                  FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException e) {
             forwardToError(request, response, "Errore processamento dati percorso" + e.getMessage(), cred);
-            logger.error("Errore processamento dati percorso {}", e.toString());
+            logger.error("Errore processamento dati percorso", e);
         }
 
         RouteDecoratorService.decorate(dto, request);
@@ -125,10 +126,12 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             logger.info(FORWARDING, e);
         }
 
-        String result = "Route from " + route.getPartenza().replaceAll(CRLF_REGEX, "") +
-                " to " + route.getArrivo().replaceAll(CRLF_REGEX, "") +
-                " in " + route.getCitta().replaceAll(CRLF_REGEX, "");
-        logger.info(result);
+        if (logger.isInfoEnabled()) {
+            String result = "Route from " + route.getPartenza().replaceAll(CRLF_REGEX, "") +
+                    " to " + route.getArrivo().replaceAll(CRLF_REGEX, "") +
+                    " in " + route.getCitta().replaceAll(CRLF_REGEX, "");
+            logger.info(result);
+        }
     }
 
     private RouteBean estrattorePercorso(HttpServletRequest request, HttpServletResponse response, Credentials cred) {
@@ -141,7 +144,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             return rb;
         } catch (InvalidRouteInputExceptionRemoli e) {
             forwardToError(request, response, "Errore nell'input del percorso {}. -" + e.getMessage(), cred);
-            logger.error("Errore nell'input del percorso {}", e.getMessage());
+            logger.error("Errore nell'input del percorso:", e);
             return null;
         }
     }
@@ -149,7 +152,6 @@ public class PathControllerGrafico extends LoggedHttpServlet {
     protected void forwardToError(HttpServletRequest request, HttpServletResponse response, String errorMessage, Credentials cred) {
         try {
             request.setAttribute(ERRORE, errorMessage);
-
             HttpSession session = request.getSession(false);
 
             String errorPage;
