@@ -3,7 +3,7 @@
 <head>
 <%@ include file="imports.jsp" %>
 <title>RouteX - Comunicazione</title>
-<link rel="stylesheet" type="text/css" href="css/dashWork.css">
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/index.css">
 <style>
 
     .form-container {

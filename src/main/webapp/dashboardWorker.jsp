@@ -5,7 +5,7 @@
 <head>
 <%@ include file="imports.jsp" %>
 <title>RouteX - Metro Finder</title>
-<link rel="stylesheet" type="text/css" href="css/dashWork.css">
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/index.css">
 <style>
 /* Sezione per loghi della metropolitana */
 .metro-logos {
@@ -30,9 +30,8 @@
     transform: scale(1.2);
 }
 
-/* --- Modal scheda work schedule --- */
 .modal-scheda {
-    display: none; /* verrà mostrato via JS se workerSchedule non è vuoto */
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;

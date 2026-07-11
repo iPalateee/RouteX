@@ -24,7 +24,7 @@ public class CFIsNullBrondi extends Exception {
     }
     @Override
     public String toString() {
-        return "CFIsNullRemoliException {" +
+        return "CFIsNullBrondiException {" +
                 "errorCode='" + errorCode + '\'' +
                 ", userMessage='" + userMessage + '\'' +
                 ", technicalMessage='" + technicalMessage + '\'' +

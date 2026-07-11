@@ -39,7 +39,7 @@ public final class AreaRiservataCLI
     }
     private static void printPercorsi() {
 
-        System.out.println("📍 I tuoi percorsi salvati:\n");
+        System.out.println("   I tuoi percorsi salvati:\n");
 
         if (listaPercorsi == null || listaPercorsi.isEmpty()) {
             System.out.println("   Nessun percorso disponibile.\n");

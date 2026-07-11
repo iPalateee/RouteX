@@ -79,6 +79,18 @@
         .action-buttons a {
             margin-left: 8px;
         }
+
+        .table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .table td {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
     </style>
 </head>
 

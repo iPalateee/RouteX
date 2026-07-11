@@ -9,7 +9,7 @@ public final class ErroreLoginCLI
         System.out.println("\n================================");
         System.out.println("        ERRORE DI LOGIN          ");
         System.out.println("================================");
-        System.out.println("❌ " + messaggio);
+        System.out.println(messaggio);
         System.out.println("================================\n");
     }
 }

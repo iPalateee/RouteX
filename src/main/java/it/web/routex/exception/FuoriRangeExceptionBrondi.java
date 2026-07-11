@@ -21,7 +21,7 @@ public class FuoriRangeExceptionBrondi extends Exception {
 
     public FuoriRangeExceptionBrondi(String technicalMessage, Severity severity) {
         super(technicalMessage);
-        this.errorCode = "ERR-RANGE-REMOLI";
+        this.errorCode = "ERR-RANGE-BRONDI";
         this.userMessage = "Parametro fuori dal range consentito. Verifica la stazione selezionata.";
         this.technicalMessage = technicalMessage;
         this.timestamp = LocalDateTime.now(ZoneId.systemDefault());

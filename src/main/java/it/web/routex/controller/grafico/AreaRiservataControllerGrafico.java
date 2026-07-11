@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
 import it.web.routex.exception.DAOExceptionBrondi;
@@ -31,8 +32,22 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
                 AreaRiservata reserved = new AreaRiservata();
 
                 if (cf != null) {
-                    List<RouteBean> listaPercorsi = reserved.runPath(cf);
-                    List<TicketBean> tickets = reserved.runTicket(cf);
+
+                    List<RouteBean> listaPercorsi = new ArrayList<>();
+                    List<TicketBean> tickets = new ArrayList<>();
+
+                    try {
+                        listaPercorsi = reserved.runPath(cf);
+                    } catch (PathNotFoundExceptionRemoli e) {
+                        logger.info("Nessun percorso trovato per l'utente {}. La tabella percorsi resterà vuota.", cf);
+                    }
+
+                    try {
+                        tickets = reserved.runTicket(cf);
+                    } catch (PathNotFoundExceptionRemoli e) {
+                        logger.info("Nessun biglietto trovato per l'utente {}. La tabella biglietti resterà vuota.", cf);
+                    }
+
                     request.setAttribute("listaPercorsi", listaPercorsi);
                     request.setAttribute("tickets", tickets);
                     forwardAreaRiservata(request, response);
@@ -40,19 +55,6 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
                 }
             }
             redirectToLogin(response);
-
-        } catch (PathNotFoundExceptionRemoli remoli) {
-            logger.error("Errore PathNotFoundExceptionRemoli. Messaggio={} Cf={} CodiceErrore={} Dettagli={}.", remoli.getMessage(), remoli.getCodiceFiscaleUtente(), remoli.getCodiceDiErrore(), remoli.getDetails());
-
-            request.setAttribute(ATTR_ERRORE, remoli.getMessage());
-            String indexUrl = request.getContextPath() + "/indexLogged.jsp";
-            request.setAttribute("indexUrl", indexUrl);
-
-            try {
-                request.getRequestDispatcher(PAGE_ERRORE).forward(request, response);
-            } catch (Exception e) {
-                logger.error(MSG_LOG_FORWARD_ERROR, e);
-            }
 
         } catch (DAOExceptionBrondi remoli) {
             logger.error("Errore DAOExceptionRemoli. Messaggio={}", remoli.getMessage(), remoli.getCause());

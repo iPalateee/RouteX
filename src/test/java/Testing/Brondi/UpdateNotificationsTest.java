@@ -27,21 +27,17 @@ class UpdateNotificationsTest {
     @Test
     void TestAggiornaNotifica() throws SQLException {
 
-        // 1. Setup Ruolo
         ConnectionFactory.cambioDiRuolo(Ruolo.WORKER);
 
 
-        // 2. Creazione Bean (come fa il controller grafico)
         MessageBean bean = new MessageBean(
                 RB.getString("msgDaRisolvere"),
                 Timestamp.valueOf(RB.getString("orarioMsg"))
                 //new Timestamp(System.currentTimeMillis())
         );
 
-        // 3. Controller applicativo
         UpdateNotificationsControllerApplicativo controller = new UpdateNotificationsControllerApplicativo();
 
-        // 4. Verifica
         assertDoesNotThrow(() ->
                 controller.aggiornaStatoNotifica(bean)
         );

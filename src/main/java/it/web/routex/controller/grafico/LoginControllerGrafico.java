@@ -128,7 +128,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
         try {
 
             HttpSession session = request.getSession(true);
-            session.setMaxInactiveInterval(180); // 3 minuti di inattività
+            session.setMaxInactiveInterval(180);
 
             AutenticazioneBean credenziali = creaBeanAutenticazione(request);
 

@@ -5,7 +5,6 @@
 <head>
     <title>RouteX - Metro Finder</title>
     <style>
-        /* Stile di base per la pagina */
         .searchBox {
                     width: 90%;
                     padding: 10px;
@@ -15,7 +14,6 @@
                     margin-bottom: 10px;
                 }
 
-                /* Contenitore per i risultati */
                 .searchResults {
                     border: 1px solid #ccc;
                     max-height: 200px;
@@ -27,7 +25,6 @@
                     display: none;
                 }
 
-                /* Stile per ogni risultato */
                 .resultItem {
                     padding: 10px;
                     cursor: pointer;
@@ -48,7 +45,6 @@
             position: relative;
         }
 
-        /* Container per il form e la mappa */
         .main-container {
             display: flex;
             background: rgba(255, 255, 255, 0.9);
@@ -61,13 +57,11 @@
             gap: 40px; /* Aumentato lo spazio tra i contenitori */
         }
 
-        /* Container per il form */
         .form-container {
             flex: 1;
             text-align: center;
         }
 
-        /* Container per la mappa */
         .map-container {
             flex: 1;
             display: flex;
@@ -85,45 +79,40 @@
             border-radius: 10px;
         }
 
-        /* Stile per le dropdown */
         select {
-            width: 90%; /* Aumentata la larghezza */
-            padding: 16px; /* Aumentato il padding */
+            width: 90%;
+            padding: 16px;
             margin: 10px 0;
             border: 1px solid #007bff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-size: 18px; /* Aumentato il font-size */
+            font-size: 18px;
             transition: all 0.3s ease;
         }
 
-        /* Stile per il bottone */
         button {
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 16px 30px; /* Aumentato il padding */
+            padding: 16px 30px;
             border-radius: 15px;
-            font-size: 20px; /* Aumentato il font-size */
+            font-size: 20px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        /* Effetto hover per il bottone */
         button:hover {
             background-color: #0056b3;
             transform: translateY(-2px);
         }
 
-        /* Effetto focus per i select */
         select:focus {
             outline: none;
             border-color: #0056b3;
             box-shadow: 0 0 8px rgba(0, 91, 187, 0.5);
         }
 
-        /* Animazione di slide in */
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -135,20 +124,18 @@
             }
         }
 
-        /* Stile per il testo del risultato */
         p {
-            font-size: 20px; /* Aumentato il font-size */
+            font-size: 20px;
             color: #333;
             margin-top: 20px;
         }
 
-        /* Stile per i pulsanti registrati, login e home */
         .button-container-right {
             position: absolute;
             top: 20px;
-            right: 40px; /* Spazio dal margine destro */
+            right: 40px;
             display: flex;
-            gap: 10px; /* Spazio tra i due pulsanti */
+            gap: 10px;
         }
 
         .button-container-right a, .button-container-left a {
@@ -167,24 +154,21 @@
             background-color: #0056b3;
         }
 
-        /* Contenitore per il pulsante Home */
         .button-container-left {
             position: absolute;
             top: 20px;
-            left: 40px; /* Spazio dal margine sinistro */
+            left: 40px;
         }
 
-        /* Tooltip container per il bottone disabilitato */
         #submitBtn[disabled] {
           position: relative;
           cursor: not-allowed;
         }
 
-        /* Tooltip personalizzato (inizialmente nascosto) */
         #submitBtn[disabled]::after {
           content: attr(data-tooltip);
           position: absolute;
-          bottom: 130%; /* sopra il bottone */
+          bottom: 130%;
           left: 50%;
           transform: translateX(-50%);
           background-color: #333;
@@ -200,11 +184,10 @@
           z-index: 1000;
         }
 
-        /* Tooltip visibile subito al passaggio mouse */
         #submitBtn[disabled]:hover::after {
           opacity: 1;
           visibility: visible;
-          transition-delay: 0s; /* nessun delay */
+          transition-delay: 0s;
         }
     </style>
 <body>
@@ -267,6 +250,7 @@
                 <label for="startSearchBox">Start Station:</label>
                 <input type="text" name="startStation" id="startSearchBox" class="searchBox" placeholder="Search start station...">
 
+                <br>
                 <label for="endSearchBox">End Station:</label>
                 <input type="text" name="endStation" id="endSearchBox" class="searchBox" placeholder="Search end station...">
 

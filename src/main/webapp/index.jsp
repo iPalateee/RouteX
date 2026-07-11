@@ -23,7 +23,6 @@
 
     <div class="right-content">
 
-        <!--  SOLO REGISTER E LOGIN -->
         <div class="button-container">
             <a href="login.jsp">Login</a>
         </div>
@@ -32,7 +31,6 @@
             <img src="images/logo-no-background.png" alt="Logo">
             <h1>Welcome to RouteX!</h1>
 
-            <!--  Start Exploring sempre disponibile -->
             <form action="PathControllerGrafico" method="get">
                 <button class="welcome-button" type="submit">Start Exploring</button>
             </form>

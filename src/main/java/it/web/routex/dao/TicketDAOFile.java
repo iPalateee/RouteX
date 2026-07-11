@@ -31,7 +31,6 @@ public class TicketDAOFile extends TicketDAOLayer
 
             String line;
 
-            // Salta header
             String header = br.readLine();
             if (header == null) {
                 throw new DAOExceptionBrondi("File tickets CSV vuoto o corrotto");
@@ -41,7 +40,6 @@ public class TicketDAOFile extends TicketDAOLayer
 
                 String[] parts = line.split(",");
 
-                // sicurezza minima
                 if (parts.length < 8) continue;
 
                 String codiceFiscale = parts[0].trim();
@@ -49,7 +47,6 @@ public class TicketDAOFile extends TicketDAOLayer
                 String[] codiciBiglietti = parts[6].split(";");
                 String timestamp = parts[7].trim();
 
-                // Filtra per codice fiscale
                 if (codiceFiscale.equals(cf)) {
 
                     LocalDateTime dataAcquisto = parseTimestamp(timestamp);
@@ -92,18 +89,14 @@ public class TicketDAOFile extends TicketDAOLayer
         boolean fileVuoto = !new File(filePath).exists() || new File(filePath).length() == 0;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
 
-            // Se il file è nuovo o vuoto → scrivi l'header UNA sola volta
             if (fileVuoto) {
                 bw.write("codice_fiscale,nome,cognome,disabile,metodo_pagamento,citta,codici_biglietti,timestamp");
                 bw.newLine();
             }
 
             String listaCodici = String.join(";", codiciBiglietti);
-
-            // Timestamp formattato
             String timestamp = java.time.LocalDateTime.now(ZoneId.systemDefault()).format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
-            // Scrittura della riga
             bw.write(
                     cred.getCodiceFiscale() + "," +
                             cred.getNome() + "," +

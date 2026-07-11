@@ -48,7 +48,7 @@ public final class DemoStorage {
                         .disabile(false)
                         .ruolo(Ruolo.ADMIN)
                         .email("lucia@gmail.com")
-                        .password("mammi")
+                        .password("a")
                         .build()
         );
 

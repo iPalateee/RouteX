@@ -26,7 +26,7 @@ public class AdminViewCLI
                     LogoutCLI.logoutUser();
                     return;
                 }
-                default -> System.out.println("❌ Scelta non valida.");
+                default -> System.out.println("Scelta non valida.");
 
             }
 

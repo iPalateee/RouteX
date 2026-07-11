@@ -87,8 +87,8 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
             MastercardBean mb = new MastercardBean();
 
             mb.setNumero(rawNumero);
-            mb.setNumero(rawScadenza);
-            mb.setNumero(rawCvv);
+            mb.setScadenza(rawScadenza);
+            mb.setCvv(rawCvv);
 
             return new PagamentoMastercard(
                     mb.getNumero(),

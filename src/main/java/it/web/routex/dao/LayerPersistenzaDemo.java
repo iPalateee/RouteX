@@ -437,14 +437,13 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
                 if (p.getCodiceFiscale().equals(cf)) {
 
-                    // simulazione dei ticket salvati nel pagamento
                     String[] codici = p.getBiglietti().split(",");
 
                     for (String codice : codici) {
                         Ticket t = new Ticket(
                                 codice.trim(),
                                 p.getCity(),
-                                LocalDateTime.now(ZoneId.systemDefault()) // simulazione data_pagamento // simulazione data_pagamento
+                                LocalDateTime.now(ZoneId.systemDefault())
                         );
                         result.add(t);
                     }

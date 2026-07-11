@@ -1,9 +1,5 @@
 package it.web.routex.bean;
 
-/**
- * Bean che rappresenta una fermata della metropolitana.
- * Contiene l'ID della fermata, il nome e la linea di appartenenza.
- */
 public class FermataRecordBean {
 
     private String nome;

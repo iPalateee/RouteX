@@ -23,7 +23,6 @@ public class WorkerSchedule {
         return oraFine - oraInizio;
     }
 
-    //getter solo se servono alla view
     public int getOraInizio() { return oraInizio; }
     public int getOraFine() { return oraFine; }
     public String getLuogoDiLavoro() { return luogoDiLavoro; }

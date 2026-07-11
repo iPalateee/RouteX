@@ -15,7 +15,7 @@ public class UpdateNotificationsControllerGrafico extends LoggedHttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            String[] risolte = request.getParameterValues("risolte"); // eh no io ora da qui me le voglio prendere dalla cache
+            String[] risolte = request.getParameterValues("risolte");
 
             UpdateNotificationsControllerApplicativo service = new UpdateNotificationsControllerApplicativo();
 

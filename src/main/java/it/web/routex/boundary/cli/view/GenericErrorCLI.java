@@ -9,7 +9,7 @@ public final class GenericErrorCLI
         System.out.println("\n================================");
         System.out.println("        ERRORE!          ");
         System.out.println("================================");
-        System.out.println("❌ " + messaggio);
+        System.out.println(messaggio);
         System.out.println("================================\n");
     }
 }

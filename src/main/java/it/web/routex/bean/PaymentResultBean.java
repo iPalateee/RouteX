@@ -37,7 +37,6 @@ public class PaymentResultBean {
         this.ticketCodes = ticketCodes;
     }
 
-    // --- GETTERS ---
     public String getCity() { return city; }
     public int getQuantity() { return quantity; }
     public double getTotal() { return total; }

@@ -3,9 +3,6 @@ package it.web.routex.bean;
 
 import it.web.routex.model.City;
 
-/**
- * Bean per il trasferimento del solo nome della città verso la View.
- */
 public class CityBean {
 
     private String nome;
