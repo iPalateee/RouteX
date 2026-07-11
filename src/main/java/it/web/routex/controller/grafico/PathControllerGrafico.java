@@ -90,7 +90,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
         try {
             PathController path = new PathController();
-            dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta()); //controller applicativo
+            dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta());
         } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
                  FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException e) {
             forwardToError(request, response, "Errore processamento dati percorso" + e.getMessage(), cred);
@@ -106,10 +106,16 @@ public class PathControllerGrafico extends LoggedHttpServlet {
         PathController pathCtrl = new PathController();
         boolean salvato = pathCtrl.saveRoute(cred, dto, route, status);
 
-        if(salvato) {
-            logger.info("Percorso salvato correttamente per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.getCitta());
-        } else {
-            logger.info("Percorso non salvato per l'utente {} {} {} relativo alla città {}.", cred.getNome(), cred.getCognome(), cred.getRuolo(), route.getCitta());
+        if (logger.isInfoEnabled()) {
+            String safeCity = route.getCitta().replaceAll(CRLF_REGEX, "");
+
+            if (salvato) {
+                logger.info("Percorso salvato correttamente per l'utente {} {} {} relativo alla città {}.",
+                        cred.getNome(), cred.getCognome(), cred.getRuolo(), safeCity);
+            } else {
+                logger.info("Percorso non salvato per l'utente {} {} {} relativo alla città {}.",
+                        cred.getNome(), cred.getCognome(), cred.getRuolo(), safeCity);
+            }
         }
 
         RequestDispatcher dispatcher;
