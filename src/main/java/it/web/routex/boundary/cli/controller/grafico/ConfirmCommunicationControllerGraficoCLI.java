@@ -5,7 +5,7 @@ import it.web.routex.boundary.cli.view.ComunicazioneInviataCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.boundary.cli.view.SendCommunicationCLI;
 import it.web.routex.controller.applicativo.ConfirmCommunicationControllerApplicativo;
-import it.web.routex.exception.BrondiInvalidCommunicationInputException;
+import it.web.routex.exception.RemoliInvalidCommunicationInputException;
 
 import java.sql.Timestamp;
 
@@ -29,7 +29,7 @@ public class ConfirmCommunicationControllerGraficoCLI extends LoggedCLI {
             );
 
 
-        } catch (BrondiInvalidCommunicationInputException e) {
+        } catch (RemoliInvalidCommunicationInputException e) {
 
             GenericErrorCLI.mostraErrore(e.getMessage());
 

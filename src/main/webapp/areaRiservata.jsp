@@ -177,7 +177,7 @@
                    <% for (TicketBean t : tickets) { %>
                        <tr>
                            <td><%= t.getCodice() %></td>
-                           <td><%= t.getCitta() %></td>
+                           <td><%= t.getCity() %></td>
                            <td><%= t.getDataAcquisto() %></td>
                        </tr>
                    <% } %>

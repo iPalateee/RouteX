@@ -2,7 +2,7 @@ package it.web.routex.controller.applicativo;
 import it.web.routex.bean.MessageBean;
 import it.web.routex.exception.BrondiException;
 import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.BrondiNoNotificationsWarningException;
+import it.web.routex.exception.RemoliNoNotificationsWarningException;
 import it.web.routex.model.Notification;
 import it.web.routex.utility.factory.LayerPersistenza;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 public class ViewNotificationsControllerApplicativo {
 
     public List<MessageBean> messages()
-            throws BrondiException, BrondiNoNotificationsWarningException {
+            throws BrondiException, RemoliNoNotificationsWarningException {
 
         List<MessageBean> result = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class ViewNotificationsControllerApplicativo {
             }
 
             if (result.isEmpty()) {
-                throw new BrondiNoNotificationsWarningException(
+                throw new RemoliNoNotificationsWarningException(
                         "Nessuna notifica da visualizzare",
                         "Tutte le notifiche risultano risolte"
                 );

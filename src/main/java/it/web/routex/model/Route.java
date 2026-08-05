@@ -2,7 +2,7 @@ package it.web.routex.model;
 import it.web.routex.bean.InformazioniPercorsoBean;
 import it.web.routex.bean.RouteBean;
 import it.web.routex.utility.builder.data.RouteData;
-import it.web.routex.exception.InvalidRouteException;
+import it.web.routex.exception.InvalidRouteExceptionRemoli;
 import it.web.routex.utility.decorator.decoratorchange.BaseComponent;
 import it.web.routex.utility.decorator.decoratorchange.CheckCambiamentiDecorator;
 import it.web.routex.utility.decorator.decoratorchange.Component;
@@ -42,7 +42,7 @@ public class Route {
     }
 
 
-    public Route(InformazioniPercorsoBean dto, RouteBean route, String status) throws InvalidRouteException {
+    public Route(InformazioniPercorsoBean dto, RouteBean route, String status) throws InvalidRouteExceptionRemoli {
 
         Credentials cred = Credentials.getInstanceSingleton();
         Component c = new CheckCambiamentiDecorator(new BaseComponent());
@@ -83,7 +83,7 @@ public class Route {
             this.utente = cred.getCodiceFiscale();
 
         } catch (NullPointerException e) {
-            throw new InvalidRouteException(
+            throw new InvalidRouteExceptionRemoli(
                     "Errore nei dati della richiesta per la creazione della Route", e
             );
         }

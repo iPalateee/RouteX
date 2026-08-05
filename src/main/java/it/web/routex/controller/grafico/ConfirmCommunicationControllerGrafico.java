@@ -3,7 +3,7 @@ package it.web.routex.controller.grafico;
 import it.web.routex.bean.MessageBean;
 import it.web.routex.controller.applicativo.ConfirmCommunicationControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.exception.BrondiInvalidCommunicationInputException;
+import it.web.routex.exception.RemoliInvalidCommunicationInputException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +35,7 @@ public class ConfirmCommunicationControllerGrafico extends LoggedHttpServlet {
 
             request.getRequestDispatcher("/successCommunication.jsp").forward(request, response);
 
-        } catch (BrondiInvalidCommunicationInputException e) {
+        } catch (RemoliInvalidCommunicationInputException e) {
 
             request.setAttribute("errore", e.getMessage());
             try {

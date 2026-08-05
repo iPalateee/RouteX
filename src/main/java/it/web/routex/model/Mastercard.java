@@ -3,7 +3,7 @@ package it.web.routex.model;
 
 import it.web.routex.interfaces.Payment;
 import it.web.routex.enumerator.PaymentMethod;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
+import it.web.routex.exception.PaymentValidationExceptionBrondi;
 
 /**
  * Model di dominio per i pagamenti tramite Mastercard.
@@ -12,9 +12,9 @@ import it.web.routex.exception.PaymentValidationExceptionRemoli;
  */
 public class Mastercard implements Payment
 {
-    String numeroCarta;
-    String dataScadenza;
-    String cvv;
+    private String numeroCarta;
+    private String dataScadenza;
+    private String cvv;
 
     public void setCvv(String cvv) {
         this.cvv = cvv;
@@ -43,9 +43,9 @@ public class Mastercard implements Payment
     }
 
     @Override
-    public void validate() throws PaymentValidationExceptionRemoli {
+    public void validate() throws PaymentValidationExceptionBrondi {
         if (!isValid()) {
-            throw new PaymentValidationExceptionRemoli(
+            throw new PaymentValidationExceptionBrondi(
                     "Dati Mastercard non validi",
                     PaymentMethod.MASTERCARD,
                     "Validazione dominio Mastercard"

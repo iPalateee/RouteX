@@ -3,7 +3,7 @@ package it.web.routex.exception;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class InvalidLoginInputExceptionBrondi extends Exception {
+public class InvalidLoginInputExceptionRemoli extends Exception {
 
     private final String errorCode;
     private final String userMessage;
@@ -13,7 +13,7 @@ public class InvalidLoginInputExceptionBrondi extends Exception {
 
     public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 
-    public InvalidLoginInputExceptionBrondi(String userMessage,
+    public InvalidLoginInputExceptionRemoli(String userMessage,
                                             String technicalMessage,
                                             Severity severity) {
         super(technicalMessage);
@@ -25,7 +25,7 @@ public class InvalidLoginInputExceptionBrondi extends Exception {
     }
     @Override
     public String toString() {
-        return "InvalidLoginInputExceptionBrondi {" +
+        return "InvalidLoginInputExceptionRemoli {" +
                 "errorCode='" + errorCode + '\'' +
                 ", userMessage='" + userMessage + '\'' +
                 ", technicalMessage='" + technicalMessage + '\'' +

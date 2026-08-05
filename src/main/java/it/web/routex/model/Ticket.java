@@ -1,7 +1,7 @@
 package it.web.routex.model;
 
 
-import it.web.routex.exception.InvalidTicketExceptionRemoli;
+import it.web.routex.exception.InvalidTicketExceptionBrondi;
 
 import java.time.LocalDateTime;
 
@@ -40,9 +40,9 @@ public class Ticket {
                 && dataAcquisto != null;
     }
 
-    public void validate() throws InvalidTicketExceptionRemoli {
+    public void validate() throws InvalidTicketExceptionBrondi {
         if (!isValid()) {
-            throw new InvalidTicketExceptionRemoli(
+            throw new InvalidTicketExceptionBrondi(
                     "Ticket non valido",
                     "Invarianti di dominio violate nel Ticket",
                     codice

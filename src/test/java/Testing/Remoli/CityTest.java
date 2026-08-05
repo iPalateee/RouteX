@@ -2,7 +2,8 @@ package Testing.Remoli;
 
 import it.web.routex.bean.CityBean;
 import it.web.routex.bean.PrezzoTotaleBean;
-import it.web.routex.controller.applicativo.CityController;
+import it.web.routex.bean.TicketBean;
+import it.web.routex.controller.applicativo.BuyTicketControllerApplicativo;
 import it.web.routex.enumerator.Ruolo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * ------------------------------------------------------------
  *  Test Class : <CityTest>
  *  Author     : Simone Remoli
- *  Description: Test della classe CityController, in particolare
+ *  Description: Test della classe BuyTicketControllerApplicativo, in particolare
  *               del metodo ottieni_prezzo_totale e getAllCities.
  * ------------------------------------------------------------
  */
@@ -48,8 +49,12 @@ class CityTest {
         String quantita = parts[1];
         double expected = Double.parseDouble(parts[2]);
 
-        CityController cityController = new CityController();
-        PrezzoTotaleBean prezzo = cityController.ottieniPrezzoTotale(city, Integer.parseInt(quantita));
+        BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
+        TicketBean ticket = new TicketBean();
+
+        ticket.setCity(city);
+        ticket.setQuantity(quantita);
+        PrezzoTotaleBean prezzo = buyTicketControllerApplicativo.ottieniPrezzoTotale(ticket);
 
         assertEquals(expected, prezzo.getPrezzoTotale());
     }
@@ -57,8 +62,8 @@ class CityTest {
     void OttieniCity() throws InvalidCityDataExceptionBrondi, SQLException, DAOExceptionBrondi {
 
         ConnectionFactory.cambioDiRuolo(Ruolo.TRAVELER);
-        CityController cityController = new CityController();
-        List<CityBean> city = cityController.getAllCities();
+        BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
+        List<CityBean> city = buyTicketControllerApplicativo.getAllCities();
         assertTrue(city.size() > 0);
 
     }

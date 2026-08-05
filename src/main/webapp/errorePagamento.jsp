@@ -71,7 +71,6 @@
 <div class="box">
     <h2>Pagamento non riuscito</h2>
 
-    <!-- MESSAGGIO DI ERRORE DAL CONTROLLER -->
     <p>${messaggioErrore}</p>
 
     <div class="links">

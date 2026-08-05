@@ -7,7 +7,7 @@ import it.web.routex.boundary.cli.domain.RouteDecoratorServiceCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.boundary.cli.view.PathNOREGCLI;
 import it.web.routex.boundary.cli.view.StartExploringCLI;
-import it.web.routex.controller.applicativo.CityController;
+import it.web.routex.controller.applicativo.BuyTicketControllerApplicativo;
 import it.web.routex.controller.applicativo.PathController;
 import it.web.routex.exception.*;
 import it.web.routex.domain.UserStatusResolver;
@@ -21,8 +21,8 @@ public class PathControllerGraficoCLI extends LoggedCLI
     public void doGet()
     {
         try {
-            CityController cityController = new CityController();
-            List<CityBean> cities = cityController.getAllCities();
+            BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
+            List<CityBean> cities = buyTicketControllerApplicativo.getAllCities();
 
             StartExploringCLI.mostraExploring(cities);
 

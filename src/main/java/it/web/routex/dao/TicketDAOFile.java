@@ -10,7 +10,7 @@ import it.web.routex.exception.PathNotFoundExceptionRemoli;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.model.Ticket;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.CredentialsExceptionRemoli;
+import it.web.routex.exception.CredentialsExceptionBrondi;
 import it.web.routex.utility.configloader.ConfigLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +84,7 @@ public class TicketDAOFile extends TicketDAOLayer
 
 
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionRemoli
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionBrondi
     {
         boolean fileVuoto = !new File(filePath).exists() || new File(filePath).length() == 0;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -110,7 +110,7 @@ public class TicketDAOFile extends TicketDAOLayer
             bw.newLine();
 
         } catch (IOException e) {
-            throw new CredentialsExceptionRemoli("Errore scrittura CSV: " + e.getMessage(),
+            throw new CredentialsExceptionBrondi("Errore scrittura CSV: " + e.getMessage(),
                     "Errore in TicketDAOFile.java");
         }
     }

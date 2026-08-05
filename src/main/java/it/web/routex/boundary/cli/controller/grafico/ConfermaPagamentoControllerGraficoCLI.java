@@ -140,7 +140,7 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         try {
             return controllerPagamento.run();
 
-        } catch (PaymentValidationExceptionRemoli | DAOExceptionBrondi | CredentialsExceptionRemoli e) {
+        } catch (PaymentValidationExceptionBrondi | DAOExceptionBrondi | CredentialsExceptionBrondi e) {
 
             GenericErrorCLI.mostraErrore(e.getMessage());
             logger.error("Errore durante il pagamento", e);

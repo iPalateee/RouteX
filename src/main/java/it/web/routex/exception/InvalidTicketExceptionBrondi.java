@@ -1,10 +1,10 @@
 package it.web.routex.exception;
 
-public class InvalidTicketExceptionRemoli extends Exception {
+public class InvalidTicketExceptionBrondi extends Exception {
 
     private final String codiceTicket;
 
-    public InvalidTicketExceptionRemoli(String userMessage,
+    public InvalidTicketExceptionBrondi(String userMessage,
                                         String details,
                                         String codiceTicket) {
         super(userMessage + " | " + details);

@@ -82,7 +82,7 @@ public final class AreaRiservataCLI
         for (TicketBean t : tickets) {
             System.out.println("\n   Biglietto #" + index++);
             System.out.println("   • Codice biglietto: " + t.getCodice());
-            System.out.println("   • City: " + t.getCitta());
+            System.out.println("   • City: " + t.getCity());
             System.out.println("   • Data: " + t.getDataAcquisto());
         }
     }

@@ -109,6 +109,15 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
         }
     }
 
+    @Override
+    public City getCityByName(String nomeCitta) {
+        for (City c : DemoStorage.getCities()) {
+            if (c.getCity().equalsIgnoreCase(nomeCitta)) {
+                return c;
+            }
+        }
+        return null;
+    }
 
     @Override
     public List<City> listCities() throws DAOExceptionBrondi {
@@ -119,7 +128,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             for (City c : DemoStorage.getCities()) {
                 informazioni.add(
                         new City(
-                                c.getName(),
+                                c.getCity(),
                                 c.getCostoBiglietto(),
                                 c.getNumeroStazioni()
                         )
@@ -400,7 +409,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
         }
     }
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionRemoli
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionBrondi
     {
         final Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("Modalità DEMO: il pagamento non viene salvato in persistenza.");
@@ -422,7 +431,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
             DemoStorage.getPayments().add(records);
 
         } catch (Exception e) {
-            throw new CredentialsExceptionRemoli(
+            throw new CredentialsExceptionBrondi(
                     "Nessun salvataggio del percorso nel livello di persistenza " + e.getMessage(),
                     "Errore in SalvaPagamentoDAO.java"
             );

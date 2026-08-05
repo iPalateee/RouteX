@@ -1,6 +1,6 @@
 package it.web.routex.dao;
 import it.web.routex.enumerator.Ruolo;
-import it.web.routex.exception.CredentialsExceptionRemoli;
+import it.web.routex.exception.CredentialsExceptionBrondi;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.LoginNotFoundRemoli;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
@@ -118,6 +118,28 @@ public class LayerPersistenzaFull extends LayerPersistenza
                     "Errore durante il recupero del pagamento Paypal: " + e.getMessage(),
                     e
             );
+        }
+    }
+
+    @Override
+    public City getCityByName(String nomeCitta) throws DAOExceptionBrondi {
+        try (Connection conn = ConnectionFactory.getConnection();
+             CallableStatement cs = conn.prepareCall("{ CALL RouteX_Update.getCityByName(?) }")) {
+
+            cs.setString(1, nomeCitta);
+
+            try (ResultSet rs = cs.executeQuery()) {
+                if (rs.next()) {
+                    return new City(
+                            rs.getString("nome_citta"),
+                            rs.getDouble("prezzo_ticket"),
+                            rs.getLong("numero_stazioni")
+                    );
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new DAOExceptionBrondi("Errore nella comunicazione con il database: " + e.getMessage(), e);
         }
     }
 
@@ -452,7 +474,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
     }
 
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodoPagamento, String city) throws CredentialsExceptionRemoli {
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodoPagamento, String city) throws CredentialsExceptionBrondi {
         TicketDAOLayer dao = FactoryPersistence.createTicketDAO();
         dao.salvataggio(cred, codiciBiglietti, metodoPagamento, city);
         final Logger logger = LoggerFactory.getLogger(getClass());

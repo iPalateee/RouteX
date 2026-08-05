@@ -43,12 +43,12 @@ public class AreaRiservata
 
                 TicketBean b = new TicketBean();
                 b.setCodice(t.getCodice());
-                b.setCitta(t.getCitta());
+                b.setCity(t.getCitta());
                 b.setDataAcquisto(t.getDataAcquisto().toString());
 
                 beans.add(b);
 
-            } catch (InvalidTicketExceptionRemoli e) {
+            } catch (InvalidTicketExceptionBrondi e) {
 
                 throw new PathNotFoundExceptionRemoli(
                         "Sono stati trovati ticket non validi associati all'utente.",

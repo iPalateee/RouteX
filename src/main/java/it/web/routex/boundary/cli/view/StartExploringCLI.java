@@ -27,7 +27,7 @@ public final class StartExploringCLI
         System.out.println("==============================================");
         int index = 1;
         for (CityBean city : cities) {
-            System.out.println(index + ") " + city.getName());
+            System.out.println(index + ") " + city.getCity());
             index++;
         }
         System.out.println("==============================================");

@@ -1,6 +1,6 @@
 package it.web.routex.bean;
 
-import it.web.routex.exception.InvalidLoginInputExceptionBrondi;
+import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 
 import static it.web.routex.utility.text.TextUtils.sanitize;
 
@@ -12,49 +12,49 @@ public class AutenticazioneBean {
     public String getEmail() { return email; }
     public String getPassword() { return password; }
 
-    public void setEmail(String rawEmail) throws InvalidLoginInputExceptionBrondi {
+    public void setEmail(String rawEmail) throws InvalidLoginInputExceptionRemoli {
         if (rawEmail == null)
-            throw new InvalidLoginInputExceptionBrondi(
+            throw new InvalidLoginInputExceptionRemoli(
                     "Il campo email non è stato inviato dal form.",
                     "Parametro 'Email' null.",
-                    InvalidLoginInputExceptionBrondi.Severity.LOW
+                    InvalidLoginInputExceptionRemoli.Severity.LOW
             );
 
         String cleanEmail = sanitize(rawEmail);
 
         if (cleanEmail.isBlank())
-            throw new InvalidLoginInputExceptionBrondi(
+            throw new InvalidLoginInputExceptionRemoli(
                     "Email mancante.",
                     "Email è blank dopo sanitizzazione.",
-                    InvalidLoginInputExceptionBrondi.Severity.MEDIUM
+                    InvalidLoginInputExceptionRemoli.Severity.MEDIUM
             );
 
         if (!cleanEmail.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-            throw new InvalidLoginInputExceptionBrondi(
+            throw new InvalidLoginInputExceptionRemoli(
                     "Inserisci una email valida.",
                     "Regex email non rispettata: " + cleanEmail,
-                    InvalidLoginInputExceptionBrondi.Severity.MEDIUM
+                    InvalidLoginInputExceptionRemoli.Severity.MEDIUM
             );
         }
 
         this.email = cleanEmail;
     }
 
-    public void setPassword(String rawPassword) throws InvalidLoginInputExceptionBrondi {
+    public void setPassword(String rawPassword) throws InvalidLoginInputExceptionRemoli {
         if (rawPassword == null)
-            throw new InvalidLoginInputExceptionBrondi(
+            throw new InvalidLoginInputExceptionRemoli(
                     "Il campo password non è stato inviato dal form.",
                     "Parametro 'Password' null dal form.",
-                    InvalidLoginInputExceptionBrondi.Severity.LOW
+                    InvalidLoginInputExceptionRemoli.Severity.LOW
             );
 
         String cleanPassword = sanitize(rawPassword);
 
         if (cleanPassword.isBlank()) {
-            throw new InvalidLoginInputExceptionBrondi(
+            throw new InvalidLoginInputExceptionRemoli(
                     "La password non deve essere vuota.",
                     "Password blank dopo sanitizzazione.",
-                    InvalidLoginInputExceptionBrondi.Severity.MEDIUM
+                    InvalidLoginInputExceptionRemoli.Severity.MEDIUM
             );
         }
 

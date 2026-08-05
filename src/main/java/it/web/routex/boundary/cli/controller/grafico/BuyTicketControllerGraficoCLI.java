@@ -1,18 +1,17 @@
 package it.web.routex.boundary.cli.controller.grafico;
 
 import it.web.routex.bean.CityBean;
-import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.bean.PrezzoTotaleBean;
+import it.web.routex.bean.TicketBean;
 import it.web.routex.boundary.cli.LoggedCLI;
 import it.web.routex.boundary.cli.view.BuyTicketCLI;
 import it.web.routex.boundary.cli.view.ConfermaPagamentoCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
-import it.web.routex.controller.applicativo.CityController;
+import it.web.routex.controller.applicativo.BuyTicketControllerApplicativo;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
-import it.web.routex.record.BuyTicketRecord;
 
 import java.util.List;
 
@@ -20,12 +19,16 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
 {
     public void doGet()
     {
-
         try {
-            CityController cityController = new CityController();
-            List<CityBean> cities = cityController.getAllCities();
+            BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
+            List<CityBean> cities = buyTicketControllerApplicativo.getAllCities();
 
-            forwardToBuyTicket(cities);
+            try {
+                BuyTicketCLI.mostraAcquisto(cities);
+                logger.info("[CLI]Visualizzata la pagina di acquisto biglietti con size={} città disponibili.", cities.size());
+            } catch (Exception e) {
+                logger.error("[CLI]Errore nella visualizzazione della pagina di acquisto biglietti.", e);
+            }
 
         } catch (DAOExceptionBrondi e) {
             GenericErrorCLI.mostraErrore(e.getMessage());
@@ -33,28 +36,27 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
             GenericErrorCLI.mostraErrore(e.getUserMessage());
             logger.error("Errore nei dati delle città: {}", e.toString());
         }
-
     }
 
     public void doPost(String city, String quantity) {
 
-        BuyTicketRecord buyTicket = estraiBuyTicket(city,quantity);
+        TicketBean ticket = estraiBuyTicket(city, quantity);
 
-        if (buyTicket == null) {
+        if (ticket == null) {
             logger.warn("Impossibile estrarre i dati del biglietto: city='{}', quantity='{}'", city, quantity);
             GenericErrorCLI.mostraErrore("I dati inseriti per l'acquisto non sono validi.");
             return;
         }
 
         logger.info("Elaborazione richiesta acquisto biglietti per città='{}', quantità={}",
-                buyTicket.city(), buyTicket.quantity());
+                ticket.getCity(), ticket.getQuantity());
         try {
-            CityController cityController = new CityController();
-            PrezzoTotaleBean prezzo = cityController.ottieniPrezzoTotale(buyTicket.city(), buyTicket.quantity());
-            logger.info("Elaborazione prezzo: prezzo={}",prezzo.getPrezzoTotale());
+            BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
+            PrezzoTotaleBean prezzo = buyTicketControllerApplicativo.ottieniPrezzoTotale(ticket);
+            logger.info("Elaborazione prezzo: prezzo={}", prezzo.getPrezzoTotale());
 
-            ConfermaPagamentoCLI.init(buyTicket.city(),String.valueOf(buyTicket.quantity()),prezzo.getPrezzoTotale());
-            forwardingConferma();
+            ConfermaPagamentoCLI.init(ticket.getCity(), String.valueOf(ticket.getQuantity()), prezzo.getPrezzoTotale());
+            ConfermaPagamentoCLI.stampa();
 
         } catch (DAOExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Errore durante l'elaborazione dell'acquisto: " + e.getMessage());
@@ -64,16 +66,13 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
         }
     }
 
-    private BuyTicketRecord estraiBuyTicket(String city, String quantity)
+    private TicketBean estraiBuyTicket(String city, String quantity)
     {
         try {
-
-            PaymentResultBean prb = new PaymentResultBean();
-
-            prb.setCity(city);
-            prb.setQuantity(quantity);
-
-            return new BuyTicketRecord(prb.getCity(), prb.getQuantity());
+            TicketBean ticket = new TicketBean();
+            ticket.setCity(city);
+            ticket.setQuantity(quantity);
+            return ticket;
 
         } catch (InvalidBuyTicketInputExceptionBrondi e) {
             logger.error("Errore di validazione input nell'acquisto biglietti", e);
@@ -81,17 +80,5 @@ public class BuyTicketControllerGraficoCLI extends LoggedCLI
             return null;
         }
     }
-    private void forwardingConferma()
-    {
-        ConfermaPagamentoCLI.stampa();
-    }
 
-    private void forwardToBuyTicket(List<CityBean> cities) {
-        try {
-            BuyTicketCLI.mostraAcquisto(cities);
-            logger.info("[CLI]Visualizzata la pagina di acquisto biglietti con size={} città disponibili.", cities.size());
-        } catch (Exception e) {
-            logger.error("[CLI]Errore nella visualizzazione della pagina di acquisto biglietti.", e);
-        }
-    }
 }

@@ -4,7 +4,7 @@ import it.web.routex.bean.UtenteBeanGenerico;
 import it.web.routex.controller.applicativo.LoginController;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.domain.LoggedHttpServlet;
-import it.web.routex.exception.InvalidLoginInputExceptionBrondi;
+import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 import it.web.routex.utility.factory.ConnectionFactory;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -31,7 +31,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
 
 
     private AutenticazioneBean creaBeanAutenticazione(HttpServletRequest request)
-            throws InvalidLoginInputExceptionBrondi {
+            throws InvalidLoginInputExceptionRemoli {
 
         AutenticazioneBean aut = new AutenticazioneBean();
 
@@ -107,7 +107,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
      * Gestisce gli errori di validazione sintattica sollevati dalla Bean
      * durante la creazione (es. email non conforme, password mancante).
      */
-    private void gestisciErroreValidazione(HttpServletRequest request, HttpServletResponse response, InvalidLoginInputExceptionBrondi ex)
+    private void gestisciErroreValidazione(HttpServletRequest request, HttpServletResponse response, InvalidLoginInputExceptionRemoli ex)
     {
         request.setAttribute(ATTR_MESSAGGIO_ERRORE, ex.getUserMessage());
         try {
@@ -156,7 +156,7 @@ public class LoginControllerGrafico extends LoggedHttpServlet {
             }
             logger.error("Tentativo di login fallito: email={}, Maskedpassw={}, message={}", ex.getEmail(), ex.getMaskedPassword(), ex.getMessage());
 
-        } catch (InvalidLoginInputExceptionBrondi e) {
+        } catch (InvalidLoginInputExceptionRemoli e) {
             gestisciErroreValidazione(request, response, e);
         }
     }

@@ -2,8 +2,8 @@ package it.web.routex.controller.applicativo;
 import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.enumerator.PaymentMethod;
 import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
+import it.web.routex.exception.CredentialsExceptionBrondi;
+import it.web.routex.exception.PaymentValidationExceptionBrondi;
 import it.web.routex.model.Mastercard;
 import it.web.routex.utility.factory.LayerPersistenza;
 import it.web.routex.utility.decorator.decoratorticket.BaseTicketCode;
@@ -25,14 +25,14 @@ public class PagamentoMastercard extends RegistrazionePagamentoController
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
 
-    public PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionRemoli, CredentialsExceptionRemoli {
+    public PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionBrondi, CredentialsExceptionBrondi {
 
         final List<String> codiciBiglietti;
 
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         Mastercard mastercard = layer.getPaymentMastercard(numeroCarta, scadenza, cvv);
         if (mastercard == null) {
-            throw new PaymentValidationExceptionRemoli(
+            throw new PaymentValidationExceptionBrondi(
                     "Carta non valida o non presente nel sistema.",
                     PaymentMethod.MASTERCARD,
                     "PagamentoMastercard.run"
@@ -53,10 +53,10 @@ public class PagamentoMastercard extends RegistrazionePagamentoController
 
         return new PaymentResultBean(
                 city,
-                quantitativo,
                 totale,
                 mastercard.getMethod().getDisplayName(),
-                codiciBiglietti
+                codiciBiglietti,
+                quantitativo
         );
     }
     public PagamentoMastercard(String numeroCarta, String scadenza, String cvv, Credentials cred,double tot, int quantita, String citta )
@@ -67,9 +67,9 @@ public class PagamentoMastercard extends RegistrazionePagamentoController
         this.cvv = cvv;
     }
 
-    private void registraPagamentoPermanente(List<String> codiciBiglietti, Mastercard mastercard) throws CredentialsExceptionRemoli {
+    private void registraPagamentoPermanente(List<String> codiciBiglietti, Mastercard mastercard) throws CredentialsExceptionBrondi {
         if (credenziali == null) {
-            throw new CredentialsExceptionRemoli("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoMastercard.java");
+            throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoMastercard.java");
         }
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         layer.salvataggio(credenziali, codiciBiglietti, mastercard.getMethod().getDisplayName(), city);

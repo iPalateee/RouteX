@@ -10,38 +10,38 @@ import static it.web.routex.utility.text.TextUtils.*;
 public class PaymentResultBean {
 
     private String city;
-    private int quantity;
     private double total;
     private String paymentMethod;
     private final List<String> ticketCodes;
+    private int quantity;
 
     public PaymentResultBean() {
         this.city = "";
-        this.quantity = 0;
         this.total = 0.0;
         this.paymentMethod = "";
         this.ticketCodes = null;
+        this.quantity = 0;
     }
 
     public PaymentResultBean(
             String city,
-            int quantity,
             double total,
             String paymentMethod,
-            List<String> ticketCodes
+            List<String> ticketCodes,
+            int quantity
     ) {
         this.city = city;
-        this.quantity = quantity;
         this.total = total;
         this.paymentMethod = paymentMethod;
         this.ticketCodes = ticketCodes;
+        this.quantity = quantity;
     }
 
     public String getCity() { return city; }
-    public int getQuantity() { return quantity; }
     public double getTotal() { return total; }
     public String getPaymentMethod() { return paymentMethod; }
     public List<String> getTicketCodes() { return ticketCodes; }
+    public int getQuantity() { return quantity; }
 
     public void setCity(String c) throws InvalidBuyTicketInputExceptionBrondi {
         if (c == null)
@@ -56,31 +56,6 @@ public class PaymentResultBean {
             errorTicket("La città inserita non è valida.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
 
         this.city = citta;
-    }
-
-    public void setQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {
-        if (rawQuantity == null) {
-            errorTicket("Il campo quantità non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
-        }
-
-        String sQuantita = sanitize(rawQuantity);
-        int quantita;
-
-        try {
-            quantita = Integer.parseInt(sQuantita);
-        } catch (NumberFormatException e) {
-            errorTicket("La quantità inserita non è un numero valido.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
-        }
-
-        if (quantita <= 0)
-            errorTicket("La quantità deve essere maggiore di zero.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        if (quantita > 10)
-            errorTicket("Puoi acquistare un massimo di 10 biglietti alla volta.", InvalidBuyTicketInputExceptionBrondi.Severity.HIGH);
-
-        this.quantity = quantita;
     }
 
     public void setTotale(String rawTotale) throws InvalidBuyTicketInputExceptionBrondi {
@@ -111,5 +86,30 @@ public class PaymentResultBean {
             return;
         }
         this.paymentMethod = sanitize(rawMetodo);
+    }
+
+    public void setQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {
+        if (rawQuantity == null) {
+            errorTicket("Il campo quantità non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
+            return;
+        }
+
+        String sQuantita = sanitize(rawQuantity);
+        int quantita;
+
+        try {
+            quantita = Integer.parseInt(sQuantita);
+        } catch (NumberFormatException e) {
+            errorTicket("La quantità inserita non è un numero valido.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
+            return;
+        }
+
+        if (quantita <= 0)
+            errorTicket("La quantità deve essere maggiore di zero.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
+
+        if (quantita > 10)
+            errorTicket("Puoi acquistare un massimo di 10 biglietti alla volta.", InvalidBuyTicketInputExceptionBrondi.Severity.HIGH);
+
+        this.quantity = quantita;
     }
 }

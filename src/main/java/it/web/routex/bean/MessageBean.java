@@ -1,6 +1,6 @@
 package it.web.routex.bean;
 
-import it.web.routex.exception.BrondiInvalidCommunicationInputException;
+import it.web.routex.exception.RemoliInvalidCommunicationInputException;
 
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -31,7 +31,7 @@ public class MessageBean
     public void setMessage(String message) {
 
         if (message == null || message.trim().isEmpty()) {
-            throw new BrondiInvalidCommunicationInputException(
+            throw new RemoliInvalidCommunicationInputException(
                     "Il messaggio della comunicazione non può essere vuoto."
             );
         }
@@ -41,7 +41,7 @@ public class MessageBean
 
         for (String forbidden : FORBIDDEN_WORDS) {
             if (normalized.contains(forbidden)) {
-                throw new BrondiInvalidCommunicationInputException(
+                throw new RemoliInvalidCommunicationInputException(
                         "Il messaggio contiene linguaggio non consentito."
                 );
             }

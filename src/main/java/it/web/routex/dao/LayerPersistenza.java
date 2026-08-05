@@ -14,10 +14,11 @@ public abstract class LayerPersistenza {
 
     public abstract Credentials login(String email, String password) throws DAOExceptionBrondi, LoginNotFoundRemoli;
 
-    public abstract Mastercard getPaymentMastercard(String nC, String sc, String cvv) throws DAOExceptionBrondi, PaymentValidationExceptionRemoli;
+    public abstract Mastercard getPaymentMastercard(String nC, String sc, String cvv) throws DAOExceptionBrondi, PaymentValidationExceptionBrondi;
 
-    public abstract Paypal getPaymentPaypal(String email, String codice) throws DAOExceptionBrondi, PaymentValidationExceptionRemoli;
+    public abstract Paypal getPaymentPaypal(String email, String codice) throws DAOExceptionBrondi, PaymentValidationExceptionBrondi;
 
+    public abstract City getCityByName(String nomeCitta) throws DAOExceptionBrondi;
 
     public final List<City> listCitiesRAM() throws DAOExceptionBrondi {
 
@@ -68,6 +69,6 @@ public abstract class LayerPersistenza {
             Credentials cred,
             List<String> codiciBiglietti,
             String metodoPagamento,
-            String city) throws CredentialsExceptionRemoli;
+            String city) throws CredentialsExceptionBrondi;
 
 }

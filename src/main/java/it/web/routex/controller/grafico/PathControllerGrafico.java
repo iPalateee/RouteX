@@ -4,7 +4,7 @@ import it.web.routex.bean.CityBean;
 import it.web.routex.bean.InformazioniPercorsoBean;
 import it.web.routex.bean.RouteBean;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
-import it.web.routex.controller.applicativo.CityController;
+import it.web.routex.controller.applicativo.BuyTicketControllerApplicativo;
 import it.web.routex.controller.applicativo.PathController;
 import it.web.routex.exception.*;
 import it.web.routex.domain.LoggedHttpServlet;
@@ -40,8 +40,8 @@ public class PathControllerGrafico extends LoggedHttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Credentials cred = Credentials.getInstanceSingleton();
         try {
-            CityController cityController = new CityController();
-            List<CityBean> cities = cityController.getAllCities();
+            BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
+            List<CityBean> cities = buyTicketControllerApplicativo.getAllCities();
 
             request.setAttribute("cities2", cities);
             forward(request, response);

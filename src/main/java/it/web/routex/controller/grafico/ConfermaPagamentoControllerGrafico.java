@@ -7,10 +7,9 @@ import it.web.routex.controller.applicativo.PagamentoPaypal;
 import it.web.routex.controller.applicativo.RegistrazionePagamentoController;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.exception.*;
-import it.web.routex.enumerator.TypesOfPersistenceLayer;
 import it.web.routex.utility.builder.PaymentBuilder;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.utility.singleton.PersistenceMode;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -31,8 +30,6 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
 
         PaymentResultBean paymentRecord = estraiPagamento(request, response);
         if (paymentRecord == null) return;
-
-        logPersistenzaScelta();
 
         RegistrazionePagamentoController controllerPagamento = creaControllerPagamento(paymentRecord, request, response, cred);
 
@@ -91,11 +88,6 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
     private void logUtente(Credentials cred) {
         logger.info("[PROCESSAMENTO PAGAMENTO] Utente loggato: nome={}, cognome={}, ruolo={}",
                 cred.getNome(), cred.getCognome(), cred.getRuolo());
-    }
-
-    private void logPersistenzaScelta() {
-        TypesOfPersistenceLayer persistenceLayer = PersistenceMode.getSingletonInstance().getTipo();
-        logger.info("Tipo di persistenza scelto: {}", persistenceLayer);
     }
 
     private RegistrazionePagamentoController creaControllerPagamento(
@@ -189,7 +181,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
         try {
             return controllerPagamento.run();
 
-        } catch (PaymentValidationExceptionRemoli | DAOExceptionBrondi | CredentialsExceptionRemoli e) {
+        } catch (PaymentValidationExceptionBrondi | DAOExceptionBrondi | CredentialsExceptionBrondi e) {
 
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getMessage());
             try {

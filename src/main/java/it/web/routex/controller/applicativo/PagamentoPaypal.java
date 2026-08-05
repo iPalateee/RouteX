@@ -9,8 +9,8 @@ import it.web.routex.utility.decorator.decoratorticket.CittaDecorator;
 import it.web.routex.utility.decorator.decoratorticket.Component;
 import it.web.routex.utility.decorator.decoratorticket.TimestampDecorator;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.CredentialsExceptionRemoli;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
+import it.web.routex.exception.CredentialsExceptionBrondi;
+import it.web.routex.exception.PaymentValidationExceptionBrondi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
     String email;
     String codice;
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    public PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionRemoli, CredentialsExceptionRemoli
+    public PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionBrondi, CredentialsExceptionBrondi
     {
         final List<String> codiciBiglietti;
 
@@ -30,7 +30,7 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
         Paypal p = layer.getPaymentPaypal(email,codice);
 
         if (p == null) {
-            throw new PaymentValidationExceptionRemoli(
+            throw new PaymentValidationExceptionBrondi(
                     "Nessun pagamento Paypal trovato per i dati inseriti.",
                     PaymentMethod.PAYPAL,
                     "PagamentoPaypal.run"
@@ -51,10 +51,10 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
 
         return new PaymentResultBean(
                 city,
-                quantitativo,
                 totale,
                 p.getMethod().getDisplayName(),
-                codiciBiglietti
+                codiciBiglietti,
+                quantitativo
         );
     }
 
@@ -66,9 +66,9 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
 
     }
 
-    private void registraPagamentoPermanente(List<String> codiciBiglietti, Paypal paypal) throws CredentialsExceptionRemoli {
+    private void registraPagamentoPermanente(List<String> codiciBiglietti, Paypal paypal) throws CredentialsExceptionBrondi {
         if (credenziali == null) {
-            throw new CredentialsExceptionRemoli("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoPaypal.java");
+            throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoPaypal.java");
         }
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         layer.salvataggio(credenziali, codiciBiglietti, paypal.getMethod().getDisplayName(), city);

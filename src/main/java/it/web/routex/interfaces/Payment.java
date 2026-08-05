@@ -1,7 +1,7 @@
 package it.web.routex.interfaces;
 
 import it.web.routex.enumerator.PaymentMethod;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
+import it.web.routex.exception.PaymentValidationExceptionBrondi;
 
 public interface Payment {
 
@@ -9,5 +9,5 @@ public interface Payment {
 
     boolean isValid();
 
-    void validate() throws PaymentValidationExceptionRemoli;
+    void validate() throws PaymentValidationExceptionBrondi;
 }

@@ -3,7 +3,7 @@ import it.web.routex.bean.MessageBean;
 import it.web.routex.controller.applicativo.ViewNotificationsControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.exception.BrondiException;
-import it.web.routex.exception.BrondiNoNotificationsWarningException;
+import it.web.routex.exception.RemoliNoNotificationsWarningException;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ public class ViewNotificationsControllerGrafico extends LoggedHttpServlet {
             request.setAttribute("notifiche", notifiche);
             request.getRequestDispatcher("/viewNotifications.jsp").forward(request, response);
 
-        } catch (BrondiNoNotificationsWarningException w) {
+        } catch (RemoliNoNotificationsWarningException w) {
 
             logger.info(
                     "Nessuna notifica da mostrare. Dettagli={}",

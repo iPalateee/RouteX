@@ -62,19 +62,19 @@ public class PathController
                 //uso route per salvare il percorso. Poi RouteBean è diverso, non ha utente
                 return true;
             } else {
-                throw new CFIsNullBrondi("Devi effettuare il login per salvare il percorso.",
+                throw new CFIsNullExceptionBrondi("Devi effettuare il login per salvare il percorso.",
                         "CF nullo: richiesta di salvataggio senza autenticazione.",
                         "ERR-CF-NULL",
-                        CFIsNullBrondi.Severity.CRITICAL);
+                        CFIsNullExceptionBrondi.Severity.CRITICAL);
             }
-        }catch (CFIsNullBrondi e)
+        }catch (CFIsNullExceptionBrondi e)
         {
             logger.error("Utente non autenticato, impossibile salvare il percorso. {}", e.toString());
         }
         catch (DAOExceptionBrondi e)
         {
             logger.error("Errore nel salvataggio del percorso. {}", e.toString());
-        } catch (InvalidRouteException e) {
+        } catch (InvalidRouteExceptionRemoli e) {
             logger.error("Errore nella conversione dei dati nel percorso. {}", e.toString());
         }
         return false;

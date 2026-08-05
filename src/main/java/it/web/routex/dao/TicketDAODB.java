@@ -11,7 +11,7 @@ import java.util.List;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.utility.singleton.Credentials;
-import it.web.routex.exception.CredentialsExceptionRemoli;
+import it.web.routex.exception.CredentialsExceptionBrondi;
 
 public class TicketDAODB extends TicketDAOLayer {
 
@@ -57,7 +57,7 @@ public class TicketDAODB extends TicketDAOLayer {
 
 
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionRemoli {
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionBrondi {
         try {
             Connection conn = ConnectionFactory.getConnection();
             String bigliettiConcatenati = String.join(",", codiciBiglietti);
@@ -73,7 +73,7 @@ public class TicketDAODB extends TicketDAOLayer {
             cs.executeQuery();
 
         } catch (SQLException e) {
-            throw new CredentialsExceptionRemoli("Nessun salvataggio del percorso nel livello di persistenza " + e.getMessage(), "Errore in SalvaPagamentoDAO.java");
+            throw new CredentialsExceptionBrondi("Nessun salvataggio del percorso nel livello di persistenza " + e.getMessage(), "Errore in SalvaPagamentoDAO.java");
         }
     }
 

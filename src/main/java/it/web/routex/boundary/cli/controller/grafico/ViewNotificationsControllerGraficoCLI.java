@@ -7,7 +7,7 @@ import it.web.routex.boundary.cli.view.TuttoRisoltoCLIView;
 import it.web.routex.boundary.cli.view.ViewNotificationsCLI;
 import it.web.routex.controller.applicativo.ViewNotificationsControllerApplicativo;
 import it.web.routex.exception.BrondiException;
-import it.web.routex.exception.BrondiNoNotificationsWarningException;
+import it.web.routex.exception.RemoliNoNotificationsWarningException;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ViewNotificationsControllerGraficoCLI extends LoggedCLI {
             List<MessageBean> notifiche = notifications.messages();
             ViewNotificationsCLI.mostraNotifiche(notifiche);
 
-        } catch (BrondiNoNotificationsWarningException w) {
+        } catch (RemoliNoNotificationsWarningException w) {
 
             logger.info(
                     "Nessuna notifica da mostrare. Dettagli={}",

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import it.web.routex.utility.factory.ConnectionFactory;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.DAOExceptionBrondi;
-import it.web.routex.exception.CredentialsExceptionRemoli;
+import it.web.routex.exception.CredentialsExceptionBrondi;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -101,6 +101,6 @@ class PagamentoMastercardTest
                 Integer.parseInt(p[5]),
                 p[6]
         );
-        assertThrows(CredentialsExceptionRemoli.class, pagamento::run);
+        assertThrows(CredentialsExceptionBrondi.class, pagamento::run);
     }
 }

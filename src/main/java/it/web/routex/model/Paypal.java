@@ -3,7 +3,7 @@ package it.web.routex.model;
 
 import it.web.routex.interfaces.Payment;
 import it.web.routex.enumerator.PaymentMethod;
-import it.web.routex.exception.PaymentValidationExceptionRemoli;
+import it.web.routex.exception.PaymentValidationExceptionBrondi;
 
 import java.util.regex.Pattern;
 
@@ -55,9 +55,9 @@ public class Paypal implements Payment
 
 
     @Override
-    public void validate() throws PaymentValidationExceptionRemoli {
+    public void validate() throws PaymentValidationExceptionBrondi {
         if (!isValid()) {
-            throw new PaymentValidationExceptionRemoli(
+            throw new PaymentValidationExceptionBrondi(
                     "Dati Paypal non validi",
                     PaymentMethod.PAYPAL,
                     "Validazione dominio Paypal"

@@ -1,10 +1,10 @@
 package it.web.routex.exception;
 
-public class CredentialsExceptionRemoli extends Exception {
+public class CredentialsExceptionBrondi extends Exception {
 
     final String details;
 
-    public CredentialsExceptionRemoli(String message,String details) {
+    public CredentialsExceptionBrondi(String message, String details) {
         super(message);
         this.details = details;
     }

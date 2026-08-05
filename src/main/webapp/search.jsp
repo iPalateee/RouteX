@@ -232,7 +232,7 @@
                     if (cities != null && !cities.isEmpty()) {
                        for (it.web.routex.bean.CityBean c : cities) {
                 %>
-                    <option value="<%= c.getName() %>"><%= c.getName() %></option>
+                    <option value="<%= c.getCity() %>"><%= c.getCity() %></option>
                 <%
                    }
                 } else {
