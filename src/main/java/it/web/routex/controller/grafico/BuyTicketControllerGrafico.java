@@ -36,12 +36,9 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
 
             request.setAttribute("cities", cities);
 
-            try {
-                request.getRequestDispatcher("buyTicket.jsp").forward(request, response);
-                logger.info("Visualizzata la pagina di acquisto biglietti con size={} città disponibili.", cities.size());
-            } catch (Exception e) {
-                logger.error("Errore nella visualizzazione della pagina di acquisto biglietti.", e);
-            }
+            request.getRequestDispatcher("buyTicket.jsp").forward(request, response);
+
+            logger.info("Visualizzata la pagina di acquisto biglietti con size={} città disponibili.", cities.size());
 
         } catch (DAOExceptionBrondi e) {
             request.setAttribute(ATTR_ERRORE, "Errore nel caricamento delle città: " + e.getMessage());
@@ -58,12 +55,16 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
             } catch (Exception forwardEx) {
                 logger.error(MSG_ERR_FORWARD, forwardEx);
             }
+        } catch (Exception e) {
+            logger.error("Errore nella visualizzazione della pagina di acquisto biglietti.", e);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+
         final HttpSession session = request.getSession(false);
+
         if (session == null) {
             try {
                 response.sendRedirect("login.jsp");
@@ -86,11 +87,7 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
             request.setAttribute("quantity", String.valueOf(ticket.getQuantity()));
             request.setAttribute("prezzo", prezzo.getPrezzoTotale());
 
-            try {
-                request.getRequestDispatcher("/confermaPagamento.jsp").forward(request, response);
-            } catch (Exception e) {
-                logger.error("Errore durante il forward alla pagina di conferma pagamento", e);
-            }
+            request.getRequestDispatcher("/confermaPagamento.jsp").forward(request, response);
 
         } catch (InvalidBuyTicketInputExceptionBrondi e) {
             logger.error("Errore di validazione input nell'acquisto biglietti", e);
@@ -116,6 +113,8 @@ public class BuyTicketControllerGrafico extends LoggedHttpServlet {
             } catch (Exception forwardEx) {
                 logger.error(MSG_ERR_FORWARD, forwardEx);
             }
+        } catch (Exception e) {
+            logger.error("Errore durante il forward alla pagina di conferma pagamento", e);
         }
     }
 

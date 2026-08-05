@@ -15,29 +15,34 @@ public final class BuyTicketCLI
         BuyTicketControllerGraficoCLI ctrgraphic = new BuyTicketControllerGraficoCLI();
         ctrgraphic.doGet();
     }
-    public static void mostraAcquisto(List<CityBean> cities)
-    {
+    public static void mostraAcquisto(List<CityBean> cities) {
         Scanner scanner = new Scanner(System.in);
-        int accesso=-1;
+        int accesso = -1;
         System.out.println("================================");
         System.out.println("        ROUTEX - BuyTicketCLI       ");
         System.out.println("================================");
 
-        while(accesso>cities.size() || accesso < 1)
-        {
-            for(int i=0;i<cities.size();i++) System.out.println((i+1)+") per "+cities.get(i));
+        while(accesso > cities.size() || accesso < 1) {
+            for(int i=0; i<cities.size(); i++) {
+                System.out.println((i+1) + ") per " + cities.get(i));
+            }
             System.out.print("Inserisci città: ");
-            accesso = scanner.nextInt();
+
+            if (scanner.hasNextInt()) {
+                accesso = scanner.nextInt();
+            } else {
+                System.out.println("\n[!] Errore: devi inserire un numero valido.");
+                scanner.next();
+            }
         }
 
         String city = String.valueOf(cities.get(accesso-1));
         scanner.nextLine();
+
         System.out.print("Inserisci quantità: ");
         String quantity = scanner.nextLine();
 
         BuyTicketControllerGraficoCLI tick = new BuyTicketControllerGraficoCLI();
         tick.doPost(city, quantity);
-
-
     }
 }

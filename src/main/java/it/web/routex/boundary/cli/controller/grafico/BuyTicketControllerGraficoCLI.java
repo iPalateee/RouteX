@@ -17,18 +17,14 @@ import java.util.List;
 
 public class BuyTicketControllerGraficoCLI extends LoggedCLI
 {
-    public void doGet()
-    {
+    public void doGet() {
         try {
             BuyTicketControllerApplicativo buyTicketControllerApplicativo = new BuyTicketControllerApplicativo();
             List<CityBean> cities = buyTicketControllerApplicativo.getAllCities();
 
-            try {
-                BuyTicketCLI.mostraAcquisto(cities);
-                logger.info("[CLI]Visualizzata la pagina di acquisto biglietti con size={} città disponibili.", cities.size());
-            } catch (Exception e) {
-                logger.error("[CLI]Errore nella visualizzazione della pagina di acquisto biglietti.", e);
-            }
+            BuyTicketCLI.mostraAcquisto(cities);
+
+            logger.info("[CLI]Visualizzata la pagina di acquisto biglietti con size={} città disponibili.", cities.size());
 
         } catch (DAOExceptionBrondi e) {
             GenericErrorCLI.mostraErrore(e.getMessage());

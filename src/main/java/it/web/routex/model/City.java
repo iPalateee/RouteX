@@ -12,19 +12,19 @@ import static it.web.routex.utility.text.TextUtils.sanitize;
  */
 
 public class City {
-    private String city;
+    private String citta;
     private double costoBiglietto;
     private long numeroStazioni;
 
     public City() { }
 
-    public City(String city, double costo, long numeroStazioni) {
-        this.city = city;
+    public City(String citta, double costo, long numeroStazioni) {
+        this.citta = citta;
         this.costoBiglietto = costo;
         this.numeroStazioni = numeroStazioni;
     }
 
-    public String getCity() { return city; }
+    public String getCity() { return citta; }
 
     public void setCity(String rawCity) throws InvalidBuyTicketInputExceptionBrondi {
 
@@ -52,14 +52,14 @@ public class City {
             );
         }
 
-        this.city = city;
+        this.citta = city;
     }
 
     public double getCostoBiglietto() { return costoBiglietto; }
 
     public boolean isValid() {
-        return city != null &&
-                !city.isBlank() &&
+        return citta != null &&
+                !citta.isBlank() &&
                 costoBiglietto > 0 &&
                 numeroStazioni > 0;
     }
