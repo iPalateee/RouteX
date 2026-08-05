@@ -17,22 +17,7 @@ public class TicketBean
 
     public void setCity(String rawCity) throws InvalidBuyTicketInputExceptionBrondi {
 
-        if (rawCity == null)
-            throw new InvalidBuyTicketInputExceptionBrondi(
-                    "Parametro mancante.",
-                    "Request incompleta.",
-                    InvalidBuyTicketInputExceptionBrondi.Severity.LOW
-            );
-
-        String city = sanitize(rawCity);
-
-        if (city.isBlank())
-            errorTicket("Il campo città non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        if (!city.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s-]+$"))
-            errorTicket("La città inserita non è valida.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        this.citta = city;
+        this.citta = validateCitySyntax(rawCity);
     }
 
     public void setQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {

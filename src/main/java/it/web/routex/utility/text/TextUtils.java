@@ -40,4 +40,33 @@ public final class TextUtils {
         throw new InvalidBuyTicketInputExceptionBrondi(msg, msg, severity);
     }
 
+    public static String validateCitySyntax(String rawCity) throws InvalidBuyTicketInputExceptionBrondi {
+
+        if (rawCity == null)
+            throw new InvalidBuyTicketInputExceptionBrondi(
+                    "Il campo città non è stato inviato dal form.",
+                    "Parametro 'Città' null.",
+                    InvalidBuyTicketInputExceptionBrondi.Severity.LOW
+            );
+
+        String city = sanitize(rawCity);
+
+        if (city.isBlank())
+            throw new InvalidBuyTicketInputExceptionBrondi(
+                    "Città mancante.",
+                    "Città è blank dopo sanitizzazione.",
+                    InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM
+            );
+
+        if (!city.matches("^[\\p{L}\\s\\-']{2,50}$")) {
+            throw new InvalidBuyTicketInputExceptionBrondi(
+                    "Inserisci una città valida.",
+                    "Regex città non rispettata: " + city,
+                    InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM
+            );
+        }
+
+        return city;
+    }
+
 }
