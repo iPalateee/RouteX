@@ -1,7 +1,7 @@
 package it.web.routex.bean;
 
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
+import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 
 import java.util.List;
 
@@ -44,24 +44,12 @@ public class PaymentResultBean {
     public int getQuantity() { return quantity; }
 
     public void setCity(String c) throws InvalidBuyTicketInputExceptionBrondi {
-        if (c == null)
-            errorTicket("Il campo città non può essere nullo.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        String citta = sanitize(c);
-
-        if (citta.isBlank())
-            errorTicket("Il campo città non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        if (!citta.matches("^[A-Za-zÀ-ÖØ-öø-ÿ\\s-]+$"))
-            errorTicket("La città inserita non è valida.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        this.city = citta;
+        this.city = validateCitySyntax(c);
     }
 
     public void setTotale(String rawTotale) throws InvalidBuyTicketInputExceptionBrondi {
         if (rawTotale == null || rawTotale.isBlank()) {
-            errorTicket("Il totale non può essere nullo o vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
+            throw errorTicket("Il totale non può essere nullo o vuoto.");
         }
 
         double parsedTotale;
@@ -69,47 +57,24 @@ public class PaymentResultBean {
         try {
             parsedTotale = Double.parseDouble(sanitize(rawTotale));
         } catch (NumberFormatException e) {
-            errorTicket("Il totale inserito non è valido.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
+            throw errorTicket("Il totale inserito non è valido.");
         }
 
         if (parsedTotale < 0) {
-            errorTicket("Il totale non può essere negativo.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
+            throw errorTicket("Il totale non può essere negativo.");
         }
 
         this.total = parsedTotale;
     }
 
-    public void setMetodoPagamento(String rawMetodo) throws InvalidCardInputExceptionRemoli {
+    public void setMetodoPagamento(String rawMetodo) throws InvalidCardInputExceptionBrondi {
         if (rawMetodo == null || rawMetodo.isBlank()) {
-            error("Metodo di pagamento vuoto.");
-            return;
+            throw error("Metodo di pagamento vuoto.");
         }
         this.paymentMethod = sanitize(rawMetodo);
     }
 
     public void setQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {
-        if (rawQuantity == null) {
-            errorTicket("Il campo quantità non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
-        }
-
-        String sQuantita = sanitize(rawQuantity);
-        int quantita;
-
-        try {
-            quantita = Integer.parseInt(sQuantita);
-        } catch (NumberFormatException e) {
-            errorTicket("La quantità inserita non è un numero valido.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
-        }
-
-        if (quantita <= 0)
-            errorTicket("La quantità deve essere maggiore di zero.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        if (quantita > 10)
-            errorTicket("Puoi acquistare un massimo di 10 biglietti alla volta.", InvalidBuyTicketInputExceptionBrondi.Severity.HIGH);
-
-        this.quantity = quantita;
+        this.quantity = validateQuantity(rawQuantity);
     }
 }

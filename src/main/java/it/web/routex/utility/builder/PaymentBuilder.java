@@ -3,7 +3,7 @@ package it.web.routex.utility.builder;
 import it.web.routex.bean.PaymentResultBean;
 import it.web.routex.enumerator.TypesOfPersistenceLayer;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
+import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 import it.web.routex.exception.InvalidPaymentInputExceptionBrondi;
 import it.web.routex.utility.singleton.PersistenceMode;
 
@@ -32,7 +32,7 @@ public class PaymentBuilder {
         return this;
     }
 
-    public PaymentBuilder withMetodoPagamento(String rawMetodoPagamento) throws InvalidCardInputExceptionRemoli {
+    public PaymentBuilder withMetodoPagamento(String rawMetodoPagamento) throws InvalidCardInputExceptionBrondi {
         this.prb.setMetodoPagamento(rawMetodoPagamento);
         return this;
     }

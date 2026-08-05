@@ -52,7 +52,7 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         }catch(InvalidPaymentInputExceptionBrondi e) {
             GenericErrorCLI.mostraErrore("Errore nell'input del pagamento"+ e.getUserMessage());
             return null;
-        } catch (InvalidCardInputExceptionRemoli | InvalidBuyTicketInputExceptionBrondi e) {
+        } catch (InvalidCardInputExceptionBrondi | InvalidBuyTicketInputExceptionBrondi e) {
             throw new RuntimeException(e);
         }
     }
@@ -100,7 +100,7 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
                     paymentRecord.getCity()
             );
 
-        } catch (InvalidCardInputExceptionRemoli e) {
+        } catch (InvalidCardInputExceptionBrondi e) {
             gestisciErroreInput(e.getUserMessage(), "Errore nei dati Mastercard", e);
             return null;
         }
@@ -125,7 +125,7 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
                     paymentRecord.getQuantity(),
                     paymentRecord.getCity()
             );
-        } catch (InvalidCardInputExceptionRemoli e) {
+        } catch (InvalidCardInputExceptionBrondi e) {
             gestisciErroreInput(e.getUserMessage(), "Errore nei dati Paypal", e);
             return null;
         }
@@ -160,7 +160,7 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         SuccessoPagamentoCLI.setTotale(pay.getTotal());
         SuccessoPagamentoCLI.setMetodo(pay.getPaymentMethod());
         SuccessoPagamentoCLI.setMessaggio("Pagamento completato");
-        SuccessoPagamentoCLI.setCodiciBiglietti( pay.getTicketCodes());
+        SuccessoPagamentoCLI.setCodiciBiglietti(pay.getTicketCodes());
         SuccessoPagamentoCLI.stampa();
 
     }

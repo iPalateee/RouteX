@@ -2,7 +2,7 @@ package it.web.routex.exception;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class InvalidCardInputExceptionRemoli extends Exception {
+public class InvalidCardInputExceptionBrondi extends Exception {
 
     private final String errorCode;
     private final String userMessage;
@@ -12,7 +12,7 @@ public class InvalidCardInputExceptionRemoli extends Exception {
 
     public enum Severity { LOW, MEDIUM, HIGH, CRITICAL }
 
-    public InvalidCardInputExceptionRemoli(String userMessage,
+    public InvalidCardInputExceptionBrondi(String userMessage,
                                            String technicalMessage,
                                            Severity severity) {
         super(technicalMessage);
@@ -29,7 +29,7 @@ public class InvalidCardInputExceptionRemoli extends Exception {
 
     @Override
     public String toString() {
-        return "InvalidCardInputExceptionRemoli {" +
+        return "InvalidCardInputExceptionBrondi {" +
                 "errorCode='" + errorCode + '\'' +
                 ", userMessage='" + userMessage + '\'' +
                 ", technicalMessage='" + technicalMessage + '\'' +

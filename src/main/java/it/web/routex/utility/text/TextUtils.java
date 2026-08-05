@@ -1,7 +1,7 @@
 package it.web.routex.utility.text;
 
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
+import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 
 
 public final class TextUtils {
@@ -13,32 +13,37 @@ public final class TextUtils {
     }
 
     public static String sanitizeParam(String name)
-            throws InvalidCardInputExceptionRemoli {
+            throws InvalidCardInputExceptionBrondi {
 
         if (name == null) {
-            throw new InvalidCardInputExceptionRemoli(
+            throw new InvalidCardInputExceptionBrondi(
                     "Errore",
                     "Parametro non presente nella request",
-                    InvalidCardInputExceptionRemoli.Severity.HIGH
+                    InvalidCardInputExceptionBrondi.Severity.HIGH
             );
         }
 
         return sanitize(name);
     }
 
-    public static void error(String message)
-            throws InvalidCardInputExceptionRemoli {
+    public static InvalidCardInputExceptionBrondi error(String message){
 
-        throw new InvalidCardInputExceptionRemoli(
+        return new InvalidCardInputExceptionBrondi(
                 message,
                 message,
-                InvalidCardInputExceptionRemoli.Severity.MEDIUM
+                InvalidCardInputExceptionBrondi.Severity.MEDIUM
         );
     }
 
-    public static void errorTicket(String msg, InvalidBuyTicketInputExceptionBrondi.Severity severity) throws InvalidBuyTicketInputExceptionBrondi {
-        throw new InvalidBuyTicketInputExceptionBrondi(msg, msg, severity);
+    public static InvalidBuyTicketInputExceptionBrondi errorTicket(String message) {
+
+        return new InvalidBuyTicketInputExceptionBrondi(
+                message,
+                message,
+                InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM
+        );
     }
+
 
     public static String validateCitySyntax(String rawCity) throws InvalidBuyTicketInputExceptionBrondi {
 
@@ -67,6 +72,30 @@ public final class TextUtils {
         }
 
         return city;
+    }
+
+    public static int validateQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {
+        if (rawQuantity == null) {
+            throw errorTicket("Il campo quantità non può essere vuoto.");
+        }
+
+        String sQuantita = sanitize(rawQuantity);
+        int quantita;
+
+        try {
+            quantita = Integer.parseInt(sQuantita);
+        } catch (NumberFormatException e) {
+            throw errorTicket("La quantità inserita non è un numero valido.");
+        }
+
+        if (quantita <= 0)
+            throw errorTicket("La quantità deve essere maggiore di zero.");
+
+        if (quantita > 10)
+            throw errorTicket("Puoi acquistare un massimo di 10 biglietti alla volta.");
+
+        return quantita;
+
     }
 
 }

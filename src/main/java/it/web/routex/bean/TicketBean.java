@@ -21,28 +21,7 @@ public class TicketBean
     }
 
     public void setQuantity(String rawQuantity) throws InvalidBuyTicketInputExceptionBrondi {
-        if (rawQuantity == null) {
-            errorTicket("Il campo quantità non può essere vuoto.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
-        }
-
-        String sQuantita = sanitize(rawQuantity);
-        int quantita;
-
-        try {
-            quantita = Integer.parseInt(sQuantita);
-        } catch (NumberFormatException e) {
-            errorTicket("La quantità inserita non è un numero valido.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-            return;
-        }
-
-        if (quantita <= 0)
-            errorTicket("La quantità deve essere maggiore di zero.", InvalidBuyTicketInputExceptionBrondi.Severity.MEDIUM);
-
-        if (quantita > 10)
-            errorTicket("Puoi acquistare un massimo di 10 biglietti alla volta.", InvalidBuyTicketInputExceptionBrondi.Severity.HIGH);
-
-        this.quantity = quantita;
+        this.quantity = validateQuantity(rawQuantity);
     }
 
     public void setDataAcquisto(String dataAcquisto) {

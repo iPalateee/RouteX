@@ -1,6 +1,6 @@
 package it.web.routex.bean;
 
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
+import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 
 import static it.web.routex.utility.text.TextUtils.*;
 
@@ -17,30 +17,30 @@ public class PaypalBean {
         return this.email;
     }
 
-    public void setCodice(String c) throws InvalidCardInputExceptionRemoli {
+    public void setCodice(String c) throws InvalidCardInputExceptionBrondi {
 
         String codicee = sanitizeParam(c);
 
         if (codicee.isBlank()) {
-            error("Il codice transazione è obbligatorio.");
+            throw error("Il codice transazione è obbligatorio.");
         }
         
         if (!codicee.matches("^TXN-[A-Za-z0-9]{6,20}$")) {
-            error("Il codice transazione non è valido.");
+            throw error("Il codice transazione non è valido.");
         }
         
         this.codice = codicee;
     }
 
-    public void setEmail(String e) throws InvalidCardInputExceptionRemoli {
+    public void setEmail(String e) throws InvalidCardInputExceptionBrondi {
 
         String emaill = sanitizeParam(e);
 
         if (emaill.isBlank()) {
-            error("Inserisci la tua email PayPal.");
+            throw error("Inserisci la tua email PayPal.");
         }
         if (!emaill.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-            error("L'email PayPal inserita non è valida.");
+            throw error("L'email PayPal inserita non è valida.");
         }
 
         this.email = emaill;

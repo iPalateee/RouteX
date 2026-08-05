@@ -1,6 +1,6 @@
 package it.web.routex.bean;
 
-import it.web.routex.exception.InvalidCardInputExceptionRemoli;
+import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -24,24 +24,24 @@ public class MastercardBean {
         return this.cvv;
     }
 
-    public void setNumero(String rawNumero) throws InvalidCardInputExceptionRemoli {
+    public void setNumero(String rawNumero) throws InvalidCardInputExceptionBrondi {
 
         String numeroo = sanitizeParam(rawNumero);
 
         if (!numeroo.isBlank() && !numeroo.matches("^\\d{16}$")) {
-            error("Numero carta non valido.");
+            throw error("Numero carta non valido.");
         }
 
         this.numero = numeroo;
 
     }
 
-    public void setScadenza(String rawScadenza) throws InvalidCardInputExceptionRemoli {
+    public void setScadenza(String rawScadenza) throws InvalidCardInputExceptionBrondi {
 
         String scadenzaa = sanitizeParam(rawScadenza);
 
         if (!scadenzaa.isBlank() && !scadenzaa.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
-            error("Scadenza non valida.");
+            throw error("Scadenza non valida.");
         }
 
         String[] parts = scadenzaa.split("-");
@@ -49,7 +49,7 @@ public class MastercardBean {
         int month = Integer.parseInt(parts[1]);
 
         if (month < 1 || month > 12) {
-            error("Mese della carta non valido.");
+            throw error("Mese della carta non valido.");
         }
 
         LocalDate today = LocalDate.now(ZoneId.systemDefault());
@@ -58,25 +58,25 @@ public class MastercardBean {
                 .minusDays(1);
 
         if (expiry.isBefore(today)) {
-            throw new InvalidCardInputExceptionRemoli(
+            throw new InvalidCardInputExceptionBrondi(
                     "La carta è scaduta.",
                     "Data scadenza " + scadenza,
-                    InvalidCardInputExceptionRemoli.Severity.HIGH
+                    InvalidCardInputExceptionBrondi.Severity.HIGH
             );
         }
 
         this.scadenza = scadenzaa;
     }
 
-    public void setCvv(String rawCvv) throws InvalidCardInputExceptionRemoli {
+    public void setCvv(String rawCvv) throws InvalidCardInputExceptionBrondi {
 
         String cvvv = sanitizeParam(rawCvv);
 
         if (!cvvv.matches("^\\d{3}$")) {
-            error("Il codice CVV non è valido.");
+            throw error("Il codice CVV non è valido.");
         }
         if (!cvvv.isBlank() && !cvvv.matches("^\\d{3}$")) {
-            error("CVV non valido.");
+            throw error("CVV non valido.");
         }
 
         this.cvv = cvvv;

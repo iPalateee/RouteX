@@ -62,7 +62,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
                 logger.error("Errore durante il forward alla pagina di errore", a);
             }
             return null;
-        } catch (InvalidBuyTicketInputExceptionBrondi | InvalidCardInputExceptionRemoli e) {
+        } catch (InvalidBuyTicketInputExceptionBrondi | InvalidCardInputExceptionBrondi e) {
 
             logger.error("Errore di validazione input: {}", e.getMessage());
             request.setAttribute(ATTR_MESSAGGIO_ERRORE, e.getMessage()); // o e.getUserMessage() se lo hai implementato
@@ -131,7 +131,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
                     paymentRecord.getQuantity(),
                     paymentRecord.getCity()
             );
-        } catch (InvalidCardInputExceptionRemoli e) {
+        } catch (InvalidCardInputExceptionBrondi e) {
             gestisciErroreInput(request, response, e.getUserMessage(), "Errore nei dati Mastercard", e);
             return null;
         }
@@ -160,7 +160,7 @@ public class ConfermaPagamentoControllerGrafico extends LoggedHttpServlet {
                     paymentRecord.getQuantity(),
                     paymentRecord.getCity()
             );
-        } catch (InvalidCardInputExceptionRemoli e) {
+        } catch (InvalidCardInputExceptionBrondi e) {
             gestisciErroreInput(request, response, e.getUserMessage(), "Errore nei dati Paypal", e);
             return null;
         }
