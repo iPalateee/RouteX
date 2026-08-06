@@ -13,7 +13,6 @@ public class BrondiException extends Exception {
         this.details = details;
     }
 
-
     public String getCodiceDiErrore() {
         return codiceDiErrore;
     }
