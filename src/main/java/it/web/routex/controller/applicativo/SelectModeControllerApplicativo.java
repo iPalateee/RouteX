@@ -8,17 +8,8 @@ public class SelectModeControllerApplicativo {
 
     public void selectMode(ApplicationModeBean bean) {
 
-        if (bean == null || bean.getMode() == null) {
-            throw new IllegalArgumentException("Application mode not specified");
-        }
-
-        ApplicationMode mode;
-
-        try {
-            mode = ApplicationMode.valueOf(bean.getMode());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid application mode");
-        }
+        ApplicationMode mode = ApplicationMode.valueOf(bean.getMode());
         ApplicationModeManager.getSingletonInstance().setMode(mode);
+
     }
 }

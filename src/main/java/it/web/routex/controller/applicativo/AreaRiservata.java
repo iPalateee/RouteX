@@ -57,7 +57,7 @@ public class AreaRiservata
                         "Errore dominio Ticket: " + e.getMessage()
                 );
             } catch (InvalidBuyTicketInputExceptionBrondi e) {
-                throw new RuntimeException(e);
+                throw new DAOExceptionBrondi("Dati del ticket non validi nel database: " + e.getMessage(), e);
             }
         }
         return beans;
@@ -65,7 +65,7 @@ public class AreaRiservata
 
 
     public List<RouteBean> runPath(String cf)
-            throws PathNotFoundExceptionRemoli, DAOExceptionBrondi, InvalidRouteInputExceptionRemoli {
+            throws PathNotFoundExceptionRemoli, DAOExceptionBrondi, InvalidRouteInputExceptionRemoli, InvalidBuyTicketInputExceptionBrondi {
 
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Route> listaPercorsi = layer.getData(cf);

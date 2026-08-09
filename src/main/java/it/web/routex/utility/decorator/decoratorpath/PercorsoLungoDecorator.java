@@ -1,6 +1,7 @@
 package it.web.routex.utility.decorator.decoratorpath;
 
 import it.web.routex.bean.RouteBean;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.model.Route;
 
 public class PercorsoLungoDecorator extends Decorator
@@ -10,8 +11,7 @@ public class PercorsoLungoDecorator extends Decorator
     }
 
     @Override
-    public RouteBean update(RouteBean rb, Route r)
-    {
+    public RouteBean update(RouteBean rb, Route r) throws InvalidRouteInputExceptionRemoli {
         rb = super.update(rb,r);
         if(r.getnStazAttraversate()==1)
         {

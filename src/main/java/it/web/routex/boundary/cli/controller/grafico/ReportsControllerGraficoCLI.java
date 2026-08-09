@@ -6,6 +6,8 @@ import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.boundary.cli.view.ViewReportsAndStatisticsCLI;
 import it.web.routex.controller.applicativo.ReportsControllerApplicativo;
 import it.web.routex.exception.DAOExceptionBrondi;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 
 public class ReportsControllerGraficoCLI extends LoggedCLI {
 
@@ -17,9 +19,7 @@ public class ReportsControllerGraficoCLI extends LoggedCLI {
 
             ViewReportsAndStatisticsCLI.mostrareports(stats);
 
-
-
-        } catch (DAOExceptionBrondi e) {
+        } catch (DAOExceptionBrondi | InvalidBuyTicketInputExceptionBrondi | InvalidRouteInputExceptionRemoli e) {
             logger.error("Errore statistiche admin", e);
             GenericErrorCLI.mostraErrore("Errore nel recupero statistiche.");
 

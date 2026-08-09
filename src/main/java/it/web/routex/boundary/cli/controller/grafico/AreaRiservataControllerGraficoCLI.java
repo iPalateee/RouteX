@@ -7,6 +7,7 @@ import it.web.routex.boundary.cli.view.AreaRiservataCLI;
 import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.boundary.cli.view.LoginViewCLI;
 import it.web.routex.controller.applicativo.AreaRiservata;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.PathNotFoundExceptionRemoli;
@@ -48,6 +49,9 @@ public class AreaRiservataControllerGraficoCLI extends LoggedCLI {
             return reserved.runPath(cf);
         } catch (PathNotFoundExceptionRemoli e) {
             logger.info("Nessun percorso trovato in CLI per l'utente {}. La lista percorsi resterà vuota.", cf);
+            return new ArrayList<>();
+        } catch (InvalidBuyTicketInputExceptionBrondi e) {
+            logger.info("Errore: {}", e.getMessage());
             return new ArrayList<>();
         }
     }

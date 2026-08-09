@@ -1,17 +1,13 @@
 package it.web.routex.utility.builder;
 
 import it.web.routex.bean.PaymentResultBean;
-import it.web.routex.enumerator.TypesOfPersistenceLayer;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 import it.web.routex.exception.InvalidPaymentInputExceptionBrondi;
-import it.web.routex.utility.singleton.PersistenceMode;
 
 public class PaymentBuilder {
 
     private final PaymentResultBean prb;
-
-    private String rawPersistenza;
 
     public PaymentBuilder() {
         this.prb = new PaymentResultBean();
@@ -37,32 +33,37 @@ public class PaymentBuilder {
         return this;
     }
 
-    public PaymentBuilder withPersistenza(String rawPersistenza) {
-        this.rawPersistenza = rawPersistenza;
+    public PaymentBuilder withPersistenza(String rawPersistenza) throws InvalidPaymentInputExceptionBrondi {
+        this.prb.setPersistenza(rawPersistenza);
         return this;
     }
 
+    public PaymentBuilder withNumeroCarta(String rawNumeroCarta) throws InvalidCardInputExceptionBrondi {
+        this.prb.setNumeroCarta(rawNumeroCarta);
+        return this;
+    }
 
-    public PaymentResultBean build() throws InvalidPaymentInputExceptionBrondi {
+    public PaymentBuilder withScadenzaCarta(String rawScadenza) throws InvalidCardInputExceptionBrondi {
+        this.prb.setScadenzaCarta(rawScadenza);
+        return this;
+    }
 
-        if (this.rawPersistenza == null) {
-            throw new InvalidPaymentInputExceptionBrondi(
-                    "Campo mancante: persistence.",
-                    "Parametro 'persistence' è null.",
-                    InvalidPaymentInputExceptionBrondi.Severity.LOW
-            );
-        }
+    public PaymentBuilder withCvvCarta(String rawCvv) throws InvalidCardInputExceptionBrondi {
+        this.prb.setCvvCarta(rawCvv);
+        return this;
+    }
 
-        switch (this.rawPersistenza) {
-            case "JDBC" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.JDBC);
-            case "FileSystem" -> PersistenceMode.getSingletonInstance().setTipo(TypesOfPersistenceLayer.FILE_SYSTEM);
-            default -> throw new InvalidPaymentInputExceptionBrondi(
-                    "Tipo di persistenza non valido.",
-                    "Parametro persistence='" + this.rawPersistenza + "' non riconosciuto.",
-                    InvalidPaymentInputExceptionBrondi.Severity.HIGH
-            );
-        }
+    public PaymentBuilder withEmailPaypal(String rawEmail) throws InvalidCardInputExceptionBrondi {
+        this.prb.setEmailPaypal(rawEmail);
+        return this;
+    }
 
+    public PaymentBuilder withCodicePaypal(String rawCodice) {
+        this.prb.setCodicePaypal(rawCodice);
+        return this;
+    }
+
+    public PaymentResultBean build() {
         return this.prb;
     }
 }

@@ -13,12 +13,13 @@ public abstract class RegistrazionePagamentoController
     Credentials credenziali;
     int quantitativo;
 
-    protected RegistrazionePagamentoController(double tot, int quantita, String city, Credentials cred)
+    protected RegistrazionePagamentoController(PaymentResultBean payment)
     {
-        this.totale = tot;
-        this.quantitativo = quantita;
-        this.city = city;
-        this.credenziali = cred;
+        this.totale = payment.getTotal();
+        this.quantitativo = payment.getQuantity();
+        this.city = payment.getCity();
+        this.credenziali = Credentials.getInstanceSingleton();
     }
+
     public abstract PaymentResultBean run() throws DAOExceptionBrondi, PaymentValidationExceptionBrondi, CredentialsExceptionBrondi;
 }

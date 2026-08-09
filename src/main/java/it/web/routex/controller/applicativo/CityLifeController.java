@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import it.web.routex.exception.FuoriRangeExceptionBrondi;
+import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 import it.web.routex.exception.UnreacheableNodeExceptionRemoli;
 import it.web.routex.model.CityModel;
 import it.web.routex.model.Fermata;
@@ -83,7 +84,7 @@ public class CityLifeController
 
     }
 
-    public CityLifeBean calcolaPercorso(List<Integer> ids, String city) throws SQLException {
+    public CityLifeBean calcolaPercorso(List<Integer> ids, String city) throws InvalidCityDataExceptionBrondi, SQLException {
         final Logger logger = LoggerFactory.getLogger(getClass());
         StatoPercorso stato = new StatoPercorso();
 

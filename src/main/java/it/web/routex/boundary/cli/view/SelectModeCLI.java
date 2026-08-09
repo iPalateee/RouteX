@@ -1,6 +1,7 @@
 package it.web.routex.boundary.cli.view;
 
 import it.web.routex.boundary.cli.controller.grafico.SelectModeControllerGraficoCLI;
+import it.web.routex.exception.InvalidModeExceptionBrondi;
 
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public final class SelectModeCLI {
 
     }
 
-    public static void choiceDemoFull() {
+    public static void choiceDemoFull() throws InvalidModeExceptionBrondi {
 
         System.out.println("\n================================");
         System.out.println("     ROUTEX - TYPE MODE       ");

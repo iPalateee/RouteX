@@ -52,9 +52,9 @@ public class PathControllerGraficoCLI extends LoggedCLI
 
         try {
             PathController path = new PathController();
-            dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta()); //controller applicativo
-        } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
-                 FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException e) {
+            dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta());
+        } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli | FuoriRangeExceptionBrondi |
+                 DAOExceptionBrondi | SQLException | InvalidCityDataExceptionBrondi | InvalidRouteInputExceptionRemoli | InvalidBuyTicketInputExceptionBrondi e) {
             logger.error("Errore processamento dati percorso {}", e.toString());
             GenericErrorCLI.mostraErrore("Errore processamento dati percorso");
             return;
@@ -89,6 +89,9 @@ public class PathControllerGraficoCLI extends LoggedCLI
         {
             logger.error("Errore nell'input del percorso {}", e.getMessage());
             GenericErrorCLI.mostraErrore("Errore nell'input del percorso: "+e.getMessage());
+            return null;
+        } catch (InvalidBuyTicketInputExceptionBrondi e) {
+            GenericErrorCLI.mostraErrore("Errore: " + e.getMessage());
             return null;
         }
     }

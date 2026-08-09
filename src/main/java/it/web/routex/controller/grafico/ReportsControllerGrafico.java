@@ -3,6 +3,9 @@ import it.web.routex.bean.ReportsStatsBean;
 import it.web.routex.controller.applicativo.ReportsControllerApplicativo;
 import it.web.routex.domain.LoggedHttpServlet;
 import it.web.routex.exception.DAOExceptionBrondi;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,16 +24,16 @@ public class ReportsControllerGrafico extends LoggedHttpServlet {
             request.setAttribute("stats", stats);
             forwardToView(request, response, "/viewRAS.jsp");
 
-        } catch (DAOExceptionBrondi e) {
+        } catch (DAOExceptionBrondi | InvalidBuyTicketInputExceptionBrondi | InvalidRouteInputExceptionRemoli e) {
             logger.error("Errore statistiche admin", e);
             request.setAttribute("errore", "Errore nel recupero statistiche.");
             try {
                 request.getRequestDispatcher("/adminError.jsp").forward(request, response);
             }catch(Exception d)
             {
-                logger.error("Errore nel forwarding verso adminError.jsp.jsp. {}", d.getMessage());
+                logger.error("Errore nel forwarding verso adminError.jsp. {}", d.getMessage());
             }
-        }
+        } 
     }
     private void forwardToView(HttpServletRequest request,
                                HttpServletResponse response,

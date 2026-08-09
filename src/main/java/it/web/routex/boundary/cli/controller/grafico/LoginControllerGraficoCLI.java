@@ -36,6 +36,9 @@ public class LoginControllerGraficoCLI extends LoggedCLI {
             ErroreLoginCLI.mostraErrore(ex.getMessage());
             LoginViewCLI.mostraLogin();
             logger.error("[CLI]Tentativo di login fallito: email={}, Maskedpassw={}, message={}", ex.getEmail(), ex.getMaskedPassword(), ex.getMessage());
+        } catch (InvalidLoginInputExceptionRemoli e) {
+            ErroreLoginCLI.mostraErrore(e.getMessage());
+            LoginViewCLI.mostraLogin();
         }
 
 

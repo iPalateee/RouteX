@@ -1,6 +1,7 @@
 package it.web.routex.utility.decorator.decoratorpath;
 
 import it.web.routex.bean.RouteBean;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.model.Route;
 
 public abstract class Decorator implements Component {
@@ -11,7 +12,7 @@ public abstract class Decorator implements Component {
     }
 
     @Override
-    public RouteBean update(RouteBean rb, Route r) {
+    public RouteBean update(RouteBean rb, Route r) throws InvalidRouteInputExceptionRemoli {
         return component.update(rb, r);
     }
 }

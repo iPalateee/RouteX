@@ -92,7 +92,8 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             PathController path = new PathController();
             dto = path.run(route.getPartenza(), route.getArrivo(), route.getCitta());
         } catch (IllegalArgumentException | UnreacheableNodeExceptionRemoli |
-                 FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException e) {
+                 FuoriRangeExceptionBrondi | DAOExceptionBrondi | SQLException |
+                 InvalidCityDataExceptionBrondi | InvalidRouteInputExceptionRemoli | InvalidBuyTicketInputExceptionBrondi e) {
             forwardToError(request, response, "Errore processamento dati percorso" + e.getMessage(), cred);
             logger.error("Errore processamento dati percorso", e);
         }
@@ -148,7 +149,7 @@ public class PathControllerGrafico extends LoggedHttpServlet {
             rb.setArrivo(request.getParameter("endStation"));
 
             return rb;
-        } catch (InvalidRouteInputExceptionRemoli e) {
+        } catch (InvalidRouteInputExceptionRemoli | InvalidBuyTicketInputExceptionBrondi e) {
             forwardToError(request, response, "Errore nell'input del percorso {}. -" + e.getMessage(), cred);
             logger.error("Errore nell'input del percorso:", e);
             return null;

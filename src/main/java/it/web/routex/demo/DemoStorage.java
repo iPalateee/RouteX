@@ -4,7 +4,9 @@ import it.web.routex.model.*;
 import it.web.routex.utility.builder.UserBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Memoria centrale in RAM per la DEMO version.
@@ -14,7 +16,7 @@ public final class DemoStorage {
 
     private static List<Route> routes = new ArrayList<>();
     private static List<Notification> notifications = new ArrayList<>();
-    private static List<City> cities = new ArrayList<>();
+    private static Map<String, City> cities = new HashMap<>();
     private static List<User> users = new ArrayList<>();
     private static List<Mastercard> mastercards = new ArrayList<>();
     private static List<Paypal> paypals = new ArrayList<>();
@@ -25,7 +27,7 @@ public final class DemoStorage {
     static {
 
 
-        cities.add(new City("Rome", 1.50, 76));
+        cities.put("rome", new City("Rome", 1.50, 76));
 
         users.add(
                 new UserBuilder("RSSMRA80A01H501U")
@@ -199,7 +201,12 @@ public final class DemoStorage {
     private DemoStorage() {}
 
     public static List<City> getCities() {
-        return cities;
+        //return cities;
+        return new ArrayList<>(cities.values());
+    }
+
+    public static City getCityByName(String nomeCitta) {
+        return cities.get(nomeCitta.toLowerCase());
     }
 
     public static List<Fermate> getFermate() {

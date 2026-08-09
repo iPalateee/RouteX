@@ -16,8 +16,7 @@ import java.util.List;
 
 public class PathController
 {
-    public InformazioniPercorsoBean run(String startStation, String endStation, String city) throws IllegalArgumentException, FuoriRangeExceptionBrondi, UnreacheableNodeExceptionRemoli, SQLException, DAOExceptionBrondi
-    {
+    public InformazioniPercorsoBean run(String startStation, String endStation, String city) throws IllegalArgumentException, FuoriRangeExceptionBrondi, UnreacheableNodeExceptionRemoli, SQLException, DAOExceptionBrondi, InvalidCityDataExceptionBrondi, InvalidRouteInputExceptionRemoli, InvalidBuyTicketInputExceptionBrondi {
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Station> stations = layer.restituisciIdStazioni(startStation, endStation, city);
 

@@ -8,7 +8,6 @@ import it.web.routex.utility.decorator.decoratorticket.BaseTicketCode;
 import it.web.routex.utility.decorator.decoratorticket.CittaDecorator;
 import it.web.routex.utility.decorator.decoratorticket.Component;
 import it.web.routex.utility.decorator.decoratorticket.TimestampDecorator;
-import it.web.routex.utility.singleton.Credentials;
 import it.web.routex.exception.CredentialsExceptionBrondi;
 import it.web.routex.exception.PaymentValidationExceptionBrondi;
 import org.slf4j.Logger;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagamentoPaypal extends RegistrazionePagamentoController
+public class ConfermaPagamentoPaypalControllerApplicativo extends RegistrazionePagamentoController
 {
     String email;
     String codice;
@@ -33,7 +32,7 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
             throw new PaymentValidationExceptionBrondi(
                     "Nessun pagamento Paypal trovato per i dati inseriti.",
                     PaymentMethod.PAYPAL,
-                    "PagamentoPaypal.run"
+                    "ConfermaPagamentoPaypalControllerApplicativo.run"
             );
         }
 
@@ -58,17 +57,17 @@ public class PagamentoPaypal extends RegistrazionePagamentoController
         );
     }
 
-    public PagamentoPaypal(String email, String codiceTransazione, Credentials cred,double tot, int quantita, String citta)
+    public ConfermaPagamentoPaypalControllerApplicativo(PaymentResultBean payment)
     {
-        super(tot, quantita, citta, cred);
-        this.email = email;
-        this.codice = codiceTransazione;
+        super(payment);
+        this.email = payment.getEmailPaypal();
+        this.codice = payment.getCodicePaypal();
 
     }
 
     private void registraPagamentoPermanente(List<String> codiciBiglietti, Paypal paypal) throws CredentialsExceptionBrondi {
         if (credenziali == null) {
-            throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoPaypal.java");
+            throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel ConfermaPagamentoPaypalControllerApplicativo.java");
         }
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         layer.salvataggio(credenziali, codiciBiglietti, paypal.getMethod().getDisplayName(), city);

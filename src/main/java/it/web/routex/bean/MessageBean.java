@@ -9,26 +9,25 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-public class MessageBean
-{
+public class MessageBean {
+
     private static final Set<String> FORBIDDEN_WORDS = loadForbiddenWords();
     private String message;
     private Timestamp date;
     private Boolean risolto;
 
-    public MessageBean(){}
+    public MessageBean() {}
 
-    public MessageBean(String m, Timestamp d)
-    {
+    public MessageBean(String m, Timestamp d) throws RemoliInvalidCommunicationInputException {
         setMessage(m);
-        this.date = d;
+        setDate(d);
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(String message) throws RemoliInvalidCommunicationInputException {
 
         if (message == null || message.trim().isEmpty()) {
             throw new RemoliInvalidCommunicationInputException(
@@ -53,11 +52,26 @@ public class MessageBean
     public Timestamp getDate() {
         return date;
     }
-    public void setDate(Timestamp date) {
+
+    public void setDate(Timestamp date) throws RemoliInvalidCommunicationInputException {
+        if (date == null) {
+            throw new RemoliInvalidCommunicationInputException(
+                    "Errore di sistema: La data (Timestamp) del messaggio non può essere nulla."
+            );
+        }
         this.date = date;
     }
 
-    public void setRisolto(Boolean risolto) {
+    public Boolean getRisolto() {
+        return risolto;
+    }
+
+    public void setRisolto(Boolean risolto) throws RemoliInvalidCommunicationInputException {
+        if (risolto == null) {
+            throw new RemoliInvalidCommunicationInputException(
+                    "Errore di sistema: Lo stato di risoluzione del messaggio non può essere nullo."
+            );
+        }
         this.risolto = risolto;
     }
 

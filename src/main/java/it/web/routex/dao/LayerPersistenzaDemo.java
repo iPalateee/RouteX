@@ -111,12 +111,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
 
     @Override
     public City getCityByName(String nomeCitta) {
-        for (City c : DemoStorage.getCities()) {
-            if (c.getCity().equalsIgnoreCase(nomeCitta)) {
-                return c;
-            }
-        }
-        return null;
+        return DemoStorage.getCityByName(nomeCitta);
     }
 
     @Override

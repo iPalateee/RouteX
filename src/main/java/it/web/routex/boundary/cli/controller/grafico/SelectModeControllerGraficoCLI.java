@@ -4,13 +4,15 @@ import it.web.routex.bean.ApplicationModeBean;
 import it.web.routex.boundary.cli.view.HomePrincipaleCLI;
 import it.web.routex.boundary.cli.view.SelectModeCLI;
 import it.web.routex.controller.applicativo.SelectModeControllerApplicativo;
+import it.web.routex.exception.InvalidModeExceptionBrondi;
+
 @SuppressWarnings("java:S106")
 public final class SelectModeControllerGraficoCLI {
 
     private SelectModeControllerGraficoCLI() {
     }
 
-    public static void doPost() {
+    public static void doPost() throws InvalidModeExceptionBrondi {
 
         String mode = SelectModeCLI.getScelta();
 

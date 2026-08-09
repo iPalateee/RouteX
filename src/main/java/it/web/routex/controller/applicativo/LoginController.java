@@ -2,6 +2,7 @@ package it.web.routex.controller.applicativo;
 
 import it.web.routex.bean.AutenticazioneBean;
 import it.web.routex.bean.UtenteBeanGenerico;
+import it.web.routex.exception.InvalidLoginInputExceptionRemoli;
 import it.web.routex.utility.factory.LayerPersistenza;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ public class LoginController {
         this.autenticazione = autenticazione;
     }
 
-    public UtenteBeanGenerico autenticaUtente() throws DAOExceptionBrondi, LoginNotFoundRemoli {
+    public UtenteBeanGenerico autenticaUtente() throws DAOExceptionBrondi, LoginNotFoundRemoli, InvalidLoginInputExceptionRemoli {
 
         final Logger logger = LoggerFactory.getLogger(getClass());
 

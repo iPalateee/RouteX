@@ -3,6 +3,8 @@ package it.web.routex.controller.applicativo;
 import it.web.routex.bean.PathInfoBean;
 import it.web.routex.bean.ReportsStatsBean;
 import it.web.routex.exception.DAOExceptionBrondi;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
+import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.model.Route;
 import it.web.routex.utility.factory.LayerPersistenza;
 
@@ -10,7 +12,7 @@ import java.util.*;
 
 public class ReportsControllerApplicativo {
 
-    public ReportsStatsBean recuperaStatistiche() throws DAOExceptionBrondi {
+    public ReportsStatsBean recuperaStatistiche() throws DAOExceptionBrondi, InvalidRouteInputExceptionRemoli, InvalidBuyTicketInputExceptionBrondi {
 
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         List<Route> models=layer.getAllPathInfo();

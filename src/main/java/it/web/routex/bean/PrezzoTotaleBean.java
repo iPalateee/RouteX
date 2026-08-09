@@ -1,14 +1,24 @@
 package it.web.routex.bean;
 
-public class PrezzoTotaleBean
-{
-    private final double prezzoTotale;
+import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
 
-    public PrezzoTotaleBean(double calculate)
-    {
-        this.prezzoTotale = calculate;
-    }
+public class PrezzoTotaleBean {
+    private double prezzoTotale;
+
     public double getPrezzoTotale() {
         return prezzoTotale;
+    }
+
+    public void setPrezzoTotale(double prezzoTotale) throws InvalidPriceCalculationExceptionBrondi {
+
+        if (prezzoTotale < 0) {
+            throw new InvalidPriceCalculationExceptionBrondi(
+                    "Impossibile procedere: il prezzo totale risulta negativo.",
+                    "Prezzo negativo: " + prezzoTotale,
+                    InvalidPriceCalculationExceptionBrondi.Severity.HIGH
+            );
+        }
+
+        this.prezzoTotale = prezzoTotale;
     }
 }

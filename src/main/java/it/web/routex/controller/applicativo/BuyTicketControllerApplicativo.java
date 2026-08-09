@@ -71,7 +71,8 @@ public class BuyTicketControllerApplicativo {
             );
         }
 
-        double totale = city.calcolaPrezzoTotale(ticket.getQuantity());
-        return new PrezzoTotaleBean(totale);
+        PrezzoTotaleBean result = new PrezzoTotaleBean();
+        result.setPrezzoTotale(city.calcolaPrezzoTotale(ticket.getQuantity()));
+        return result;
     }
 }

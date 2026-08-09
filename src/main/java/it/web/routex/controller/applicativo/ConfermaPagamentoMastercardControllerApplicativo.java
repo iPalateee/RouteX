@@ -10,14 +10,13 @@ import it.web.routex.utility.decorator.decoratorticket.BaseTicketCode;
 import it.web.routex.utility.decorator.decoratorticket.CittaDecorator;
 import it.web.routex.utility.decorator.decoratorticket.Component;
 import it.web.routex.utility.decorator.decoratorticket.TimestampDecorator;
-import it.web.routex.utility.singleton.Credentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagamentoMastercard extends RegistrazionePagamentoController
+public class ConfermaPagamentoMastercardControllerApplicativo extends RegistrazionePagamentoController
 {
     String numeroCarta;
     String scadenza;
@@ -35,7 +34,7 @@ public class PagamentoMastercard extends RegistrazionePagamentoController
             throw new PaymentValidationExceptionBrondi(
                     "Carta non valida o non presente nel sistema.",
                     PaymentMethod.MASTERCARD,
-                    "PagamentoMastercard.run"
+                    "ConfermaPagamentoMastercardControllerApplicativo.run"
             );
         }
 
@@ -59,17 +58,17 @@ public class PagamentoMastercard extends RegistrazionePagamentoController
                 quantitativo
         );
     }
-    public PagamentoMastercard(String numeroCarta, String scadenza, String cvv, Credentials cred,double tot, int quantita, String citta )
+    public ConfermaPagamentoMastercardControllerApplicativo(PaymentResultBean payment)
     {
-        super(tot, quantita, citta, cred);
-        this.numeroCarta = numeroCarta;
-        this.scadenza = scadenza;
-        this.cvv = cvv;
+        super(payment);
+        this.numeroCarta = payment.getNumeroCarta();
+        this.scadenza = payment.getScadenzaCarta();
+        this.cvv = payment.getCvv();
     }
 
     private void registraPagamentoPermanente(List<String> codiciBiglietti, Mastercard mastercard) throws CredentialsExceptionBrondi {
         if (credenziali == null) {
-            throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel PagamentoMastercard.java");
+            throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel ConfermaPagamentoMastercardControllerApplicativo.java");
         }
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
         layer.salvataggio(credenziali, codiciBiglietti, mastercard.getMethod().getDisplayName(), city);

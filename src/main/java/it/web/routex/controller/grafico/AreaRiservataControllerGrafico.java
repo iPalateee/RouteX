@@ -4,6 +4,7 @@ import it.web.routex.bean.RouteBean;
 import it.web.routex.bean.TicketBean;
 import it.web.routex.controller.applicativo.AreaRiservata;
 import it.web.routex.domain.LoggedHttpServlet;
+import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidRouteInputExceptionRemoli;
 import it.web.routex.utility.singleton.Credentials;
 import javax.servlet.annotation.WebServlet;
@@ -68,6 +69,9 @@ public class AreaRiservataControllerGrafico extends LoggedHttpServlet {
             return reserved.runPath(cf);
         } catch (PathNotFoundExceptionRemoli e) {
             logger.info("Nessun percorso trovato per l'utente {}. La tabella percorsi resterà vuota.", cf);
+            return new ArrayList<>();
+        } catch (InvalidBuyTicketInputExceptionBrondi e) {
+            logger.info("Errore: {}", e.getMessage());
             return new ArrayList<>();
         }
     }
