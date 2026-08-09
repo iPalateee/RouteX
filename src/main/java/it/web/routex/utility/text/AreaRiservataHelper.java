@@ -19,7 +19,7 @@ public class AreaRiservataHelper {
         try {
             return reserved.runPath(cf);
         } catch (PathNotFoundExceptionRemoli e) {
-            logger.info("Nessun percorso trovato per l'utente {}. La lista resterà vuota.", cf);
+            logger.info("Nessun percorso trovato per l'utente {}. La lista resterà vuota", cf);
             return new ArrayList<>();
         } catch (InvalidBuyTicketInputExceptionBrondi e) {
             logger.info("Errore: {}", e.getMessage());
