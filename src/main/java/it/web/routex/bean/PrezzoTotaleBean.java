@@ -1,5 +1,6 @@
 package it.web.routex.bean;
 
+import it.web.routex.exception.BrondiValidationException;
 import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
 
 public class PrezzoTotaleBean {
@@ -15,7 +16,7 @@ public class PrezzoTotaleBean {
             throw new InvalidPriceCalculationExceptionBrondi(
                     "Impossibile procedere: il prezzo totale risulta negativo.",
                     "Prezzo negativo: " + prezzoTotale,
-                    InvalidPriceCalculationExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
 

@@ -26,9 +26,5 @@ public class CityBean {
 
     }
 
-    /*@Override
-    public String toString() {
-        return city;
-    }*/
 }
 

@@ -1,5 +1,6 @@
 package it.web.routex.bean;
 
+import it.web.routex.exception.BrondiValidationException;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCardInputExceptionBrondi;
 import it.web.routex.exception.InvalidPaymentInputExceptionBrondi;
@@ -109,21 +110,21 @@ public class PaymentResultBean {
             throw new InvalidPaymentInputExceptionBrondi(
                     "Campo mancante: persistenza.",
                     "Il parametro persistence è null o blank.",
-                    InvalidPaymentInputExceptionBrondi.Severity.LOW
+                    BrondiValidationException.Severity.LOW
             );
         }
 
-        String persistence = sanitize(rawPersistenza);
+        String persistenza = sanitize(rawPersistenza);
 
-        if (!persistence.equals("JDBC") && !persistence.equals("FileSystem")) {
+        if (!persistenza.equals("JDBC") && !persistenza.equals("FileSystem")) {
             throw new InvalidPaymentInputExceptionBrondi(
                     "Tipo di persistenza non valido.",
-                    "Parametro " + persistence + " non valido.",
-                    InvalidPaymentInputExceptionBrondi.Severity.HIGH
+                    "Parametro " + persistenza + " non valido.",
+                    BrondiValidationException.Severity.HIGH
             );
         }
 
-        this.persistence = persistence;
+        this.persistence = persistenza;
     }
 
     public void setNumeroCarta(String rawNumeroCarta) throws InvalidCardInputExceptionBrondi {
@@ -139,7 +140,7 @@ public class PaymentResultBean {
             throw new InvalidCardInputExceptionBrondi(
                     "Formato numero carta non valido.",
                     "Il numero carta deve essere di 16 cifre numeriche.",
-                    InvalidCardInputExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
 
@@ -153,21 +154,21 @@ public class PaymentResultBean {
             return;
         }
 
-        String scadenzaCarta = sanitize(rawScadenza);
+        String scadenza = sanitize(rawScadenza);
 
-        boolean isFormatoCorto = scadenzaCarta.matches("^(0[1-9]|1[0-2])/\\d{2}$");
+        boolean isFormatoCorto = scadenza.matches("^(0[1-9]|1[0-2])/\\d{2}$");
 
-        boolean isFormatoLungo = scadenzaCarta.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
+        boolean isFormatoLungo = scadenza.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
 
         if (!isFormatoCorto && !isFormatoLungo) {
             throw new InvalidCardInputExceptionBrondi(
                     "Formato scadenza carta non valido.",
                     "La scadenza deve essere nel formato MM/YY oppure YYYY-MM-DD.",
-                    InvalidCardInputExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
 
-        this.scadenzaCarta = scadenzaCarta;
+        this.scadenzaCarta = scadenza;
     }
 
     public void setCvvCarta(String rawCvv) throws InvalidCardInputExceptionBrondi {
@@ -177,16 +178,16 @@ public class PaymentResultBean {
             return;
         }
 
-        String cvv = sanitize(rawCvv);
+        String cvvPulito = sanitize(rawCvv);
 
-        if (cvv.length() != 3 || !cvv.matches("\\d{3}")) {
+        if (cvvPulito.length() != 3 || !cvvPulito.matches("\\d{3}")) {
             throw new InvalidCardInputExceptionBrondi(
                     "Formato CVV non valido.",
                     "Il CVV deve essere composto da 3 cifre numeriche.",
-                    InvalidCardInputExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
-        this.cvv = cvv;
+        this.cvv = cvvPulito;
     }
 
     public void setEmailPaypal(String rawEmail) throws InvalidCardInputExceptionBrondi {
@@ -196,17 +197,17 @@ public class PaymentResultBean {
             return;
         }
 
-        String emailPaypal = sanitize(rawEmail);
+        String emailPaypall = sanitize(rawEmail);
 
-        if (!emailPaypal.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+        if (!emailPaypall.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             throw new InvalidCardInputExceptionBrondi(
                     "Formato email Paypal non valido.",
                     "Email non valida: " + emailPaypal,
-                    InvalidCardInputExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
 
-        this.emailPaypal = emailPaypal;
+        this.emailPaypal = emailPaypall;
     }
 
     public void setCodicePaypal(String rawCodice) {

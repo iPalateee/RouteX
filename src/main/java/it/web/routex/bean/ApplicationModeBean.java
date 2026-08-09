@@ -1,5 +1,6 @@
 package it.web.routex.bean;
 
+import it.web.routex.exception.BrondiValidationException;
 import it.web.routex.exception.InvalidModeExceptionBrondi;
 
 import static it.web.routex.utility.text.TextUtils.sanitize;
@@ -18,20 +19,20 @@ public class ApplicationModeBean {
             throw new InvalidModeExceptionBrondi(
                     "Errore: modalità non specificata.",
                     "Parametro rawMode null o blank.",
-                    InvalidModeExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
 
-        String mode = sanitize(rawMode);
+        String modalita = sanitize(rawMode);
 
-        if (!mode.equals("DEMO") && !mode.equals("FULL")) {
+        if (!modalita.equals("DEMO") && !modalita.equals("FULL")) {
             throw new InvalidModeExceptionBrondi(
                     "Errore modalità non valida.",
-                    "Valore non valido per mode: " + mode,
-                    InvalidModeExceptionBrondi.Severity.HIGH
+                    "Valore non valido per mode: " + modalita,
+                    BrondiValidationException.Severity.HIGH
             );
         }
-        this.mode = mode;
+        this.mode = modalita;
 
     }
 }

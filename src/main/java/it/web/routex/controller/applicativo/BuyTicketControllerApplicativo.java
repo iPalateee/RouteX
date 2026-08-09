@@ -6,6 +6,7 @@ import it.web.routex.bean.TicketBean;
 import it.web.routex.exception.DAOExceptionBrondi;
 import it.web.routex.exception.InvalidCityDataExceptionBrondi;
 import it.web.routex.exception.InvalidPriceCalculationExceptionBrondi;
+import it.web.routex.exception.BrondiValidationException;
 import it.web.routex.model.City;
 import it.web.routex.utility.factory.LayerPersistenza;
 
@@ -67,7 +68,7 @@ public class BuyTicketControllerApplicativo {
             throw new InvalidPriceCalculationExceptionBrondi(
                     "La città selezionata non è disponibile.",
                     "Nessuna corrispondenza per city='" + ticket.getCity() + "'",
-                    InvalidPriceCalculationExceptionBrondi.Severity.HIGH
+                    BrondiValidationException.Severity.HIGH
             );
         }
 

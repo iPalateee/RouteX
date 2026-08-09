@@ -7,6 +7,10 @@ import it.web.routex.controller.applicativo.RegistrazionePagamentoController;
 
 public class FactoryPagamento {
 
+    private FactoryPagamento(){
+
+    }
+
     public static RegistrazionePagamentoController createController(PaymentResultBean payment) {
 
         String metodo = payment.getPaymentMethod().toLowerCase();
