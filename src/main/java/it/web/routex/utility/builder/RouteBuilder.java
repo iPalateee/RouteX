@@ -5,93 +5,68 @@ import it.web.routex.model.Route;
 
 public class RouteBuilder {
 
-    private String startStation;
-    private String endStation;
-    private String city;
-    private String tipoViaggiatore;
-    private int nCambi;
-    private String listaCambi;
-    private String stazioneDiInterscambio;
-    private int nStazioniAttraversate;
-    private double tempoDiArrivo;
-    private int nStazioniCitta;
-    private double percTerrenoUtilizzato;
-    private String utente;
+    private final RouteData data = new RouteData();
 
     public RouteBuilder(String startStation) {
-        this.startStation = startStation;
+        data.setStartStation(startStation);
     }
 
     public RouteBuilder endStation(String endStation) {
-        this.endStation = endStation;
+        data.setEndStation(endStation);
         return this;
     }
 
     public RouteBuilder city(String city) {
-        this.city = city;
+        data.setCity(city);
         return this;
     }
 
     public RouteBuilder tipoViaggiatore(String tipoViaggiatore) {
-        this.tipoViaggiatore = tipoViaggiatore;
+        data.setTipoViaggiatore(tipoViaggiatore);
         return this;
     }
 
     public RouteBuilder nCambi(int nCambi) {
-        this.nCambi = nCambi;
+        data.setnCambi(nCambi);
         return this;
     }
 
     public RouteBuilder listaCambi(String listaCambi) {
-        this.listaCambi = listaCambi;
+        data.setListaCambi(listaCambi);
         return this;
     }
 
     public RouteBuilder stazioneDiInterscambio(String stazioneDiInterscambio) {
-        this.stazioneDiInterscambio = stazioneDiInterscambio;
+        data.setStazioneDiInterscambio(stazioneDiInterscambio);
         return this;
     }
 
     public RouteBuilder nStazioniAttraversate(int nStazioniAttraversate) {
-        this.nStazioniAttraversate = nStazioniAttraversate;
+        data.setnStazioniAttraversate(nStazioniAttraversate);
         return this;
     }
 
     public RouteBuilder tempoDiArrivo(double tempoDiArrivo) {
-        this.tempoDiArrivo = tempoDiArrivo;
+        data.setTempoDiArrivo(tempoDiArrivo);
         return this;
     }
 
     public RouteBuilder nStazioniCitta(int nStazioniCitta) {
-        this.nStazioniCitta = nStazioniCitta;
+        data.setnStazioniCitta(nStazioniCitta);
         return this;
     }
 
     public RouteBuilder percTerrenoUtilizzato(double percTerrenoUtilizzato) {
-        this.percTerrenoUtilizzato = percTerrenoUtilizzato;
+        data.setPercTerrenoUtilizzato(percTerrenoUtilizzato);
         return this;
     }
 
     public RouteBuilder utente(String utente) {
-        this.utente = utente;
+        data.setUtente(utente);
         return this;
     }
 
-    public Route build()
-    {
-        RouteData data = new RouteData();
-        data.setCity(city);
-        data.setEndStation(endStation);
-        data.setListaCambi(listaCambi);
-        data.setnCambi(nCambi);
-        data.setnStazioniCitta(nStazioniCitta);
-        data.setnStazioniAttraversate(nStazioniAttraversate);
-        data.setPercTerrenoUtilizzato(percTerrenoUtilizzato);
-        data.setTempoDiArrivo(tempoDiArrivo);
-        data.setTipoViaggiatore(tipoViaggiatore);
-        data.setUtente(utente);
-        data.setStartStation(startStation);
-        data.setStazioneDiInterscambio(stazioneDiInterscambio);
+    public Route build() {
         return new Route(data);
     }
 }
