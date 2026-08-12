@@ -70,7 +70,7 @@ public class ConfermaPagamentoPaypalControllerApplicativo extends RegistrazioneP
             throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel ConfermaPagamentoPaypalControllerApplicativo.java");
         }
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
-        layer.salvataggio(credenziali, codiciBiglietti, paypal.getMethod().getDisplayName(), city);
+        layer.salvataggio(credenziali, codiciBiglietti, paypal.getMethod().getDisplayName(), city, this.persistenza);
         if(logger.isInfoEnabled()) {
             logger.info("Pagamento effettuato con Paypal {}", paypal.maskedAccount());
         }

@@ -76,7 +76,6 @@ public class LayerPersistenzaFull extends LayerPersistenza
                     return found;
                 }
 
-                // nessun risultato → NON è errore DAO
                 return null;
             }
 
@@ -109,7 +108,6 @@ public class LayerPersistenzaFull extends LayerPersistenza
                     return found;
                 }
 
-                //  nessun risultato semantica neutra
                 return null;
             }
 
@@ -258,7 +256,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
                     }
                 }
             }
-            //  NESSUN controllo isEmpty()
+
             return result;
 
         } catch (SQLException e) {
@@ -286,7 +284,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
             cs.setDouble(9, route.getTempoDiArrivo());
             cs.setInt(10, route.getnStazioniCitta());
             cs.setDouble(11, route.getPercTerrenoUtilizzato());
-            cs.setString(12, route.getUtente()); // qui salvo utente
+            cs.setString(12, route.getUtente());
 
             cs.execute();
 
@@ -309,7 +307,6 @@ public class LayerPersistenzaFull extends LayerPersistenza
 
             try (ResultSet rs = cs.executeQuery()) {
 
-                //  NESSUNA ECCEZIONE: se non c'è risultato, ritorno null
                 if (!rs.next()) {
                     return null;
                 }
@@ -474,7 +471,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
     }
 
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodoPagamento, String city) throws CredentialsExceptionBrondi {
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodoPagamento, String city, String persistenza) throws CredentialsExceptionBrondi {
         TicketDAOLayer dao = FactoryPersistence.createTicketDAO();
         dao.salvataggio(cred, codiciBiglietti, metodoPagamento, city);
         final Logger logger = LoggerFactory.getLogger(getClass());

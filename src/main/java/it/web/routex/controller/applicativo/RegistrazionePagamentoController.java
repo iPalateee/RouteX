@@ -12,6 +12,7 @@ public abstract class RegistrazionePagamentoController
     String city;
     Credentials credenziali;
     int quantitativo;
+    String persistenza;
 
     protected RegistrazionePagamentoController(PaymentResultBean payment)
     {

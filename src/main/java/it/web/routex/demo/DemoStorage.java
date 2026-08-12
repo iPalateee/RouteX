@@ -18,8 +18,8 @@ public final class DemoStorage {
     private static List<Notification> notifications = new ArrayList<>();
     private static Map<String, City> cities = new HashMap<>();
     private static List<User> users = new ArrayList<>();
-    private static List<Mastercard> mastercards = new ArrayList<>();
-    private static List<Paypal> paypals = new ArrayList<>();
+    private static Map<String, Mastercard> mastercards = new HashMap<>();
+    private static Map<String, Paypal> paypals = new HashMap<>();
     private static List<Fermate> fermate = new ArrayList<>();
     private static List<WorkerScheduleRecord> workerSchedules = new ArrayList<>();
     private static List<PaymentReg> payments = new ArrayList<>();
@@ -43,7 +43,7 @@ public final class DemoStorage {
 
 
         users.add(
-                new UserBuilder("RSSSAL")
+                new UserBuilder("LUCMRCLN5H4JF7G8")
                         .nome("Lucia")
                         .cognome("Mercolano")
                         .dataDiNascita(java.sql.Date.valueOf("1980-01-01"))
@@ -111,12 +111,14 @@ public final class DemoStorage {
         demoCard.setNumeroCarta("1111222233334444");
         demoCard.setDataScadenza("2027-03-01");
         demoCard.setCvv("123");
-        mastercards.add(demoCard);
+
+        mastercards.put(demoCard.getNumeroCarta(), demoCard);
 
         Paypal demoPaypal = new Paypal();
         demoPaypal.setEmail("demo@paypal.it");
         demoPaypal.setCodice("TXN-A1B2C3");
-        paypals.add(demoPaypal);
+
+        paypals.put(demoPaypal.getEmail(), demoPaypal);
 
         fermate.add(new Fermate(0, "Rebibbia", false, "MB"));
         fermate.add(new Fermate(1, "Ponte Mammolo", true, "MB"));
@@ -214,7 +216,11 @@ public final class DemoStorage {
     }
 
     public static List<Mastercard> getMastercards() {
-        return mastercards;
+        return new ArrayList<>(mastercards.values());
+    }
+
+    public static Mastercard getMastercardByNumber(String numero){
+        return mastercards.get(numero);
     }
 
     public static List<Notification> getNotifications() {
@@ -226,7 +232,11 @@ public final class DemoStorage {
     }
 
     public static List<Paypal> getPaypals() {
-        return paypals;
+        return new ArrayList<>(paypals.values());
+    }
+
+    public static Paypal getPaypalByEmail(String email){
+        return paypals.get(email);
     }
 
     public static List<Route> getRoutes() {

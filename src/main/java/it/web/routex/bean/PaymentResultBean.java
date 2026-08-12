@@ -1,5 +1,6 @@
 package it.web.routex.bean;
 
+import it.web.routex.enumerator.TypesOfPersistenceLayer;
 import it.web.routex.exception.BrondiValidationException;
 import it.web.routex.exception.InvalidBuyTicketInputExceptionBrondi;
 import it.web.routex.exception.InvalidCardInputExceptionBrondi;
@@ -16,7 +17,7 @@ public class PaymentResultBean {
     private String paymentMethod;
     private final List<String> ticketCodes;
     private int quantity;
-    private String persistence;
+    private TypesOfPersistenceLayer persistence;
     //se devo fare mastercard
     private String numeroCarta;
     private String scadenzaCarta;
@@ -52,7 +53,7 @@ public class PaymentResultBean {
     public String getPaymentMethod() { return paymentMethod; }
     public List<String> getTicketCodes() { return ticketCodes; }
     public int getQuantity() { return quantity; }
-    public String getPersistenza() { return persistence; }
+    public TypesOfPersistenceLayer getPersistenza() { return persistence; }
     public String getNumeroCarta() {
         return numeroCarta;
     }
@@ -75,7 +76,10 @@ public class PaymentResultBean {
 
     public void setTotale(String rawTotale) throws InvalidBuyTicketInputExceptionBrondi {
         if (rawTotale == null || rawTotale.isBlank()) {
-            throw errorTicket("Il totale non può essere nullo o vuoto.");
+            throw new InvalidBuyTicketInputExceptionBrondi(
+                    "Campo mancante: totale.",
+                    "rawTotale è null o blank.",
+                    BrondiValidationException.Severity.LOW);
         }
 
         double parsedTotale;
@@ -95,7 +99,10 @@ public class PaymentResultBean {
 
     public void setMetodoPagamento(String rawMetodo) throws InvalidCardInputExceptionBrondi {
         if (rawMetodo == null || rawMetodo.isBlank()) {
-            throw error("Metodo di pagamento vuoto.");
+            throw new InvalidCardInputExceptionBrondi(
+                    "Campo mancante: metodo di pagamento.",
+                    "rawMetodo è null o blank.",
+                    BrondiValidationException.Severity.HIGH);
         }
         this.paymentMethod = sanitize(rawMetodo);
     }
@@ -116,15 +123,19 @@ public class PaymentResultBean {
 
         String persistenza = sanitize(rawPersistenza);
 
-        if (!persistenza.equals("JDBC") && !persistenza.equals("FileSystem")) {
+        if (persistenza.equalsIgnoreCase("JDBC")) {
+            this.persistence = TypesOfPersistenceLayer.JDBC;
+        }
+        else if (persistenza.equalsIgnoreCase("FileSystem")) {
+            this.persistence = TypesOfPersistenceLayer.FILE_SYSTEM;
+        }
+        else {
             throw new InvalidPaymentInputExceptionBrondi(
                     "Tipo di persistenza non valido.",
                     "Parametro " + persistenza + " non valido.",
                     BrondiValidationException.Severity.HIGH
             );
         }
-
-        this.persistence = persistenza;
     }
 
     public void setNumeroCarta(String rawNumeroCarta) throws InvalidCardInputExceptionBrondi {

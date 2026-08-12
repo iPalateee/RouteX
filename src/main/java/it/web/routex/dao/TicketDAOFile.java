@@ -51,7 +51,7 @@ public class TicketDAOFile extends TicketDAOLayer
 
                     LocalDateTime dataAcquisto = parseTimestamp(timestamp);
 
-                    // Un Ticket per ogni codice biglietto
+                    //Un ticket per ogni codice biglietto
                     for (String codice : codiciBiglietti) {
                         Ticket t = new Ticket(
                                 codice.trim(),
@@ -86,6 +86,7 @@ public class TicketDAOFile extends TicketDAOLayer
     @Override
     public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionBrondi
     {
+        logger.info("STO SCRIVENDO IL CSV NEL PERCORSO ASSOLUTO: {}", new File(filePath).getAbsolutePath());
         boolean fileVuoto = !new File(filePath).exists() || new File(filePath).length() == 0;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
 

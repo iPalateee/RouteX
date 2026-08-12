@@ -14,11 +14,11 @@ public class Credentials {
     private Ruolo ruolo;
 
     private static class LazyCointainer{
-        public static final ThreadLocal<Credentials> sigletonInstance = ThreadLocal.withInitial(Credentials::new);
+        public static final Credentials sigletonInstance = new Credentials();
     }
 
     public static Credentials getInstanceSingleton() {
-        return LazyCointainer.sigletonInstance.get();
+        return LazyCointainer.sigletonInstance;
     }
 
     public String getNome() { return nome; }

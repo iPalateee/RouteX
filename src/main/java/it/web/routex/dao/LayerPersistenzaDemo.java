@@ -52,26 +52,21 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
     }
 
     @Override
-    public Mastercard getPaymentMastercard(String nC, String sc, String cvv)
-            throws DAOExceptionBrondi {
-
+    public Mastercard getPaymentMastercard(String nC, String sc, String cvv) throws DAOExceptionBrondi {
         try {
-            for (Mastercard m : DemoStorage.getMastercards()) {
 
-                if (m.getNumeroCarta().equals(nC)
-                        && m.getDataScadenza().equals(sc)
-                        && m.getCvv().equals(cvv)) {
+            Mastercard m = DemoStorage.getMastercardByNumber(nC);
 
-                    Mastercard found = new Mastercard();
-                    found.setNumeroCarta(m.getNumeroCarta());
-                    found.setDataScadenza(m.getDataScadenza());
-                    found.setCvv(m.getCvv());
+            if (m != null && m.getDataScadenza().equals(sc) && m.getCvv().equals(cvv)) {
 
-                    return found;
-                }
+                Mastercard found = new Mastercard();
+                found.setNumeroCarta(m.getNumeroCarta());
+                found.setDataScadenza(m.getDataScadenza());
+                found.setCvv(m.getCvv());
+
+                return found;
             }
 
-            //  nessun risultato : NON errore DAO
             return null;
 
         } catch (Exception e) {
@@ -83,20 +78,18 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
     }
 
     @Override
-    public Paypal getPaymentPaypal(String email, String codice)
-            throws DAOExceptionBrondi {
-
+    public Paypal getPaymentPaypal(String email, String codice) throws DAOExceptionBrondi {
         try {
-            for (Paypal p : DemoStorage.getPaypals()) {
 
-                if (p.getEmail().equals(email)
-                        && p.getCodice().equals(codice)) {
+            Paypal p = DemoStorage.getPaypalByEmail(email);
 
-                    Paypal found = new Paypal();
-                    found.setEmail(p.getEmail());
-                    found.setCodice(p.getCodice());
-                    return found;
-                }
+            if (p != null && p.getCodice().equals(codice)) {
+
+                Paypal found = new Paypal();
+                found.setEmail(p.getEmail());
+                found.setCodice(p.getCodice());
+
+                return found;
             }
 
             return null;
@@ -404,7 +397,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
         }
     }
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionBrondi
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city, String persistenza) throws CredentialsExceptionBrondi
     {
         final Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("Modalità DEMO: il pagamento non viene salvato in persistenza.");
