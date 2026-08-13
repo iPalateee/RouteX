@@ -203,7 +203,6 @@ public final class DemoStorage {
     private DemoStorage() {}
 
     public static List<City> getCities() {
-        //return cities;
         return new ArrayList<>(cities.values());
     }
 

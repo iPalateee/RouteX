@@ -69,7 +69,6 @@ public abstract class LayerPersistenza {
             Credentials cred,
             List<String> codiciBiglietti,
             String metodoPagamento,
-            String city,
-            String persistenza) throws CredentialsExceptionBrondi;
+            String city) throws CredentialsExceptionBrondi;
 
 }

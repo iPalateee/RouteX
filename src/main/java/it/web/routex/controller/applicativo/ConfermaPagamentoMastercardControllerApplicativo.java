@@ -71,7 +71,7 @@ public class ConfermaPagamentoMastercardControllerApplicativo extends Registrazi
             throw new CredentialsExceptionBrondi("Nessun utente loggato associato al pagamento.", "Errore nel ConfermaPagamentoMastercardControllerApplicativo.java");
         }
         it.web.routex.dao.LayerPersistenza layer = LayerPersistenza.createLayerPersistenza();
-        layer.salvataggio(credenziali, codiciBiglietti, mastercard.getMethod().getDisplayName(), city, this.persistenza);
+        layer.salvataggio(credenziali, codiciBiglietti, mastercard.getMethod().getDisplayName(), city);
         if (logger.isInfoEnabled()) {
             logger.info("Pagamento effettuato con Mastercard {}", mastercard.maskedNumber());
         }

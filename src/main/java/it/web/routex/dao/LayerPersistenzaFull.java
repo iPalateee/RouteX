@@ -471,7 +471,7 @@ public class LayerPersistenzaFull extends LayerPersistenza
     }
 
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodoPagamento, String city, String persistenza) throws CredentialsExceptionBrondi {
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodoPagamento, String city) throws CredentialsExceptionBrondi {
         TicketDAOLayer dao = FactoryPersistence.createTicketDAO();
         dao.salvataggio(cred, codiciBiglietti, metodoPagamento, city);
         final Logger logger = LoggerFactory.getLogger(getClass());

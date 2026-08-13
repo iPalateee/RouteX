@@ -3,7 +3,6 @@ package it.web.routex.controller.grafico;
 import it.web.routex.bean.CityBean;
 import it.web.routex.bean.InformazioniPercorsoBean;
 import it.web.routex.bean.RouteBean;
-import it.web.routex.boundary.cli.view.GenericErrorCLI;
 import it.web.routex.controller.applicativo.BuyTicketControllerApplicativo;
 import it.web.routex.controller.applicativo.PathController;
 import it.web.routex.exception.*;
@@ -75,7 +74,6 @@ public class PathControllerGrafico extends LoggedHttpServlet {
 
         if (route == null) {
             logger.warn("Impossibile acquisire i dati del percorso: l'oggetto route è null.");
-            GenericErrorCLI.mostraErrore("Dati non validi.");
             return;
         }
 

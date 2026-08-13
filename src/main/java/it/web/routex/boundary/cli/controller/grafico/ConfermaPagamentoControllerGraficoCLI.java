@@ -17,14 +17,13 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
         Credentials cred = Credentials.getInstanceSingleton();
         logUtente(cred);
 
-        PaymentResultBean paymentRecord = estraiPagamento();
-        if (paymentRecord == null) return;
+        PaymentResultBean payment = estraiPagamento();
+        if (payment == null) return;
 
         logPersistenzaScelta();
 
-        // CHIAMATA ALLA FACADE (Esattamente come nella Servlet Web!)
-        PagamentoControllerApplicativo facciataPagamento = new PagamentoControllerApplicativo();
-        PaymentResultBean result = eseguiPagamento(facciataPagamento, paymentRecord);
+        PagamentoControllerApplicativo pag = new PagamentoControllerApplicativo();
+        PaymentResultBean result = eseguiPagamento(pag, payment);
 
         if (result == null) return;
 
@@ -54,7 +53,6 @@ public class ConfermaPagamentoControllerGraficoCLI extends LoggedCLI {
                 return null;
             }
 
-            // La validazione sintattica scatterà qui durante la build
             return builder.build();
 
         } catch (InvalidPaymentInputExceptionBrondi | InvalidCardInputExceptionBrondi | InvalidBuyTicketInputExceptionBrondi e) {

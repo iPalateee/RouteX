@@ -397,7 +397,7 @@ public class LayerPersistenzaDemo extends LayerPersistenza{
         }
     }
     @Override
-    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city, String persistenza) throws CredentialsExceptionBrondi
+    public void salvataggio(Credentials cred, List<String> codiciBiglietti, String metodopayment, String city) throws CredentialsExceptionBrondi
     {
         final Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("Modalità DEMO: il pagamento non viene salvato in persistenza.");
